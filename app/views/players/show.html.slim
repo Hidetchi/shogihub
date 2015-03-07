@@ -1,0 +1,26 @@
+h2 #{@player.to_s}
+
+ul
+  li Player ID: #{@player.kishi_id}
+  li Rank: #{@player.to_rank}
+  li JSA Page: #{link_to(@player.to_jsa_url, @player.to_jsa_url, target:'_blank')}
+
+table style="margin-left:30px;"
+  tr
+    th Date
+    th Side
+    th Result
+    th Opponent
+    th Tournament
+    th Description
+  - @games.each do |g|
+    tr
+      td #{g.game_date}
+      td #{g.sente_id == @player.id ? "Sente" : "Gote"}
+      td #{g.to_result_mark(g.sente_id == @player.id)}
+      - if g.sente_id == @player.id
+        td #{g.gote.category == 1 ? link_to(g.gote.to_s, player_path(g.gote_id), style:'text-decoration:none;') : g.gote.to_s}
+      - else
+        td #{g.sente.category == 1 ? link_to(g.sente.to_s, player_path(g.sente_id), style:'text-decoration:none;') : g.sente.to_s}
+      td #{g.tournament.name}
+      td #{g.description}

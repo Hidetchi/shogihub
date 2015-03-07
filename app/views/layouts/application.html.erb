@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= SITE_NAME %><%= " / " + yield(:title) if content_for?(:title) %></title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <% if content_for?(:canonical) %>
+    <link rel="canonical" href="<%= yield(:canonical) %>">
+    <meta property="og:url" content="<%= yield(:canonical) %>">
+  <% end %>
+  <meta property="og:title" content="<%= SITE_NAME %><%= " / " + yield(:title) if content_for?(:title) %>">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="">
+  <meta property="og:image" content="<%= image_url('') %>">
+  <%= favicon_link_tag %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body id="root">
+<div id="wrapper">
+
+<div id="top_banner">
+<%= image_tag 'top_banner.jpg' %>
+</div>
+
+<div id="side_column">
+<ul class="sidemenu">
+<li><%= link_to 'TOP', '/' %>
+<li class="new_section">　JSA Professional
+<li><%= link_to 'Games', '/games' %>
+<li><%= link_to 'Players', '/players' %>
+<li class="new_section">　World Events
+<li class="new_section">　World Clubs
+<li class="new_section">　World Shogi Links
+<li class="new_section">　Lessons
+<li><%= link_to 'Shogi Openings', 'http://kingcrimsondiscipline.blogspot.de/', :target=>'_blank' %>
+<li class="new_section">　Online Shogi Sites
+<li class="new_section">　Shogi Books
+</ul>
+</div>
+
+<div id="main">
+
+<div id="contents">
+<%= yield %>
+</div>
+
+</div>
+</div>
+
+<div id="footer">
+<center>
+<table class="invisible" style="padding:0">
+<tr><td style="border:0;padding:0 15px 0 0;"><%= image_tag 'is3-logo-small.png' %>
+<td style="border:0;padding:0;text-align:left;">(c) Team ISCube<br>Innovative Shogi Information System Initiation Scheme
+</table>
+</center>
+</div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+table
+  tr
+    th Date
+    th colspan=2 Sente
+    th colspan=2 Gote
+    th Tournament
+    th Description
+  - games.each do |g|
+    tr
+      td #{g.game_date}
+      td style="border-right:0;" #{g.to_result_mark(true)}
+      td #{g.sente.category == 1 ? link_to(g.sente.to_s, player_path(g.sente_id), style:'text-decoration:none;') : g.sente.to_s}
+      td style="border-right:0;" #{g.gote.category == 1 ? link_to(g.gote.to_s, player_path(g.gote_id), style:'text-decoration:none;') : g.gote.to_s}
+      td #{g.to_result_mark(false)}
+      td #{g.tournament.name}
+      td #{g.description}
