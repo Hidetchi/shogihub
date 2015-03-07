@@ -14,16 +14,13 @@ def self.load_JSA_all
 
   @rank = 0
   @kishi_id = 0
-#  response = open(sprintf('http://www.shogi.or.jp/kisen/month/%d/%dall.html', year, month), "r:CP932").read
-#  lines = response.split("\n")
-#  lines.each do |line|
-  f = File.read("/mnt/hgfs/VMWareShare/shogihubtest_players.html", encoding:'cp932')
-  f.split("\n").each do |line|
-    if line =~ /\<table.*summary\=\"(.+)\"/
-      str = $1
-      if str =~ /([四五六七八九])段/
-        @rank = [0,1,2,3,'四','五','六','七','八','九'].index($1)
-      end
+  response = open("http://www.shogi.or.jp/player/index.html", "r:CP932").read
+  lines = response.split("\n")
+  lines.each do |line|
+#  f = File.read("/mnt/hgfs/VMWareShare/shogihubtest_players.html", encoding:'cp932')
+#  f.split("\n").each do |line|
+    if line =~ /heightLine\-(\d)/
+      @rank = $1.to_i
     end
     next if @rank == 0
     if line =~ /\<span\sclass\=\"playerno\"\>棋士番号(\d+)/

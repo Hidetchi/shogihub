@@ -106,7 +106,7 @@ def self.update_game(date, sente, gote, result, event, description)
     puts sprintf("Tournament with search key %s not found.", tournament_name)
     return
   end
-  if sente =~ /^.+か.+$/ || gote =~ /^.+か.+$/
+  if sente =~ /^.+か[^り]+$/ || gote =~ /^.+か[^り]+$/
     puts sprintf("Ignored %s vs %s", sente, gote)
     return
   end
