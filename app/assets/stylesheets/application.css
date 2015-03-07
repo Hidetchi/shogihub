@@ -48,6 +48,9 @@ div#top_banner {
   height: 200px;
   width: 100%;
 }
+img#banner_img {
+  border: 0;
+}
 
 div#side_column {
 	background-color: #fed;
