@@ -6,5 +6,29 @@ div.profile_photo {
   text-align: center;
   width: 210px;
   height: 280px;
-  border:2px solid #db8;
+  overflow: hidden;
+  border:3px ridge #db8;
+  box-shadow:rgba(0, 0, 0, 0.5) 3px 3px 6px 0px;
+  -webkit-box-shadow:rgba(0, 0, 0, 0.5) 3px 3px 6px 0px;
+  -moz-box-shadow:rgba(0, 0, 0, 0.5) 3px 3px 6px 0px;
+}
+
+a.player_name {
+  text-decoration: none;
+}
+
+#preview {
+  width: 105px;
+  height: 130px;
+  overflow: hidden;
+  position: absolute;
+  background: white;
+  padding: 0px;
+  display: none;
+  text-align: center;
+  vertical-align: middle;
+  border:3px ridge #aaa;
+  box-shadow:rgba(0, 0, 0, 0.5) 3px 3px 6px 0px;
+  -webkit-box-shadow:rgba(0, 0, 0, 0.5) 3px 3px 6px 0px;
+  -moz-box-shadow:rgba(0, 0, 0, 0.5) 3px 3px 6px 0px;
 }

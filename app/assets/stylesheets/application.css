@@ -177,7 +177,7 @@ ul.sidemenu li a {
 	width: 125px;
 	display: block;
 	padding-left: 14px;
-	border-bottom: 1px solid #e6f2fb;
+	border-bottom: 1px solid #ffeed3;
 	background-repeat: no-repeat;
 	background-position: 0px 3px;
 	transition: background-color 0.3s linear;
@@ -196,6 +196,6 @@ li.new_section {
 	background-color: transparent;
   text-align: left;
 	vertical-align: top;
-	padding: 0px 10px;
+	padding: 0px 10px 10px 10px;
 }
 

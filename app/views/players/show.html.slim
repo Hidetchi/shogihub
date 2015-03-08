@@ -21,7 +21,7 @@ table.invisible
         div.profile_photo
           = image_tag(@player.to_image_url)
 
-table style="margin-left:50px;margin-top:20px;"
+table style="margin-left:50px;margin-top:10px;"
   tr
     th Date
     th Side
@@ -37,3 +37,33 @@ table style="margin-left:50px;margin-top:20px;"
       td #{player_name_tag(g.sente_id == @player.id ? g.gote : g.sente)}
       td #{g.tournament.name}
       td #{g.description}
+
+javascript:
+  function setPreview(){
+    xOffset = 10;
+    yOffset = 165;
+                    
+    $("a.player_name").hover(function(e){
+      $("body").append("<p id='preview'><img src='" + this.name + "' width='105'/></p>");
+      $("#preview")
+      .css("top",(e.pageY - yOffset ) + "px")
+      .css("left",(e.pageX + xOffset ) + "px")
+      .fadeIn("slow");
+    },
+    function(){
+      $("#preview").remove();
+    }); 
+    $("a.player_name").click(function(e){
+      $("#preview").remove();
+    });
+
+    $("a.player_name").mousemove(function(e){
+      $("#preview")
+      .css("top",(e.pageY - yOffset) + "px")
+      .css("left",(e.pageX + xOffset) + "px");
+      });     
+    };
+
+  $(function(){
+    setPreview();
+  });

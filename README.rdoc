@@ -1,28 +1,38 @@
-== README
+=== README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+==== License
+* (c) Team ISCube, Hidetchi. All rights reserved.
 
-Things you may want to cover:
+==== Version
+* Ruby 2.0~
+* Rails 4
 
-* Ruby version
+==== Database Initialization
+* Run <tt>rake db:seed</tt> to insert initial data
 
-* System dependencies
+* Load all games:
+rails c>
+for i in 2005..2014 do
+  for j in 1..12 do
+    Game.load_JSA_month(i, j)
+  end
+end
 
-* Configuration
+* Load latest games:
+rails c>
+Game.load_JSA_latest
 
-* Database creation
+* Load all players:
+rails c>
+Player.load_JSA_all
 
-* Database initialization
+* Load player details
+rails c>
+players = Player.where(category:1)
+players.each do |p|
+  p.load_JSA_detail
+end
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+==== Other preparation
+* Install ImageMagick to enable simple-captcha
+* Move some of the image files directly to public/assets/ to avoid linking failure, which happens when the file name is specified directly in CSS file or Helper functions.
