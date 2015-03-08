@@ -1,3 +1,10 @@
 // Place all the styles related to the players controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.profile_photo {
+  text-align: center;
+  width: 210px;
+  height: 280px;
+  border:2px solid #db8;
+}

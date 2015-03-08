@@ -69,7 +69,7 @@ end
 
 def self.update_game(date, sente, gote, result, event, description)
   return if event == ""
-  if description =~ /第([123456789１２３４５６７８９])局/
+  if description =~ /^第([123456789１２３４５６７８９])局/
     description = "Title match, Game " + NKF.nkf('-m0Z1 -w', $1)
   else
     description = ""

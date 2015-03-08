@@ -1,11 +1,27 @@
-h2 #{@player.to_s}
+h2 Professional Player Info
+h3 #{@player.to_s}
 
-ul
-  li Player ID: #{@player.kishi_id}
-  li Rank: #{@player.to_rank}
-  li JSA Page: #{link_to(@player.to_jsa_url, @player.to_jsa_url, target:'_blank')}
+p style='margin-left:30px;' Original JSA Page: #{link_to(@player.to_jsa_url, @player.to_jsa_url, target:'_blank')}
 
-table style="margin-left:30px;"
+table.invisible
+  tr
+    td.invisible style='width:300px;'
+      ul
+        li Player ID: #{@player.kishi_id}
+        li Rank: #{@player.to_rank}
+        li Date of birth: #{@player.birthday}
+        li Pupil of: #{player_name_tag(@player.teacher)}
+        li Master of:
+        - if @player.pupils.length > 0
+          ul
+            - @player.pupils.each do |pupil|
+              li #{player_name_tag(pupil)}
+    td.invisible
+      - if @player.category == 1
+        div.profile_photo
+          = image_tag(@player.to_image_url)
+
+table style="margin-left:50px;margin-top:20px;"
   tr
     th Date
     th Side
@@ -18,9 +34,6 @@ table style="margin-left:30px;"
       td #{g.game_date}
       td #{g.sente_id == @player.id ? "Sente" : "Gote"}
       td #{g.to_result_mark(g.sente_id == @player.id)}
-      - if g.sente_id == @player.id
-        td #{g.gote.category == 1 ? link_to(g.gote.to_s, player_path(g.gote_id), style:'text-decoration:none;') : g.gote.to_s}
-      - else
-        td #{g.sente.category == 1 ? link_to(g.sente.to_s, player_path(g.sente_id), style:'text-decoration:none;') : g.sente.to_s}
+      td #{player_name_tag(g.sente_id == @player.id ? g.gote : g.sente)}
       td #{g.tournament.name}
       td #{g.description}

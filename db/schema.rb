@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305095122) do
+ActiveRecord::Schema.define(version: 20150307220841) do
 
   create_table "games", force: true do |t|
     t.integer  "sente_id"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20150305095122) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_url"
   end
 
   add_index "players", ["search_key"], name: "index_players_on_search_key"
