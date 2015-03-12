@@ -95,7 +95,7 @@ def self.update_game(date, sente, gote, result, event, description)
     tournament_name = 'マイナビ' 
   elsif event =~ /^朝日/
     tournament_name = '朝日杯'
-  elsif event =~ /(NHK|ＮＨＫ|銀河|最強|新人王|加古川)/
+  elsif event =~ /(NHK|ＮＨＫ|銀河|最強|新人王|加古川|女流王将)/
 #    puts sprintf("TV/Online/Rookie Tournament %s is ignored.", event)
     return
   else

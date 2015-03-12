@@ -1,4 +1,4 @@
-SITE_NAME = "局面ペディア"
+SITE_NAME = "ShogiHub"
 if Rails.env == "production"
   ROOT_PATH = "http://shogihub.com"
 else

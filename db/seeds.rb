@@ -6,24 +6,24 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Tournament.create([{name: 'Meijin Title Match', search_key: '名人'},
-                   {name: 'Ranking League', search_key: '順位'},
-                   {name: 'Ryuou Tournament', search_key: '竜王'},
-                   {name: 'Oushou Championship', search_key: '王将'},
-                   {name: 'Oui Championship', search_key: '王位'},
-                   {name: 'Ouza Championship', search_key: '王座'},
-                   {name: 'Kisei Championship', search_key: '棋聖'},
-                   {name: 'Kiou Championship', search_key: '棋王'},
-                   {name: 'Asahi Cup', search_key: '朝日杯'},
-                   {name: 'Japan Series', search_key: '日本シリーズ'},
-                   {name: "Women's Meijin", search_key: "女流名人"},
-                   {name: "Women's Ouza", search_key: "女流王座"},
-                   {name: "Mynavi Open", search_key: "マイナビ"},
-                   {name: "Women's Oushou", search_key: "女流王将"},
-                   {name: "Women's Oui", search_key: "女流王位"},
-                   {name: "Kurashiki Wisteria", search_key: "倉敷藤花"},
-                   {name: "Kashima Cup", search_key: "鹿島杯"}])
-Player.create([
+Tournament.seed('名人', 'Meijin Title Match')
+Tournament.seed('順位', 'Ranking League')
+Tournament.seed('竜王', 'Ryuou Tournament')
+Tournament.seed('王将', 'Oushou Championship')
+Tournament.seed('王位', 'Oui Championship')
+Tournament.seed('王座', 'Ouza Championship')
+Tournament.seed('棋聖', 'Kisei Championship')
+Tournament.seed('棋王', 'Kiou Championship')
+Tournament.seed('朝日杯', 'Asahi Cup')
+Tournament.seed('日本シリーズ', 'Japan Series')
+Tournament.seed('女流名人', "Women's Meijin")
+Tournament.seed('女流王座', "Women's Ouza")
+Tournament.seed('マイナビ', "Mynavi Open")
+Tournament.seed('女流王位', "Women's Oui")
+Tournament.seed('倉敷藤花', "Kurashiki Wisteria")
+Tournament.seed('鹿島杯', "Kashima Cup")
+
+Player.seeds([
 {name: 'Habu, Yoshiharu', search_key: '羽生善治', category: 1, kishi_id: 175, rank: 9, url: 'habu'},
 {name: 'Itodani, Tetsuro', search_key: '糸谷哲郎', category: 1, kishi_id: 260, rank: 8, url: 'itodani'},
 {name: 'Watanabe, Akira', search_key: '渡辺明', category: 1, kishi_id: 235, rank: 9, url: 'watanabe-a'},
@@ -184,6 +184,65 @@ Player.create([
 {name: 'Hoshino, Yoshitaka', search_key: '星野良生'},
 {name: 'Miyamoto, Hiroshi', search_key: '宮本広志'},
 {name: 'Masuda, Yasuhiro', search_key: '増田康宏'},
-{name: 'Kurosawa, Leo', search_key: '黒沢怜生'}
+{name: 'Kurosawa, Leo', search_key: '黒沢怜生'},
+{search_key: '千葉涼子', name: 'Chiba, Ryoko'},
+{search_key: '里見香奈', name: 'Satomi, Kana'},
+{search_key: '清水市代', name: 'Shimizu, Ichiyo'},
+{search_key: '鈴木環那', name: 'Suzuki, Kanna'},
+{search_key: '室谷由紀', name: 'Muroya, Yuki'},
+{search_key: '中井広恵', name: 'Nakai, Hiroe'},
+{search_key: '矢内理絵子', name: 'Yauchi, Rieko'},
+{search_key: '貞升南', name: 'Sadamasu, Minami'},
+{search_key: '中倉宏美', name: 'Nakakura, Hiromi'},
+{search_key: '本田小百合', name: 'Honda, Sayuri'},
+{search_key: '室田伊緒', name: 'Murota, Io'},
+{search_key: '岩根忍', name: 'Iwane, Shinobu'},
+{search_key: '上田初美', name: 'Ueda, Hatsumi'},
+{search_key: '和田あき', name: 'Wada, Aki'},
+{search_key: '真田彩子', name: 'Sanada, Ayako'},
+{search_key: '村田智穂', name: 'Murata, Chiho'},
+{search_key: '相川春香', name: 'Aikawa, Haruka'},
+{search_key: '蛸島彰子', name: 'Takojima, Akiko'},
+{search_key: '野田澤彩乃', name: 'Nodasawa, Ayano'},
+{search_key: '藤田綾', name: 'Fujita, Aya'},
+{search_key: '北尾まどか', name: 'Kitao, Madoka'},
+{search_key: '安食総子', name: 'Ajiki, Fusako'},
+{search_key: '山田朱未', name: 'Yamada, Akemi'},
+{search_key: '植村真理', name: 'Uemura, Mari'},
+{search_key: '石高澄恵', name: 'Ishitaka, Sumie'},
+{search_key: '大庭美樹', name: 'Oba, Miki'},
+{search_key: '井道千尋', name: 'Ido, Chihiro'},
+{search_key: '渡辺弥生', name: 'Watanabe, Mio'},
+{search_key: '山口恵梨子', name: 'Yamaguchi, Eriko'},
+{search_key: '香川愛生', name: 'Kagawa, Manao'},
+{search_key: '中村真梨花', name: 'Nakamura, Marika'},
+{search_key: '中村桃子', name: 'Nakamura, Momoko'},
+{search_key: '伊奈川愛菓', name: 'Inagawa, Manaka'},
+{search_key: '熊倉紫野', name: 'Kumakura, Shino'},
+{search_key: '中倉彰子', name: 'Nakakura, Akiko'},
+{search_key: '長沢千和子', name: 'Nagasawa, Chikako'},
+{search_key: '上川香織', name: 'Uekawa, Kaori'},
+{search_key: '久津知子', name: 'Hisatsu, Tomoko'},
+{search_key: '竹部さゆり', name: 'Takebe, Sayuri'},
+{search_key: '島井咲緒里', name: 'Shimai, Saori'},
+{search_key: '甲斐智美', name: 'Kai, Tomomi'},
+{search_key: '早水千紗', name: 'Hayamizu, Chisa'},
+{search_key: '石橋幸緒', name: 'Ishibashi, Sachio'},
+{search_key: '長谷川優貴', name: 'Hasegawa, Yuki'},
+{search_key: '高群佐知子', name: 'Takamure, Sachiko'},
+{search_key: '山田久美', name: 'Yamada, Kumi'},
+{search_key: '斎田晴子', name: 'Saida, Haruko'},
+{search_key: '渡部愛', name: 'Watanabe, Mana'},
+{search_key: '竹俣紅', name: 'Takemata, Beni'},
+{search_key: '北村桂香', name: 'Kitamura, Keika'},
+{search_key: '飯野愛', name: 'Iino, Ai'},
+{search_key: '塚田恵梨花', name: 'Tsukada, Erika'},
+{search_key: '加藤桃子', name: 'Kato, Momoko'},
+{search_key: '鹿野圭生', name: 'Kano, Tamao'},
+{search_key: '船戸陽子', name: 'Funato, Yoko'},
+{search_key: '山根ことみ', name: 'Yamane, Kotomi'},
+{search_key: '伊藤沙恵', name: 'Ito, Sae'},
+{search_key: '高浜愛子', name: 'Takahama, Aiko'},
+{search_key: '山口絵美菜', name: 'Yamaguchi, Emina'}
 ])
 

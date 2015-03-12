@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class Player < ActiveRecord::Base
 
 belongs_to :teacher, class_name: 'Player', foreign_key: 'teacher_id'
@@ -5,6 +7,8 @@ has_many :pupils, class_name: 'Player', foreign_key: 'teacher_id'
 
 def self.find_or_create(name_ja)
   name_ja = name_ja.gsub(/眞/,"真").gsub(/髙/,"高").gsub(/﨑/,"崎")
+  name_ja = '真田彩子' if name_ja == '古河彩子'
+  name_ja = '上川香織' if name_ja == '松尾香織'
   unless (player = Player.find_by(search_key: name_ja))
     player = Player.create(search_key: name_ja)
     puts sprintf("New player %s created!", name_ja)
@@ -18,20 +22,33 @@ def self.load_JSA_all
   @rank = 0
   @kishi_id = 0
   response = open("http://www.shogi.or.jp/player/index.html", "r:CP932").read
+  response += open("http://www.shogi.or.jp/player/joryu.html", "r:CP932").read
   lines = response.split("\n")
   lines.each do |line|
 #  f = File.read("/mnt/hgfs/VMWareShare/shogihubtest_players.html", encoding:'cp932')
 #  f.split("\n").each do |line|
-    if line =~ /heightLine\-(\d)/
-      @rank = $1.to_i
+    if line =~ /heightLine\-(joru)?(\d)(kyu)?/
+      if ($3 == "kyu")
+        @rank = $2.to_i * (-1)
+      else
+        @rank = $2.to_i
+      end
+    elsif line =~ /heightLine-kyakuin/
+      @rank = 0
     end
     next if @rank == 0
-    if line =~ /\<span\sclass\=\"playerno\"\>棋士番号(\d+)/
-      @kishi_id = $1.to_i
+    if line =~ /\<span\sclass\=\"playerno\"\>(女流)?棋士番号(\d+)/
+      @kishi_id = $2.to_i
     elsif line =~ /\<span\sclass\=\"playername_edit\".*kishi\/(.+)\.html\"\>(.+)\<\/a\>/
       url = $1
       name = $2.gsub(/[\s　]/,"")
       Player.update_player(1, name, @kishi_id, @rank, url)
+      @rank = 0
+    elsif line =~ /href\=\"joryu\/(.+)\.html\"\>(.+)\<\/a\>/
+      url = $1
+      name = $2.gsub(/[\s　]/,"")
+      Player.update_player(2, name, @kishi_id, @rank, url)
+      @rank = 0
     end
   end
 
@@ -72,8 +89,8 @@ def load_JSA_detail
       end
       mode = 0
     end
-    if line =~ /ph_kishi\/(.+)\.jpg/
-      self.image_url = $1
+    if line =~ /ph_(kishi|joryu)\/(.+)\.jpg/
+      self.image_url = $2
     end
   end
   self.save
@@ -87,22 +104,38 @@ end
 
 def to_rank
   return "" unless self.rank
-  ["", "", "", "", "4-Dan", "5-Dan", "6-Dan", "7-Dan", "8-Dan", "9-Dan"][self.rank]
+  self.rank.to_s + (self.rank > 0 ? "-Dan" : "-kyu")
 end
 
 def to_jsa_url
   if self.category == 1
     "http://www.shogi.or.jp/player/kishi/" + self.url + ".html"
+  elsif self.category == 2
+    "http://www.shogi.or.jp/player/joryu/" + self.url + ".html"
   else
     ""
   end
 end
 
 def to_image_url
-  if self.category == 1
+  if self.image_url == nil
+    ""
+  elsif self.category == 1
     "http://www.shogi.or.jp/player/ph_kishi/" + self.image_url + ".jpg"
+  elsif self.category == 2
+    "http://www.shogi.or.jp/player/ph_joryu/" + self.image_url + ".jpg"
   else
     ""
+  end
+end
+
+def self.seeds(array)
+  array.each do |hash|
+    if (player = Player.find_by(search_key: hash[:search_key]))
+      player.update_attributes(hash)
+    else
+      Player.create(hash)
+    end
   end
 end
 

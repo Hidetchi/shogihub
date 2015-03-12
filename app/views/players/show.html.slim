@@ -7,17 +7,18 @@ table.invisible
   tr
     td.invisible style='width:300px;'
       ul
-        li Player ID: #{@player.kishi_id}
-        li Rank: #{@player.to_rank}
+        li #{'Ladies ' if @player.category == 2}Player ID: #{@player.kishi_id}
+        li Rank: #{'Ladies ' if @player.category == 2}#{@player.to_rank}
         li Date of birth: #{@player.birthday}
         li Pupil of: #{player_name_tag(@player.teacher)}
-        li Master of:
-        - if @player.pupils.length > 0
-          ul
-            - @player.pupils.each do |pupil|
-              li #{player_name_tag(pupil)}
+        - if @player.category == 1
+          li Master of:
+          - if @player.pupils.length > 0
+            ul
+              - @player.pupils.each do |pupil|
+                li #{player_name_tag(pupil)}
     td.invisible
-      - if @player.category == 1
+      - if @player.category == 1 || @player.category == 2
         div.profile_photo
           = image_tag(@player.to_image_url)
 
