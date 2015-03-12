@@ -104,7 +104,7 @@ end
 
 def to_rank
   return "" unless self.rank
-  self.rank.to_s + (self.rank > 0 ? "-Dan" : "-kyu")
+  self.rank.abs.to_s + (self.rank > 0 ? "-Dan" : "-kyu")
 end
 
 def to_jsa_url
