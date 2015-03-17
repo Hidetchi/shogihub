@@ -23,6 +23,7 @@ def self.load_JSA_all
   @kishi_id = 0
   response = open("http://www.shogi.or.jp/player/index.html", "r:CP932").read
   response += open("http://www.shogi.or.jp/player/joryu.html", "r:CP932").read
+  response += open("http://www.shogi.or.jp/player/intai.html", "r:CP932").read
   lines = response.split("\n")
   lines.each do |line|
 #  f = File.read("/mnt/hgfs/VMWareShare/shogihubtest_players.html", encoding:'cp932')
@@ -35,18 +36,20 @@ def self.load_JSA_all
       end
     elsif line =~ /heightLine-kyakuin/
       @rank = 0
+    elsif line =~/class\=\"heightLine\"/
+      @rank = -5 
     end
     next if @rank == 0
     if line =~ /\<span\sclass\=\"playerno\"\>(女流)?棋士番号(\d+)/
       @kishi_id = $2.to_i
     elsif line =~ /\<span\sclass\=\"playername_edit\".*kishi\/(.+)\.html\"\>(.+)\<\/a\>/
       url = $1
-      name = $2.gsub(/[\s　]/,"")
+      name = $2.gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
       Player.update_player(1, name, @kishi_id, @rank, url)
       @rank = 0
     elsif line =~ /href\=\"joryu\/(.+)\.html\"\>(.+)\<\/a\>/
       url = $1
-      name = $2.gsub(/[\s　]/,"")
+      name = $2.gsub(/女流.+$/,"").gsub(/[\s　]/,"")
       Player.update_player(2, name, @kishi_id, @rank, url)
       @rank = 0
     end
@@ -58,7 +61,7 @@ end
 
 def self.update_player(category, name_ja, kishi_id, rank, url)
   player = Player.find_or_create(name_ja)
-  player.update_attributes(category: category, kishi_id: kishi_id, rank: rank, url: url) if player.rank != rank
+  player.update_attributes(category: category, kishi_id: kishi_id, rank: rank, url: url) if (player.rank == nil || player.rank < rank)
 end
 
 def load_JSA_detail
@@ -73,7 +76,9 @@ def load_JSA_detail
       if line =~ /生年月日/
         mode = 1
       elsif line =~ /\>師匠\</
-        mode =2
+        mode = 2
+      elsif line =~/\>棋士番号\</
+        mode = 3
       end
     else
       if mode == 1
@@ -85,6 +90,10 @@ def load_JSA_detail
           teacher_name = $1.gsub(/[（\(].+[）\)]/,"").gsub(/門下/,"").gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
           teacher = Player.find_or_create(teacher_name)
           self.teacher_id = teacher.id
+        end
+      elsif mode == 3
+        if line =~ /\<dd\>(\d+)\<\/dd\>/
+          self.kishi_id = $1.to_i
         end
       end
       mode = 0
@@ -131,6 +140,13 @@ end
 
 def self.seeds(array)
   array.each do |hash|
+    if (hash[:teacher_name])
+      teacher_name = hash[:teacher_name].gsub(/[（\(].+[）\)]/,"").gsub(/門下/,"").gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
+      teacher = Player.find_or_create(teacher_name)
+      hash.delete(:teacher_name)
+      hash[:teacher_id] = teacher.id
+    end
+
     if (player = Player.find_by(search_key: hash[:search_key]))
       player.update_attributes(hash)
     else

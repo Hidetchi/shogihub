@@ -32,3 +32,14 @@ a.player_name {
   -webkit-box-shadow:rgba(0, 0, 0, 0.5) 3px 3px 6px 0px;
   -moz-box-shadow:rgba(0, 0, 0, 0.5) 3px 3px 6px 0px;
 }
+
+div.families {
+  margin-left: -10px;
+  padding-left: 0;
+}
+div.families ul {
+  margin-bottom: 5px;
+}
+div.families li {
+  margin-left: 10px;
+}

@@ -16,7 +16,7 @@ def family_tree(players)
   players.each do |p|
     next if (p.teacher_id == nil && p.pupils.length == 0)
     html += "<li>" + player_name_tag(p)
-    pupils = p.pupils.order(:category, :kishi_id)
+    pupils = p.pupils.order(:category, :kishi_id, :birthday)
     html += family_tree(pupils)
   end
   html += "</ul>"

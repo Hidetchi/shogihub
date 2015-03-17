@@ -1,7 +1,7 @@
 class PlayersController < ApplicationController
 
   def index
-    @root_players = Player.where(teacher_id: nil).order(:kishi_id)
+    @root_players = Player.where(teacher_id: nil).order(:kishi_id, :birthday)
   end
 
   def show
