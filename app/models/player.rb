@@ -61,7 +61,7 @@ end
 
 def self.update_player(category, name_ja, kishi_id, rank, url)
   player = Player.find_or_create(name_ja)
-  player.update_attributes(category: category, kishi_id: kishi_id, rank: rank, url: url) if (player.rank == nil || player.rank < rank)
+  player.update_attributes(category: category, kishi_id: kishi_id, rank: rank, url: url) if (player.category != category || player.rank == nil || player.rank < rank)
 end
 
 def load_JSA_detail
@@ -141,7 +141,7 @@ end
 def self.seeds(array)
   array.each do |hash|
     if (hash[:teacher_name])
-      teacher_name = hash[:teacher_name].gsub(/[（\(].+[）\)]/,"").gsub(/門下/,"").gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
+      teacher_name = hash[:teacher_name].gsub(/[（\(].+[）\)]/,"").gsub(/門下/,"").gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(実力制|名誉|永世).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
       teacher = Player.find_or_create(teacher_name)
       hash.delete(:teacher_name)
       hash[:teacher_id] = teacher.id
