@@ -351,7 +351,7 @@ Player.seeds([
 {search_key: '松浦卓造', name: 'Matsuura, Takuzo', rank: 8, birthday: '1915/1/22', teacher_name: '（故）神田辰之助九段'},
 {search_key: '荒巻三之', name: 'Aramaki, Mitsuyuki', rank: 9, birthday: '1915/3/28', teacher_name: '（故）花田長太郎九段'},
 {search_key: '増田敏二', name: 'Masuda, Toshiji', rank: 6, birthday: '1915/8/14', teacher_name: '（故）岡崎史明八段'},
-{search_key: '平野広吉', name: 'Hirano, Hirokichi', rank: 7, birthday: '1915/9/5', teacher_name: '（故）斉藤銀次郎八段'},
+{search_key: '平野広吉', name: 'Hirano, Hirokichi', rank: 7, birthday: '1915/9/5', teacher_name: '（故）斎藤銀次郎八段'},
 {search_key: '高島一岐代', name: 'Takashima, Kazukiyo', rank: 9, birthday: '1916/5/18', teacher_name: '（故）藤内金吾八段'},
 {search_key: '松田辰雄', name: 'Matsuda, Tatsuo', rank: 8, birthday: '', teacher_name: '(故）神田辰之助九段'},
 {search_key: '山本武雄', name: 'Yamamoto, Takeo', rank: 9, birthday: '1917/1/5', teacher_name: '（故）金易二郎名誉九段'},
@@ -412,6 +412,18 @@ Player.seeds([
 {search_key: '小野敦生', name: 'Ono, Atsuo', rank: 6, birthday: '1962/5/12', teacher_name: '安恵照剛八段'},
 {search_key: '達正光', name: 'Tachi, Masamitsu', rank: 7, birthday: '1965/4/18', teacher_name: '（故）高柳敏夫名誉九段'},
 {search_key: '村山聖', name: 'Murayama, Satoshi', rank: 9, birthday: '1969/6/15', teacher_name: '森　信雄七段'},
-{search_key: '杉崎里子', name: 'Sugisaki, Satoko', rank: 4, birthday: '1942/12/24'}
+{search_key: '杉崎里子', name: 'Sugisaki, Satoko', rank: 4, birthday: '1942/12/24'},
+{search_key: '大崎熊雄', name: 'Osaki, Kumao', teacher_name: '井上義雄'},
+{search_key: '木見金治郎', name: 'Kimi, Kinjiro', teacher_name: '関根金次郎'},
+{search_key: '花田長太郎', name: 'Hanada, Chotaro', teacher_name: '関根金次郎'},
+{search_key: '斎藤銀次郎', name: 'Saito, Ginjiro', teacher_name: '石井秀吉'},
+{search_key: '宮松関三郎', name: 'Miyamatsu, Sekisaburo', teacher_name: '井上義雄'},
+{search_key: '井上義雄', name: 'Inoue, Yoshio', teacher_name: '小林東伯斎'},
+{search_key: '阪田三吉', name: 'Sakata, Sankichi', teacher_name: '小林東伯斎'},
+{search_key: '小林東伯斎', name: 'Kobayashi, Tohakusai'},
+{search_key: '神田辰之助', name: 'Kanda, Tatsunosuke'},
+{search_key: '石井秀吉', name: 'Ishii, Hideyoshi'},
+{search_key: '関根金次郎', name: 'Sekine, Kinjiro'},
+{search_key: '小菅剣之助', name: 'Kosuga, Kennosuke'}
 ])
 
