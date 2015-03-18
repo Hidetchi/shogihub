@@ -422,7 +422,7 @@ Player.seeds([
 {search_key: '阪田三吉', name: 'Sakata, Sankichi', birthday: '1870/7/1', teacher_name: '小林東伯斎'},
 {search_key: '小林東伯斎', name: 'Kobayashi, Tohakusai', birthday: '1811/1/1'},
 {search_key: '神田辰之助', name: 'Kanda, Tatsunosuke', birthday: '1893/2/22'},
-{search_key: '石井秀吉', name: 'Ishii, Hideyoshi'},
+{search_key: '石井秀吉', name: 'Ishii, Hideyoshi', birthday: '1895/1/1'},
 {search_key: '関根金次郎', name: 'Sekine, Kinjiro', birthday: '1868/4/23'},
 {search_key: '小菅剣之助', name: 'Kosuga, Kennosuke', birthday: '1865/2/19'}
 ])

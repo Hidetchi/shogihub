@@ -27,6 +27,13 @@ a {
 	color: #830;
 }
 
+a.external {
+  padding-right: 15px;
+  background-position:right;
+  background-repeat:no-repeat;
+  background-image: url("/assets/icon-external-link.png");
+}
+
 div#wrapper {
 	margin: auto;
 	width: 1000px;

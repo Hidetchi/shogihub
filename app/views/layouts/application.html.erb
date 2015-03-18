@@ -31,23 +31,27 @@
 <li class='has-sub'><span>JSA Professional</span>
   <ul>
   <li><%= link_to 'Games', '/games' %>
-  <li><%= link_to 'Players', '/players' %>
+  <li class='has-sub'><span>Players</span>
+    <ul>
+    <li><span>Active Players</span>
+    <li><%= link_to 'Master-pupil diagram', '/players' %>
+    </ul>
   </ul>
 <li class='has-sub'><span>World Activities</span>
   <ul>
   <li><span>World Events</span>
-  <li><%= link_to 'World Club Map', 'http://goo.gl/maps/SPrCo', :target=>'_blank' %>
+  <li><%= link_to 'World Club Map', 'http://goo.gl/maps/SPrCo', :target=>'_blank', :class => 'external' %>
   <li><span>World Shogi Portals</span>
   </ul>
 <li class='has-sub'><span>Lessons</span>
   <ul>
-  <li><%= link_to "Shogi Openings", 'http://kingcrimsondiscipline.blogspot.de/', :target=>'_blank' %>
-  <li><%= link_to "YouTube Lessons", 'http://youtube.com/HIDETCHI', :target=>'_blank' %>
+  <li><%= link_to "Shogi Openings", 'http://kingcrimsondiscipline.blogspot.de/', :target=>'_blank', :class => 'external' %>
+  <li><%= link_to "YouTube Lessons", 'http://youtube.com/HIDETCHI', :target=>'_blank', :class => 'external' %>
   </ul>
 <li class='has-sub'><span>Online Game Sites</span>
   <ul>
-  <li><%= link_to 'Shogi Club 24', 'http://www.shogidojo.com/eng/engindex.htm', :target=>'_blank' %>
-  <li><%= link_to '81Dojo', 'http://81dojo.com/', :target=>'_blank' %>
+  <li><%= link_to 'Shogi Club 24', 'http://www.shogidojo.com/eng/engindex.htm', :target=>'_blank', :class => 'external' %>
+  <li><%= link_to '81Dojo', 'http://81dojo.com/', :target=>'_blank', :class => 'external' %>
   </ul>
 <li><span>Shogi Books</span>
 </ul>

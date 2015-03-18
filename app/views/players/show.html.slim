@@ -1,7 +1,10 @@
+= content_for :title do
+  = @player.to_s
+
 h2 Professional Player Info
 h3 #{@player.to_s}
 
-p style='margin-left:30px;' Original JSA Page: #{link_to(@player.to_jsa_url, @player.to_jsa_url, target:'_blank')}
+p style='margin-left:30px;' Original JSA Page: #{link_to(@player.to_jsa_url, @player.to_jsa_url, target:'_blank', class:'external')}
 
 table.invisible
   tr
