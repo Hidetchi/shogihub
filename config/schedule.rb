@@ -6,7 +6,7 @@
 set :output, "log/cron_log.log"
 set :environment, :production
 
-every 1.day, :at => '19pm' do
+every 1.day, :at => '11pm' do
   runner "Game.load_JSA_latest"
 end
 

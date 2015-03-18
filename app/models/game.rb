@@ -113,7 +113,12 @@ def self.update_game(date, sente, gote, result, event, description)
   player1 = Player.find_or_create(sente)
   player2 = Player.find_or_create(gote)
   unless (game = Game.find_by(sente_id: player1.id, gote_id: player2.id, tournament_id: tournament.id, game_date: date))
-    game = Game.create(sente_id: player1.id, gote_id: player2.id, tournament_id: tournament.id, game_date: date)
+    if (game = Game.find_by(sente_id: player2.id, gote_id: player1.id, tournament_id: tournament.id, game_date: date, result: nil))
+      game.sente_id = player1.id
+      game.gote_id = player2.id
+    else
+      game = Game.create(sente_id: player1.id, gote_id: player2.id, tournament_id: tournament.id, game_date: date)
+    end
   end
   game.update_attributes(result: result, description: description)
 end
