@@ -43,19 +43,40 @@
   <li><%= link_to 'World Club Map', 'http://goo.gl/maps/SPrCo', :target=>'_blank', :class => 'external' %>
   <li><span>World Shogi Portals</span>
   </ul>
-<li class='has-sub'><span>Lessons</span>
+<li class='has-sub'><span>Forums</span>
   <ul>
-  <li><%= link_to "Shogi Openings", 'http://kingcrimsondiscipline.blogspot.de/', :target=>'_blank', :class => 'external' %>
-  <li><%= link_to "YouTube Lessons", 'http://youtube.com/HIDETCHI', :target=>'_blank', :class => 'external' %>
+  <li><%= link_to "Shogi-L", 'https://groups.google.com/forum/#!forum/shogi-l', :target=>'_blank', :class => 'external' %>
+  <li><%= link_to "81SquareUniverse", 'http://forum.81squareuniverse.com/', :target=>'_blank', :class => 'external' %>
   </ul>
 <li class='has-sub'><span>Online Game Sites</span>
   <ul>
   <li><%= link_to 'Shogi Club 24', 'http://www.shogidojo.com/eng/engindex.htm', :target=>'_blank', :class => 'external' %>
   <li><%= link_to '81Dojo', 'http://81dojo.com/', :target=>'_blank', :class => 'external' %>
   </ul>
+<li class='has-sub'><span>Lessons</span>
+  <ul>
+  <li><%= link_to "Shogi Openings", 'http://kingcrimsondiscipline.blogspot.de/', :target=>'_blank', :class => 'external' %>
+  <li><%= link_to "YouTube Lessons", 'http://youtube.com/HIDETCHI', :target=>'_blank', :class => 'external' %>
+  <li><%= link_to "Rules & Manners", 'http://81dojo.com/documents/Rules_and_Manners_of_Shogi', :target=>'_blank', :class=>'external' %>
+  </ul>
 <li><span>Shogi Books</span>
 </ul>
 </div>
+
+<div id="user_box">
+<% if user_signed_in? %>
+  <%= current_user.email %><br><%= link_to "Logout", destroy_user_session_path, method: :delete %>
+<% else %>
+  <%= link_to "Login to edit", new_user_session_path, :class => 'navbar-link' %>
+<% end %>
+</div>
+<% if (notice || alert) %>
+  <div id="alert_box">
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+  </div>
+<% end %>
+
 </div>
 
 <div id="main">
