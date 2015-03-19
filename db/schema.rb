@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150318213740) do
+ActiveRecord::Schema.define(version: 20150319062001) do
+
+  create_table "countries", force: true do |t|
+    t.string  "name"
+    t.integer "code"
+    t.boolean "enabled"
+    t.integer "region_id"
+  end
+
+  add_index "countries", ["enabled"], name: "index_countries_on_enabled"
+  add_index "countries", ["region_id"], name: "index_countries_on_region_id"
 
   create_table "games", force: true do |t|
     t.integer  "sente_id"
@@ -29,6 +39,14 @@ ActiveRecord::Schema.define(version: 20150318213740) do
   add_index "games", ["sente_id"], name: "index_games_on_sente_id"
   add_index "games", ["tournament_id"], name: "index_games_on_tournament_id"
 
+  create_table "languages", force: true do |t|
+    t.string  "name"
+    t.integer "flag_code"
+    t.boolean "enabled"
+  end
+
+  add_index "languages", ["enabled"], name: "index_languages_on_enabled"
+
   create_table "players", force: true do |t|
     t.string   "name"
     t.string   "search_key"
@@ -44,6 +62,10 @@ ActiveRecord::Schema.define(version: 20150318213740) do
   end
 
   add_index "players", ["search_key"], name: "index_players_on_search_key"
+
+  create_table "regions", force: true do |t|
+    t.string "name"
+  end
 
   create_table "tournaments", force: true do |t|
     t.string "name"

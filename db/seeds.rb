@@ -427,3 +427,274 @@ Player.seeds([
 {search_key: '小菅剣之助', name: 'Kosuga, Kennosuke', birthday: '1865/2/19'}
 ])
 
+if Country.count == 0
+  lines = <<EOM
+Afghanistan,4,,
+Åland Islands,248,,
+Albania,8,,
+Algeria,12,,
+American Samoa,16,,
+Andorra,20,,
+Angola,24,,
+Anguilla,660,,
+Antarctica,10,,
+Antigua and Barbuda,28,,6
+Argentina,32,1,7
+Armenia,51,,
+Aruba,533,,
+Australia,36,1,8
+Austria,40,1,4
+Azerbaijan,31,,
+Bahamas,44,,6
+Bahrain,48,,
+Bangladesh,50,,
+Barbados,52,,6
+Belarus,112,1,4
+Belgium,56,1,4
+Belize,84,,6
+Benin,204,,
+Bermuda,60,,
+Bhutan,64,,
+Bolivia,68,,7
+Bosnia and Herzegovina,70,,4
+Botswana,72,,
+Bouvet Island,74,,
+Brazil,76,1,7
+British Indian Ocean Territory,86,,
+Brunei Darussalam,96,,
+Bulgaria,100,,
+Burkina Faso,854,,
+Burundi,108,,
+Cambodia,116,,
+Cameroon,120,,
+Canada,124,1,5
+Cape Verde,132,,
+Cayman Islands,136,,
+Central African Republic,140,,
+Chad,148,,
+Chile,152,1,7
+China,156,1,2
+Christmas Island,162,,
+Cocos (Keeling) Islands,166,,
+Colombia,170,,7
+Comoros,174,,
+Congo Republic,178,,
+Congo Democratic Republic,180,,
+Cook Islands,184,,
+Costa Rica,188,,6
+Côte d'Ivoire,384,1,9
+Croatia,191,,
+Cuba,192,,6
+Cyprus,196,,
+Czech Republic,203,1,4
+Denmark,208,1,4
+Djibouti,262,,
+Dominica,212,,6
+Dominican Republic,214,,6
+Ecuador,218,,7
+Egypt,818,,
+El Salvador,222,,6
+Equatorial Guinea,226,,
+Eritrea,232,,
+Estonia,233,,
+Ethiopia,231,,
+Falkland Islands,238,,
+Faroe Islands,234,,
+Fiji,242,,
+Finland,246,1,4
+France,250,1,4
+French Guiana,254,,
+French Polynesia,258,,
+French Southern Territories,260,,
+Gabon,266,,
+Gambia,270,,
+Georgia,268,,
+Germany,276,1,4
+Ghana,288,,
+Gibraltar,292,,
+Greece,300,1,4
+Greenland,304,,
+Grenada,308,,6
+Guadeloupe,312,,
+Guam,316,,
+Guatemala,320,,6
+Guernsey,831,,
+Guinea,324,,
+Guinea-Bissau,624,,
+Guyana,328,,7
+Haiti,332,,6
+Heard Island and McDonald Islands,334,,
+Honduras,340,,6
+Hong Kong,344,,2
+Hungary,348,1,4
+Iceland,352,,
+India,356,,
+Indonesia,360,,2
+Iran,364,,
+Iraq,368,,
+Ireland,372,,
+Isle of Man,833,,
+Israel,376,,
+Italy,380,1,4
+Jamaica,388,,6
+Japan,392,1,1
+Jersey,832,,
+Jordan,400,,
+Kazakhstan,398,,
+Kenya,404,,
+Kiribati,296,,
+North Korea,408,,
+South Korea,410,,2
+Kuwait,414,,
+Kyrgyzstan,417,,
+Laos,418,,
+Latvia,428,,
+Lebanon,422,,
+Lesotho,426,,
+Liberia,430,,
+Libya,434,,
+Liechtenstein,438,,
+Lithuania,440,,4
+Luxembourg,442,,4
+Macao,446,,
+Macedonia (Former Yugoslav Republic of),807,,
+Madagascar,450,,
+Malawi,454,,
+Malaysia,458,1,2
+Maldives,462,,
+Mali,466,,
+Malta,470,,
+Marshall Islands,584,,
+Martinique,474,,
+Mauritania,478,,
+Mauritius,480,,
+Mayotte,175,,
+Mexico,484,1,6
+Micronesia (Federated States of),583,,
+Moldova,498,,
+Monaco,492,1,4
+Mongolia,496,,2
+Montenegro,499,,
+Montserrat,500,,
+Morocco,504,,
+Mozambique,508,,
+Myanmar,104,,
+Namibia,516,,
+Nauru,520,,
+Nepal,524,,
+Netherlands,528,1,4
+Netherlands Antilles,530,,
+New Caledonia,540,,
+New Zealand,554,1,8
+Nicaragua,558,,6
+Niger,562,,
+Nigeria,566,,
+Niue,570,,
+Norfolk Island,574,,
+Northern Mariana Islands,580,,
+Norway,578,1,4
+Oman,512,,
+Pakistan,586,,
+Palau,585,,
+Palestinian Territories,275,,
+Panama,591,,6
+Papua New Guinea,598,,
+Paraguay,600,,7
+Peru,604,,7
+Philippines,608,,
+Pitcairn,612,,
+Poland,616,1,4
+Portugal,620,1,4
+Puerto Rico,630,,
+Qatar,634,,
+Réunion,638,,
+Romania,642,,
+Russia,643,1,4
+Rwanda,646,,
+Saint Barthélemy,652,,
+Saint Helena/Ascension/Tristan da Cunha,654,,
+Saint Kitts and Nevis,659,,6
+Saint Lucia,662,,6
+Saint Martin,663,,
+Saint Pierre and Miquelon,666,,
+Saint Vincent and the Grenadines,670,,6
+Samoa,882,,
+San Marino,674,,
+Sao Tome and Principe,678,,
+Saudi Arabia,682,,
+Senegal,686,,
+Serbia,688,,
+Seychelles,690,,
+Sierra Leone,694,,
+Singapore,702,1,2
+Slovakia,703,1,4
+Slovenia,705,,
+Solomon Islands,90,,
+Somalia,706,,
+South Africa,710,,
+South Georgia and the South Sandwich Islands,239,,
+Spain,724,1,4
+Sri Lanka,144,,
+Sudan,736,,
+Suriname,740,,7
+Svalbard and Jan Mayen,744,,
+Swaziland,748,,
+Sweden,752,1,4
+Switzerland,756,1,4
+Syria,760,,
+Taiwan,158,1,2
+Tajikistan,762,,
+Tanzania,834,,
+Thailand,764,1,2
+Timor-Leste,626,,
+Togo,768,,
+Tokelau,772,,
+Tonga,776,,
+Trinidad and Tobago,780,,6
+Tunisia,788,,
+Turkey,792,,
+Turkmenistan,795,,
+Turks and Caicos Islands,796,,
+Tuvalu,798,,
+Uganda,800,,
+Ukraine,804,1,4
+United Arab Emirates,784,,
+United Kingdom,826,1,4
+United States,840,1,5
+United States Minor Outlying Islands,581,,5
+Uruguay,858,,7
+Uzbekistan,860,,
+Vanuatu,548,,
+Vatican City State,336,,
+Venezuela,862,,7
+Vietnam,704,,
+Virgin Islands (British),92,,
+Virgin Islands (U.S.),850,,
+Wallis and Futuna,876,,
+Western Sahara,732,,
+Yemen,887,,
+Zambia,894,,
+Zimbabwe,716,,
+EOM
+
+  lines.split("\n").each do |line|
+    fields = line.split(",")
+    Country.create(name: fields[0], code: fields[1], enabled: fields[2] == "1", region_id: fields[3] == "" ? nil : fields[3].to_i)
+  end
+end
+
+if Language.count == 0
+  lines = %w(
+    English,826
+    Japanese,392
+    Chinese(simplified),156
+    Chinese(traditional),158
+    Spanish,724
+    French,250
+    German,276
+  )
+  lines.each do |line|
+    fields = line.split(",")
+    Language.create(name: fields[0], flag_code: fields[1], enabled: true)
+  end
+end
