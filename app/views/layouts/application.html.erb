@@ -2,7 +2,7 @@
 <html>
 <head>
   <title><%= SITE_NAME %><%= " / " + yield(:title) if content_for?(:title) %></title>
-  <meta name="description" content="">
+  <meta name="description" content="The central hub of information for overseas shogi fans where you can find the right routes to all sorts of up-to-date information in the shogi world.">
   <meta name="keywords" content="">
   <% if content_for?(:canonical) %>
     <link rel="canonical" href="<%= yield(:canonical) %>">
@@ -10,8 +10,8 @@
   <% end %>
   <meta property="og:title" content="<%= SITE_NAME %><%= " / " + yield(:title) if content_for?(:title) %>">
   <meta property="og:type" content="website">
-  <meta property="og:description" content="">
-  <meta property="og:image" content="<%= image_url('') %>">
+  <meta property="og:description" content="The central hub of information for overseas shogi fans where you can find the right routes to all sorts of up-to-date information in the shogi world.">
+  <meta property="og:image" content="<%= image_url('logo.jpg') %>">
   <%= favicon_link_tag %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -65,7 +65,9 @@
 
 <div id="user_box">
 <% if user_signed_in? %>
-  <%= current_user.email %><br><%= link_to "Logout", destroy_user_session_path, method: :delete %>
+  <%= current_user.email %><br>
+  <% if current_user.is_admin? %>(Admin)<br><% end %>
+  <%= link_to "Logout", destroy_user_session_path, method: :delete %>
 <% else %>
   <%= link_to "Login to edit", new_user_session_path, :class => 'navbar-link' %>
 <% end %>

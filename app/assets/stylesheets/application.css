@@ -19,7 +19,7 @@ body#root {
 	width: 100%;
 	height: 100%;
 	font-size: 14px;
-	font-family: "Meiryo","Meiryo UI","ヒラギノ角ゴ Pro","Hiragino Kaku Gothic Pro","Takao Pゴシック","TakaoPGothic","sans";
+  font-family: helvetica, arial, sans-serif;
   background: #f8f7f3;
 }
 
@@ -124,12 +124,14 @@ div#user_box {
 }
 
 h1 {
+font-family: "Meiryo", "Meiryo UI", sans-serif;
 color: #620;
 margin-bottom: 10px;
 text-shadow: 1px 1px 2px rgba(0,0,0,0.25);
 }
 
 h2 {
+font-family: "Meiryo", "Meiryo UI", sans-serif;
 margin-top: 15px;
 margin-bottom: 10px;
 border-left: 20px solid #a85;
