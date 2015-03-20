@@ -1,0 +1,42 @@
+p#notice = notice
+
+p
+  strong Isbn:
+  = @book.isbn
+p
+  strong Language:
+  = @book.language_id
+p
+  strong Title:
+  = @book.title
+p
+  strong Author:
+  = @book.author
+p
+  strong Publisher:
+  = @book.publisher
+p
+  strong Issue date:
+  = @book.issue_date
+p
+  strong Translator:
+  = @book.translator
+p
+  strong Url:
+  = @book.url
+p
+  strong Image url:
+  = @book.image_url
+p
+  strong Category:
+  = @book.category
+p
+  strong Description:
+  = @book.description
+p
+  strong Stars:
+  = @book.stars
+
+= link_to 'Edit', edit_book_path(@book)
+'|
+= link_to 'Back', books_path

@@ -11,7 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319062001) do
+ActiveRecord::Schema.define(version: 20150319230033) do
+
+  create_table "books", force: true do |t|
+    t.string  "isbn"
+    t.integer "language_id"
+    t.string  "title"
+    t.string  "author"
+    t.string  "publisher"
+    t.date    "issue_date"
+    t.string  "translator"
+    t.string  "url"
+    t.string  "image_url"
+    t.string  "category"
+    t.text    "description"
+    t.integer "stars",       default: 0
+  end
+
+  add_index "books", ["issue_date"], name: "index_books_on_issue_date"
+  add_index "books", ["language_id"], name: "index_books_on_language_id"
 
   create_table "countries", force: true do |t|
     t.string  "name"
