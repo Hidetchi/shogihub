@@ -33,7 +33,7 @@
       td = f.text_field :category
     tr
       th = f.label :description
-      td = f.text_area :description
+      td = f.text_area :description, :size => "50x7", :maxlength => 255
     tr
       th = f.label :url
       td = f.text_field :url
