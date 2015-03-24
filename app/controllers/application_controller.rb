@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include Userstamp
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -52,5 +53,9 @@ class ApplicationController < ActionController::Base
     @header = "Server Error"
     @caption = "An internal server error occured. We apologize for any inconveniences."
     render template: 'pages/error', status: 500, layout: 'application', content_type: 'text/html'
+  end
+
+  def admin_only
+    raise UserException::AccessDenied unless (user_signed_in? && current_user.is_admin?)
   end
 end

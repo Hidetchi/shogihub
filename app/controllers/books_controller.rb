@@ -47,8 +47,4 @@ class BooksController < ApplicationController
     def book_params
       params.require(:book).permit(:isbn, :language_id, :title, :author, :publisher, :issue_date, :translator, :url, :image_url, :category, :description, :stars)
     end
-
-    def admin_only
-      raise UserException::AccessDenied unless (user_signed_in? && current_user.is_admin?)
-    end
 end

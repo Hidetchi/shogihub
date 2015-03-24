@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :websites
+
   resources :books
 
   devise_for :users
@@ -10,6 +12,7 @@ Rails.application.routes.draw do
   resources :players, :only => [:show, :index] do
   end
 
+  get 'pages/help'
   root :to => 'pages#updates'
   
   if Rails.env.development?

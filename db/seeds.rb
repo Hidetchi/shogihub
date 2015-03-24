@@ -698,3 +698,13 @@ if Language.count == 0
     Language.create(name: fields[0], flag_code: fields[1], enabled: true)
   end
 end
+
+if Region.count == 0
+  Region.create(name:"Japan")
+  Region.create(name:"East Asia")
+  Region.create(name:"West Asia")
+  Region.create(name:"Europe")
+  Region.create(name:"North America")
+  Region.create(name:"Latin America")
+  Region.create(name:"Africa")
+end

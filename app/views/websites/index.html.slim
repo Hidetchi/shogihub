@@ -1,0 +1,48 @@
+= content_for :title do
+  |World Shogi Portal Sites
+
+h1 World Shogi Portal Sites 
+
+- if user_signed_in? && current_user.is_admin?
+  div.admin_menu
+    = link_to 'New Website', new_website_path
+
+- region_id = 0
+- @websites.each do |website|
+  - if website.country.region_id != region_id
+    - unless website.country.region_id == 7 && region_id == 6
+      - region_id = website.country.region_id
+      - if region_id == 6 || region_id == 7
+        h2 Latin America
+      - else
+        h2 = Region.find(region_id).name
+
+  table.website_list
+    tr
+      td rowspan=7 style='width:120px;;padding:0;'
+        = flag_80_tag(website.country.code)
+      td rowspan=2 style='text-align:left;width:500px;background-color:#f5f5f5;'
+        span style='font-size:20px;font-weight:bold;line-height:1.6em;'
+          = link_to(website.name, website.url, target:'_blank')
+      = website_contents_td_tag(website.contents_introduction) + "Introduction"
+    tr
+      = website_contents_td_tag(website.contents_news_internal) + "News, internal"
+    tr
+      td rowspan=4 style='text-align:left;vertical-align:top;white-space:normal;' = website.description
+      = website_contents_td_tag(website.contents_news_external) + "News, external"
+    tr
+      = website_contents_td_tag(website.contents_forum) + "Forum"
+    tr
+      = website_contents_td_tag(website.contents_lesson) + "Lessons"
+    tr
+      = website_contents_td_tag(website.contents_database) + "Database"
+    tr
+      td style='text-align:left;'
+        span style='display:block;float:right;width:100px;text-align:right;'
+          - if user_signed_in?
+            = link_to 'Edit', edit_website_path(website)
+            - if current_user.is_admin?
+              = " | "
+              = link_to 'Destroy', website, data: {:confirm => 'Are you sure?'}, :method => :delete
+        |Organization scale: #{stars_tag(website.scale)} / Update frequency: #{stars_tag(website.frequency)}
+      = website_contents_td_tag(website.contents_shop) + "Shop"

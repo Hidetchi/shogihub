@@ -1,0 +1,67 @@
+= form_for @website do |f|
+  - if @website.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@website.errors.count, "error")} prohibited this website from being saved:"
+      ul
+        - @website.errors.full_messages.each do |message|
+          li = message
+
+  table.form 
+    tr
+      th = f.label :name
+      td = f.text_field :name
+    tr
+      th = f.label :url
+      td = f.text_field :url
+    tr
+      th = f.label :owner
+      td = f.text_field :owner
+    tr
+      th = f.label :description
+      td = f.text_area :description, :size => "50x7", :maxlength => 255
+    tr
+      th = f.label :country_id
+      td = f.collection_select :country_id, Country.where(enabled:true), :id, :name
+    tr
+      th = f.label :language_id
+      td = f.collection_select :language_id, Language.all, :id, :name
+    tr
+      th Organization<br>scale
+      td
+        = f.number_field :scale
+        | (0 to 3, see Help for definition)
+    tr
+      th Update<br>frequency
+      td
+        = f.number_field :frequency
+        | (0 to 3, see Help for definition)
+    tr
+      th rowspan=7 Contents
+      td
+        = f.check_box :contents_introduction
+        |Introduction to shogi
+    tr
+      td
+        = f.check_box :contents_news_internal
+        |News, internal
+    tr
+      td
+        = f.check_box :contents_news_external
+        |News, external
+    tr
+      td
+        = f.check_box :contents_forum
+        |Forum
+    tr
+      td
+        = f.check_box :contents_lesson
+        |Lessons of strategies and tactics
+    tr
+      td
+        = f.check_box :contents_database
+        |Information database
+    tr
+      td
+        = f.check_box :contents_shop
+        |Online shop
+  .actions = f.submit

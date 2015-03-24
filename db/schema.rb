@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319230033) do
+ActiveRecord::Schema.define(version: 20150321192813) do
 
   create_table "books", force: true do |t|
     t.string  "isbn"
@@ -115,5 +115,30 @@ ActiveRecord::Schema.define(version: 20150319230033) do
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "websites", force: true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "owner"
+    t.string   "description"
+    t.integer  "country_id"
+    t.integer  "language_id"
+    t.integer  "scale",                  default: 0
+    t.integer  "frequency",              default: 0
+    t.boolean  "contents_introduction"
+    t.boolean  "contents_news_internal"
+    t.boolean  "contents_news_external"
+    t.boolean  "contents_forum"
+    t.boolean  "contents_lesson"
+    t.boolean  "contents_database"
+    t.boolean  "contents_shop"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+  end
+
+  add_index "websites", ["country_id"], name: "index_websites_on_country_id"
+  add_index "websites", ["scale"], name: "index_websites_on_scale"
 
 end

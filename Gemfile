@@ -51,6 +51,7 @@ gem 'unicorn'
 gem 'spinjs-rails'
 gem 'kaminari'
 gem 'twitter'
+gem 'userstamp', :git => 'https://github.com/stricte/userstamp.git', :branch => 'rails4'
 group :development do
   gem 'bullet'
   gem 'rack-mini-profiler'

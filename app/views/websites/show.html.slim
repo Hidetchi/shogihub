@@ -1,0 +1,57 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @website.name
+p
+  strong Url:
+  = @website.url
+p
+  strong Owner:
+  = @website.owner
+p
+  strong Description:
+  = @website.description
+p
+  strong Country:
+  = @website.country_id
+p
+  strong Language:
+  = @website.language_id
+p
+  strong Scale:
+  = @website.scale
+p
+  strong Frequency:
+  = @website.frequency
+p
+  strong Contents introduction:
+  = @website.contents_introduction
+p
+  strong Contents news internal:
+  = @website.contents_news_internal
+p
+  strong Contents news external:
+  = @website.contents_news_external
+p
+  strong Contents forum:
+  = @website.contents_forum
+p
+  strong Contents lesson:
+  = @website.contents_lesson
+p
+  strong Contents database:
+  = @website.contents_database
+p
+  strong Contents shop:
+  = @website.contents_shop
+p
+  strong Create by:
+  = User.find(@website.creator_id).email
+p
+  strong Updated by:
+  = @website.updater.email
+
+= link_to 'Edit', edit_website_path(@website)
+'|
+= link_to 'Back', websites_path

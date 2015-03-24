@@ -132,18 +132,19 @@ text-shadow: 1px 1px 2px rgba(0,0,0,0.25);
 
 h2 {
 font-family: "Meiryo", "Meiryo UI", sans-serif;
-margin-top: 15px;
-margin-bottom: 10px;
+margin-top: 25px;
+margin-bottom: 20px;
 border-left: 20px solid #a85;
 background: #ffeed3;
-font-size: 18px;
-padding: 3px 5px;
+font-size: 20px;
+padding: 3px 15px;
 #border-bottom-right-radius: 8px;
 box-shadow: 2px 2px 4px rgba(0,0,0,0.25);
 #text-shadow: 1px 1px 2px rgba(0,0,0,0.25);
 }
 
 h3 {
+margin-top: 25px;
 margin-left: 10px;
 padding: 3px 7px;
 border-bottom: 1px solid #888;
@@ -152,7 +153,7 @@ font-size: 15px;
 }
 
 h4 {
-margin: 5px 0 12px 22px;
+margin: 15px 0 12px 22px;
 padding: 2px 4px;
 font-size: 14px;
 border-left: 6px solid #b00;
@@ -290,4 +291,27 @@ dt {
 div.admin_menu {
   width: 100%;
   text-align: center;
+}
+
+img.star {
+	vertical-align: -2px;
+}
+
+div.level2 {
+	padding-left: 25px;
+	padding-right: 10px;
+}
+div.level3 {
+	padding-left: 35px;
+	padding-right: 10px;
+}
+div.level4 {
+	padding-left: 45px;
+	padding-right: 10px;
+  padding-top: 0;
+}
+div.level5 {
+	padding-left: 55px;
+	padding-right: 10px;
+  padding-top: 0;
 }

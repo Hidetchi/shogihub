@@ -1,0 +1,94 @@
+= content_for :title do
+  |Help
+
+h2 Database Management Policy
+
+|This policy is tentative, and is subject to changes based on open discussion.
+
+h3 Access Right Policy
+div.level3
+  table
+    tr
+      td
+      td style='width:115px;' View
+      td style='width:115px;' Create
+      td style='width:115px;' Edit
+      td style='width:115px;' Delete
+    tr
+      td JSA Professional
+      td.access_all All
+      td.access_admin Admin only
+      td.access_admin Admin only
+      td.access_admin Admin only
+    tr
+      td World Events
+      td.access_all All
+      td.access_member Member only
+      td.access_member Creator/Admin only
+      td.access_member Creator/Admin only
+    tr
+      td World Shogi Portals
+      td.access_all All
+      td.access_admin Admin only
+      td.access_member Member only
+      td.access_admin Admin only
+    tr
+      td World Shogi Clubs
+      td.access_all All
+      td.access_member Member only
+      td.access_member Member only
+      td.access_member Member only
+    tr
+      td Shogi Books
+      td.access_all All
+      td.access_admin Admin only
+      td.access_admin Admin only
+      td.access_admin Admin only
+
+h3 World Shogi Portals
+h4 Organization scale
+div.level4
+  table
+    tr
+      td = stars_tag(3)
+      td style='text-align:left;' Portal website by an international level organization
+    tr
+      td = stars_tag(2)
+      td style='text-align:left;' Portal website by the national organization, or the most reliable portal of the country
+    tr
+      td = stars_tag(1)
+      td style='text-align:left;' Official website by a local club/organization
+    tr
+      td no star
+      td style='text-align:left;' Personal website having outstanding influence on the international shogi community<br>or an outstanding amount of valuable and up-to-date information.
+
+h4 Update frequency
+div.level4
+  table
+    tr
+      td = stars_tag(3)
+      td style='text-align:left;' More than once per week
+    tr
+      td = stars_tag(2)
+      td style='text-align:left;' More than once per month
+    tr
+      td = stars_tag(1)
+      td style='text-align:left;' Only several times per year
+    tr
+      td no star
+      td style='text-align:left;' Rarely updated
+
+h3 Shogi Books
+h4 What we cover
+div.level4
+  ul
+    li Translated version of a Japanese shogi book
+    li Book written by amateur player, that purly deals with shogi (introduction to shogi, strategy, exercise)
+
+h4 What we do not cover
+div.level4
+  ul
+    li Books that are not available on public sale (internet or book store)
+    li Magazines and booklets
+    li Manga/novels dealing with shogi
+    li Books that partly cover shogi
