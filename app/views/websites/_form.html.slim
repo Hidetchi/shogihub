@@ -1,67 +1,109 @@
-= form_for @website do |f|
-  - if @website.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@website.errors.count, "error")} prohibited this website from being saved:"
-      ul
-        - @website.errors.full_messages.each do |message|
-          li = message
+div.form
+  = form_for @website do |f|
+    - if @website.errors.any?
+      #error_explanation
+        h2 = "#{pluralize(@website.errors.count, "error")} prohibited this website from being saved:"
+        ul
+          - @website.errors.full_messages.each do |message|
+            li = message
 
-  table.form 
+    table.form 
+      tr
+        th = f.label :name
+        td = f.text_field :name
+      tr
+        th = f.label :url
+        td = f.text_field :url
+      tr
+        th = f.label :owner
+        td = f.text_field :owner
+      tr
+        th = f.label :description
+        td = f.text_area :description, :size => "50x7", :maxlength => 255
+      tr
+        th = f.label :country_id
+        td = f.collection_select :country_id, Country.where(enabled:true), :id, :name
+      tr
+        th = f.label :language_id
+        td = f.collection_select :language_id, Language.all, :id, :name
+      tr
+        th Organization<br>scale
+        td
+          = f.number_field :scale
+          | (0 to 3, see Help for definition)
+      tr
+        th Update<br>frequency
+        td
+          = f.number_field :frequency
+          | (0 to 3, see Help for definition)
+      tr
+        th rowspan=7 Contents
+        td
+          = f.check_box :contents_introduction
+          |Introduction to shogi
+      tr
+        td
+          = f.check_box :contents_news_internal
+          |News, internal
+      tr
+        td
+          = f.check_box :contents_news_external
+          |News, external
+      tr
+        td
+          = f.check_box :contents_forum
+          |Forum
+      tr
+        td
+          = f.check_box :contents_lesson
+          |Lessons of strategies and tactics
+      tr
+        td
+          = f.check_box :contents_database
+          |Information database
+      tr
+        td
+          = f.check_box :contents_shop
+          |Online shop
+    .actions = f.submit
+
+h3 Help
+h4 Owner, Language
+div.level4 Please ignore these fields; they are not used at the moment.
+h4 Organization scale
+div.level4
+  table
     tr
-      th = f.label :name
-      td = f.text_field :name
+      td = stars_tag(3)
+      td style='text-align:left;' Portal website by an international level organization
     tr
-      th = f.label :url
-      td = f.text_field :url
+      td = stars_tag(2)
+      td style='text-align:left;' Portal website by the national organization, or the most reliable portal of the country
     tr
-      th = f.label :owner
-      td = f.text_field :owner
+      td = stars_tag(1)
+      td style='text-align:left;' Official website by a local club/organization
     tr
-      th = f.label :description
-      td = f.text_area :description, :size => "50x7", :maxlength => 255
+      td no star
+      td style='text-align:left;' Personal website having outstanding influence on the international shogi community<br>or an outstanding amount of valuable and up-to-date information.
+
+h4 Update frequency
+div.level4
+  table
     tr
-      th = f.label :country_id
-      td = f.collection_select :country_id, Country.where(enabled:true), :id, :name
+      td = stars_tag(3)
+      td style='text-align:left;' More than once per week
     tr
-      th = f.label :language_id
-      td = f.collection_select :language_id, Language.all, :id, :name
+      td = stars_tag(2)
+      td style='text-align:left;' More than once per month
     tr
-      th Organization<br>scale
-      td
-        = f.number_field :scale
-        | (0 to 3, see Help for definition)
+      td = stars_tag(1)
+      td style='text-align:left;' Only several times per year
     tr
-      th Update<br>frequency
-      td
-        = f.number_field :frequency
-        | (0 to 3, see Help for definition)
-    tr
-      th rowspan=7 Contents
-      td
-        = f.check_box :contents_introduction
-        |Introduction to shogi
-    tr
-      td
-        = f.check_box :contents_news_internal
-        |News, internal
-    tr
-      td
-        = f.check_box :contents_news_external
-        |News, external
-    tr
-      td
-        = f.check_box :contents_forum
-        |Forum
-    tr
-      td
-        = f.check_box :contents_lesson
-        |Lessons of strategies and tactics
-    tr
-      td
-        = f.check_box :contents_database
-        |Information database
-    tr
-      td
-        = f.check_box :contents_shop
-        |Online shop
-  .actions = f.submit
+      td no star
+      td style='text-align:left;' Rarely updated
+
+h4 Contents -> News, internal/external
+div.level4 If you are a national organization, shogi topics related to your country are all 'internal'. Providing your members with shogi news from Japanese professional world is 'external', for example. (If you are a local club, club topics are 'internal', providing your members with national topics are already 'external'.)
+
+h4 Contents -> Information Database
+div.level4 If some effort is being made to summarize/list useful information in well-organized structure, you can mark this item. The best example is player and game result database of your organization, while other examples could be: collection of shogi clubs in your country, summarizing all shogi proverbs, etc., any kind of such useful information being put in order.
