@@ -1,0 +1,16 @@
+// Place all the styles related to the events controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+table.event_list {
+  margin: 15px 0 5px 50px;
+  width:770px;
+}
+
+table.event_detail {
+  margin: 10px 0 10px 40px;
+  width:750px;
+}
+table.event_detail tr {
+  height: 24px;
+}

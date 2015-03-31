@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get 'events/past' => 'events#index', :past => true
+  resources :events
+
   resources :websites
 
   resources :books

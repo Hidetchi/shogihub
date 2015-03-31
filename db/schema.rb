@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321192813) do
+ActiveRecord::Schema.define(version: 20150329164919) do
 
   create_table "books", force: true do |t|
     t.string  "isbn"
@@ -40,6 +40,40 @@ ActiveRecord::Schema.define(version: 20150321192813) do
 
   add_index "countries", ["enabled"], name: "index_countries_on_enabled"
   add_index "countries", ["region_id"], name: "index_countries_on_region_id"
+
+  create_table "event_players", force: true do |t|
+    t.integer "event_id"
+    t.integer "player_id"
+  end
+
+  add_index "event_players", ["event_id"], name: "index_event_players_on_event_id"
+  add_index "event_players", ["player_id"], name: "index_event_players_on_player_id"
+
+  create_table "events", force: true do |t|
+    t.string   "name"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "country_id"
+    t.string   "venue"
+    t.string   "address"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "organizer"
+    t.string   "url"
+    t.string   "report_url"
+    t.string   "contact"
+    t.text     "description"
+    t.integer  "category"
+    t.boolean  "canceled"
+    t.integer  "scale"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+  end
+
+  add_index "events", ["country_id"], name: "index_events_on_country_id"
+  add_index "events", ["start_time"], name: "index_events_on_start_time"
 
   create_table "games", force: true do |t|
     t.integer  "sente_id"

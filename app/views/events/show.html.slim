@@ -1,0 +1,61 @@
+= content_for :title do
+  |Event: 
+  = @event.name
+
+h2 Event Detail
+
+p#notice = notice
+
+table.event_detail
+  tr
+    td colspan=2 rowspan=2 style='text-align:left;width:470px;background-color:#f5f5f5;font-size:20px;font-weight:bold;padding-left:7px;' = @event.name
+    td style='width:200px;'
+      = @event.category == 0 ? "Tournament " : "Workshop "
+      = stars_tag(@event.scale, 2)
+  tr
+    = event_status_td_tag(@event)
+    = @event.status
+  tr
+    th Start time
+    td style='text-align:left;' = @event.start_time.strftime("%Y-%m-%d %H:%M")
+    td rowspan=6 MAP
+  tr
+    th End time
+    td style='text-align:left;' = @event.start_time.strftime("%Y-%m-%d %H:%M")
+  tr
+    th Place
+    td style='text-align:left;' = sprintf("%s (%s)", @event.venue, @event.address)
+  tr
+    th Guests
+    td style='text-align:left;'
+      - @event.players.each do |p|
+        = player_name_tag(p)
+        br
+  tr
+    th Website
+    td style='text-align:left;' = link_to @event.url, @event.url, :class=>'external'
+  tr
+    th Contact
+    td style='text-align:left;' = sprintf("%s (%s)", @event.organizer, @event.contact)
+  tr
+    th colspan=3 Description
+  tr
+    td colspan=3 style='text-align:left;' = interpret_markup(@event.description).html_safe
+
+div.admin_menu
+  - if Time.new > @event.end_time + 24*60*60
+    = link_to 'Back', '/events/past'
+  - else
+    = link_to 'Back', events_path
+  - if user_signed_in?
+    = " | "
+    = link_to 'Edit', edit_event_path(@event)
+    - if current_user.is_admin?
+      = " | "
+      = link_to 'Destroy', @event, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+- if user_signed_in?
+  p style='text-align:center;'
+    |Created by: #{@event.creator.email}
+    br
+    |Updated by: #{@event.updater.email}

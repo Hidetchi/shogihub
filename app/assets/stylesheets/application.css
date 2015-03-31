@@ -161,7 +161,7 @@ text-decoration: underline;
 }
 
 h5 {
-margin: 0 0 5px 22px;
+margin: 10px 0 5px 22px;
 padding: 3px 5px;
 font-size: 14px;
 }
@@ -297,6 +297,10 @@ img.star {
 	vertical-align: -2px;
 }
 
+div.p {
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
 div.level2 {
 	padding-left: 25px;
 	padding-right: 10px;

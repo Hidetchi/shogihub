@@ -1,0 +1,4 @@
+= f.hidden_field :id
+= f.collection_select :player_id, Player.where('category = 1 or category =2').order(:name), :id, :name
+= f.link_to_remove 'Remove guest'
+

@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require jquery_nested_form
 //= require spin
 //= require jquery.spin
 //= require_tree .

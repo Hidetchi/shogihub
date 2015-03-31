@@ -1,0 +1,47 @@
+= content_for :title do
+  |World Shogi Events
+
+h1 World Shogi Events
+
+ul
+  li = @past ? link_to('Upcoming Events', '/events') : "Upcoming Events"
+  li = @past ? "Past Events" : link_to('Past Events', '/events/past')
+
+- if user_signed_in?
+  div.admin_menu
+    = link_to 'Create New Event', new_event_path
+
+- month = nil
+- @events.each do |e|
+  - if e.start_time.strftime("%Y-%m") != month
+    - month = e.start_time.strftime("%Y-%m")
+    h3 = e.start_time.strftime("%B, %Y")
+
+  table.event_list
+    tr
+      td rowspan=5 style='width:120px;;padding:0;'
+        = flag_3d_tag(e.country.code)
+      td rowspan=2 style='text-align:left;width:470px;background-color:#f5f5f5;font-size:20px;font-weight:bold;padding-left:7px;' = link_to e.name, e
+      td
+        = e.category == 0 ? "Tournament " : "Workshop "
+        = stars_tag(e.scale, 2)
+    tr
+      = event_status_td_tag(e)
+      = e.status
+    tr
+      td style='text-align:left;' = e.time_slot
+      td rowspan=3
+        |Pro guests:
+        - if e.players.count > 0
+          - e.players.each do |p|
+            br
+            = player_name_tag(p)
+        - else
+          br
+          |None
+    tr
+      td style='text-align:left;' = sprintf("%s (%s)", e.venue, e.address)
+    tr
+      td style='text-align:left;'
+        i = e.description_preview
+  

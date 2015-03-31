@@ -64,3 +64,4 @@ group :test do
   gem "factory_girl_rails"
 end
 gem 'whenever', :require => false
+gem 'nested_form'
