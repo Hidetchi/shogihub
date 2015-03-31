@@ -40,7 +40,7 @@ table.event_detail
   tr
     th colspan=3 Description
   tr
-    td colspan=3 style='text-align:left;' = interpret_markup(@event.description).html_safe
+    td colspan=3 style='text-align:left;white-space:normal;' = interpret_markup(@event.description).html_safe
 
 div.admin_menu
   - if Time.new > @event.end_time + 24*60*60
@@ -59,3 +59,8 @@ div.admin_menu
     |Created by: #{@event.creator.email}
     br
     |Updated by: #{@event.updater.email}
+
+javascript:
+  $(function(){
+    setPreview();
+  });
