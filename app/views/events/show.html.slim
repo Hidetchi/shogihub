@@ -21,7 +21,7 @@ table.event_detail
     td rowspan=6 MAP
   tr
     th End time
-    td style='text-align:left;' = @event.start_time.strftime("%Y-%m-%d %H:%M")
+    td style='text-align:left;' = @event.end_time.strftime("%Y-%m-%d %H:%M")
   tr
     th Place
     td style='text-align:left;' = sprintf("%s (%s)", @event.venue, @event.address)
