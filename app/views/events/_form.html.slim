@@ -37,7 +37,14 @@ div.form
         td = f.text_field :venue
       tr
         th = f.label :address
-        td = f.text_field :address
+        td = f.text_field :address, size:"40"
+      tr
+        th Latitude<br>Longitude
+        td
+          = f.number_field :latitude, size:"10"
+          = " "
+          = f.number_field :longitude, size:"10"
+          | (Leave it blank to automatically set from the address)
       tr
         th = f.label :description
         td = f.text_area :description, :size=>"60x10"

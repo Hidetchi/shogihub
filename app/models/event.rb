@@ -3,6 +3,8 @@ class Event < ActiveRecord::Base
   has_many :players, through: :event_players
   accepts_nested_attributes_for :event_players, allow_destroy: true
   belongs_to :country
+  geocoded_by :address
+  after_validation :geocode_if_blank
 
   def description_preview
     if self.description.length > 70
@@ -43,4 +45,11 @@ class Event < ActiveRecord::Base
       end
     end
   end
+
+  private
+
+    def geocode_if_blank
+      geocode if self.address != nil && self.address != "" && (self.longitude == nil || self.latitude == nil)
+    end
+
 end

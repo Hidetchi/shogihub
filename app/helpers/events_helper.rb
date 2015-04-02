@@ -6,7 +6,7 @@ module EventsHelper
     elsif event.report_url != nil && event.report_url != ""
       raw("<td style='background-color: #cef'>")
     elsif t > event.end_time + 24*60*60
-      "Ended"
+      raw("<td>")
     elsif
       diff = event.start_time - t
       if (diff > 30*24*60*60)

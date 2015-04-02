@@ -1,3 +1,6 @@
+script src="//maps.google.com/maps/api/js?v=3.13&amp;sensor=false&amp;libraries=geometry" type="text/javascript"
+script src='//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js' type='text/javascript'
+
 = content_for :title do
   |Event: 
   = @event.name
@@ -18,7 +21,8 @@ table.event_detail
   tr
     th Start time
     td style='text-align:left;' = @event.start_time.strftime("%Y-%m-%d %H:%M")
-    td rowspan=6 MAP
+    td rowspan=6 style='text-align:center;vertical-align:middle;padding:0;height:150px;'
+      div id="map" style='width:100%;height:100%;'
   tr
     th End time
     td style='text-align:left;' = @event.end_time.strftime("%Y-%m-%d %H:%M")
@@ -63,4 +67,16 @@ div.admin_menu
 javascript:
   $(function(){
     setPreview();
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {streetViewControl:false,mapTypeControl:false}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers([
+        {
+          "lat": #{@event.latitude},
+          "lng": #{@event.longitude}
+        }
+      ]);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+      handler.getMap().setZoom(9);
+    });
   });

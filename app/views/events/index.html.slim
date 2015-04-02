@@ -30,15 +30,14 @@ ul
       = e.status
     tr
       td style='text-align:left;' = e.time_slot
-      td rowspan=3
-        |Pro guests:
-        - if e.players.count > 0
+      - if e.players.count > 0
+        td rowspan=3 style='background-color:#ffd;'
+          |Pro guests:
           - e.players.each do |p|
             br
             = player_name_tag(p)
-        - else
-          br
-          |None
+      - else
+        td rowspan=3 No pro guests
     tr
       td style='text-align:left;' = sprintf("%s (%s)", e.venue, e.address)
     tr
