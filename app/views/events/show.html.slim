@@ -65,18 +65,19 @@ div.admin_menu
     |Updated by: #{@event.updater.email}
 
 javascript:
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {streetViewControl:false,mapTypeControl:false}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers([
+      {
+        "lat": #{@event.latitude},
+        "lng": #{@event.longitude}
+      }
+    ]);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+    handler.getMap().setZoom(9);
+  });
   $(function(){
     setPreview();
-    handler = Gmaps.build('Google');
-    handler.buildMap({ provider: {streetViewControl:false,mapTypeControl:false}, internal: {id: 'map'}}, function(){
-      markers = handler.addMarkers([
-        {
-          "lat": #{@event.latitude},
-          "lng": #{@event.longitude}
-        }
-      ]);
-      handler.bounds.extendWith(markers);
-      handler.fitMapToBounds();
-      handler.getMap().setZoom(9);
-    });
   });
+
