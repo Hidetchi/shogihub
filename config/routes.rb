@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :clubs
+
   get 'events/past' => 'events#index', :past => true
   resources :events
 

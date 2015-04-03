@@ -1,0 +1,42 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @club.name
+p
+  strong Country:
+  = @club.country_id
+p
+  strong Address:
+  = @club.address
+p
+  strong Latitude:
+  = @club.latitude
+p
+  strong Longitude:
+  = @club.longitude
+p
+  strong Scale:
+  = @club.scale
+p
+  strong Frequency:
+  = @club.frequency
+p
+  strong Website:
+  = @club.url
+p
+  strong Contact:
+  = @club.contact
+p
+  strong Email:
+  = @club.email
+p
+  strong Created by:
+  = @club.creator.email
+p
+  strong Updated by:
+  = @club.updater.email
+
+= link_to 'Edit', edit_club_path(@club)
+'|
+= link_to 'Back', clubs_path

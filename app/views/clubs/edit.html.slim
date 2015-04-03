@@ -1,0 +1,11 @@
+h1 Editing club
+
+== render 'form'
+
+p
+  - if @club.creator
+    |Created by: #{@club.creator.email}
+    br
+  - if @club.updater
+    |Updated by: #{@club.updater.email}
+  

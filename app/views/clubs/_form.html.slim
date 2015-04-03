@@ -1,0 +1,73 @@
+div.form
+  = form_for @club do |f|
+    - if @club.errors.any?
+      #error_explanation
+        h2 = "#{pluralize(@club.errors.count, "error")} prohibited this club from being saved:"
+        ul
+          - @club.errors.full_messages.each do |message|
+            li = message
+
+    table.form 
+      tr
+        th = f.label :name
+        td = f.text_field :name, :size=>40
+      tr
+        th = f.label :country_id
+        td = f.collection_select :country_id, Country.where(enabled:true), :id, :name
+      tr
+        th = f.label :address
+        td = f.text_field :address, :size=>40
+      tr
+        th Latitude /<br>Longitude
+        td
+          = f.number_field :latitude, :step=>'any', :size=>10
+          = " "
+          = f.number_field :longitude, :step=>'any', :size=>10
+          | (Leave it blank to automatically set from the address)
+      tr
+        th Members
+        td
+          = f.radio_button :scale, 1
+          |less than 5
+          br
+          = f.radio_button :scale, 2
+          |less than 10
+          br
+          = f.radio_button :scale, 3
+          |less than 15
+          br
+          = f.radio_button :scale, 4
+          |less than 20
+          br
+          = f.radio_button :scale, 5
+          |20 or more
+      tr
+        th Meeting<br>frequency
+        td
+          = f.radio_button :frequency, 5
+          |Daily
+          br
+          = f.radio_button :frequency, 4
+          |Weekly
+          br
+          = f.radio_button :frequency, 3
+          |Biweekly
+          br
+          = f.radio_button :frequency, 2
+          |Monthly
+          br
+          = f.radio_button :frequency, 1
+          |Less
+          br
+          = f.radio_button :frequency, 0
+          |Discontinued
+      tr
+        th Website
+        td = f.text_field :url
+      tr
+        th Contact<br>person
+        td = f.text_field :contact
+      tr
+        th Email
+        td = f.text_field :email
+    .actions = f.submit
