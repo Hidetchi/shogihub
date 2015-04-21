@@ -8,9 +8,9 @@ table
   - games.each do |g|
     tr
       td #{g.game_date}
-      td style="border-right:0;" #{g.to_result_mark(true)}
+      td style="border-right:0;font-family:'MS UI Gothic';" #{g.to_result_mark(true)}
       td #{player_name_tag(g.sente)}
       td style="border-right:0;" #{player_name_tag(g.gote)}
-      td #{g.to_result_mark(false)}
+      td style="font-family:'MS UI Gothic';" #{g.to_result_mark(false)}
       td #{g.tournament.name}
       td #{g.description}

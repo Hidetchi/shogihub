@@ -37,7 +37,7 @@ table style="margin-left:50px;margin-top:10px;"
     tr
       td #{g.game_date}
       td #{g.sente_id == @player.id ? "Sente" : "Gote"}
-      td #{g.to_result_mark(g.sente_id == @player.id)}
+      td style="font-family:'MS UI Gothic';" #{g.to_result_mark(g.sente_id == @player.id)}
       td #{player_name_tag(g.sente_id == @player.id ? g.gote : g.sente)}
       td #{g.tournament.name}
       td #{g.description}
