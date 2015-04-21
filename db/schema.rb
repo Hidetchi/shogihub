@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403132300) do
+ActiveRecord::Schema.define(version: 20150421211322) do
 
   create_table "books", force: true do |t|
     t.string  "isbn"
@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 20150403132300) do
     t.string   "address"
     t.float    "latitude"
     t.float    "longitude"
-    t.integer  "scale"
-    t.integer  "frequency"
+    t.integer  "scale",      default: 1
+    t.integer  "frequency",  default: 1
     t.string   "url"
     t.string   "contact"
     t.string   "email"
