@@ -1,6 +1,8 @@
 = content_for :title do
   |Event: 
   = @event.name
+= content_for :og_image do
+  = sprintf("flags_3d/%03d.jpg", @event.country.code)
 
 h2 Event Detail
 
