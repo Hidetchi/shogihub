@@ -47,10 +47,10 @@ def self.load_JSA_all
       name = $2.gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
       Player.update_player(1, name, @kishi_id, @rank, url)
       @rank = 0
-    elsif line =~ /href\=\"joryu\/(.+)\.html\"\>(.+)\<\/a\>/
+    elsif line =~ /href\=\"joryu\/(.+)\.html\"\>(.+?)\<\/a\>/
       url = $1
       name = $2.gsub(/女流.+$/,"").gsub(/[\s　]/,"")
-      Player.update_player(2, name, @kishi_id, @rank, url)
+      Player.update_player(2, name, @kishi_id, @rank, url) if @rank >= -2
       @rank = 0
     end
   end
@@ -87,7 +87,7 @@ def load_JSA_detail
         end
       elsif mode == 2
         if line =~ /\<dd\>(.+)\<\/dd\>/
-          teacher_name = $1.gsub(/[（\(].+[）\)]/,"").gsub(/門下/,"").gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
+          teacher_name = $1.gsub(/[（\(].+[）\)]/,"").gsub(/門下/,"").gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世|実力制).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
           teacher = Player.find_or_create(teacher_name)
           self.teacher_id = teacher.id
         end
