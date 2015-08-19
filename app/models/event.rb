@@ -29,7 +29,7 @@ class Event < ActiveRecord::Base
     if self.canceled
       "Canceled"
     elsif self.report_url != nil && self.report_url != ""
-      ("<a href='" + self.report_url + "' class='external'>Report</a>").html_safe
+      ("<a href='" + self.report_url + "' target='_blank' class='external'>Report</a>").html_safe
     elsif t > self.end_time + 24*60*60
       "Ended"
     elsif
