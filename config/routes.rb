@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   devise_for :users
   get 'players/show'
+  get 'players/active'
 
   resources :games, :only => [:index] do
   end

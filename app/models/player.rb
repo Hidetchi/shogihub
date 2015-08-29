@@ -21,11 +21,18 @@ def self.load_JSA_all
 
   @rank = 0
   @kishi_id = 0
+  retired = false
   response = open("http://www.shogi.or.jp/player/index.html", "r:CP932").read
   response += open("http://www.shogi.or.jp/player/joryu.html", "r:CP932").read
+  response += "#INTAI_START\n"
   response += open("http://www.shogi.or.jp/player/intai.html", "r:CP932").read
   lines = response.split("\n")
   lines.each do |line|
+    if line == "#INTAI_START"
+      retired = true
+      @rank = 0
+      next
+    end
 #  f = File.read("/mnt/hgfs/VMWareShare/shogihubtest_players.html", encoding:'cp932')
 #  f.split("\n").each do |line|
     if line =~ /heightLine\-(joru)?(\d)(kyu)?/
@@ -45,12 +52,12 @@ def self.load_JSA_all
     elsif line =~ /\<span\sclass\=\"playername_edit\".*kishi\/(.+)\.html\"\>(.+)\<\/a\>/
       url = $1
       name = $2.gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
-      Player.update_player(1, name, @kishi_id, @rank, url)
+      Player.update_player(1, name, @kishi_id, @rank, url, retired)
       @rank = 0
     elsif line =~ /href\=\"joryu\/(.+)\.html\"\>(.+?)\<\/a\>/
       url = $1
       name = $2.gsub(/女流.+$/,"").gsub(/[\s　]/,"")
-      Player.update_player(2, name, @kishi_id, @rank, url) if @rank >= -2
+      Player.update_player(2, name, @kishi_id, @rank, url, retired)
       @rank = 0
     end
   end
@@ -59,9 +66,14 @@ def self.load_JSA_all
   ""
 end
 
-def self.update_player(category, name_ja, kishi_id, rank, url)
+def self.update_player(category, name_ja, kishi_id, rank, url, retired)
+  return if retired == false && rank < -2
   player = Player.find_or_create(name_ja)
-  player.update_attributes(category: category, kishi_id: kishi_id, rank: rank, url: url) if (player.category != category || player.rank == nil || player.rank < rank)
+  if (retired)
+    player.update_attributes(retired: true) if player.retired == false
+  else
+    player.update_attributes(category: category, kishi_id: kishi_id, rank: rank, url: url) if (player.category != category || player.rank == nil || player.rank < rank)
+  end
 end
 
 def load_JSA_detail

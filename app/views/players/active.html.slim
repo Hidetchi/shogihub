@@ -1,0 +1,29 @@
+= content_for :title do
+  |List of Active Professional Players
+
+h1 List of Active Professional Players
+
+h2 Professional Players
+
+- rank = 0
+- @pros.each do |p|
+  - if p.rank != rank
+    - rank = p.rank
+    h3 = p.to_rank
+  li style='margin-left:50px;'
+    = player_name_tag(p)
+
+h2 Ladies Professional Players
+
+- rank = 0
+- @ladies.each do |p|
+  - if p.rank != rank
+    - rank = p.rank
+    h3 = p.to_rank
+  li style='margin-left:50px;'
+    = player_name_tag(p)
+
+javascript:
+  $(function(){
+    setPreview();
+  });
