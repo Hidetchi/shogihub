@@ -1,5 +1,7 @@
 = content_for :title do
   = @player.to_s
+= content_for :og_image do
+  = @player.to_image_url
 
 h2 Professional Player Info
 h3 #{@player.to_s}
@@ -20,6 +22,8 @@ table.invisible
             ul
               - @player.pupils.each do |pupil|
                 li #{player_name_tag(pupil)}
+        - if @player.retired
+          li RETIRED
     td.invisible
       - if @player.category == 1 || @player.category == 2
         div.profile_photo

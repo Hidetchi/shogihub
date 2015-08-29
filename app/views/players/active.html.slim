@@ -4,6 +4,9 @@
 h1 List of Active Professional Players
 
 h2 Professional Players
+p
+  |See JSA original data at:
+  = link_to('http://www.shogi.or.jp/player/index.html', 'http://www.shogi.or.jp/player/index.html', target:'_blank', class:'external')
 
 - rank = 0
 - @pros.each do |p|
@@ -14,9 +17,13 @@ h2 Professional Players
     = player_name_tag(p)
 
 h2 Ladies Professional Players
+p
+  |See JSA original data at:
+  = link_to('http://www.shogi.or.jp/player/joryu.html', 'http://www.shogi.or.jp/player/joryu.html', target:'_blank', class:'external')
 
 - rank = 0
 - @ladies.each do |p|
+  - break if p.rank < -2
   - if p.rank != rank
     - rank = p.rank
     h3 = p.to_rank
