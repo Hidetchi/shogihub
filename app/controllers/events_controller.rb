@@ -8,12 +8,14 @@ class EventsController < ApplicationController
   def index
     @past = params[:past]
     t = Time.new - 24*60*60
-    if (@past)
+    if (request.format.symbol == :atom)
+      @events = Event.order(updated_at: :desc)
+    elsif (@past)
       @events = Event.where('end_time < ?', t).order(start_time: :desc)
     else
       @events = Event.where('end_time >= ?', t).order(:start_time)
     end
-    respond_with(@events)
+    respond_to :html, :atom
   end
 
   def show
