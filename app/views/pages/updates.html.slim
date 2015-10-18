@@ -1,32 +1,64 @@
-h1 Welcome to ShogiHub Concept site
-p
-  |This is a ShogiHub Concept site subject to open discussion.
-  br
-  |Discussion group on Facebook: #{link_to('https://www.facebook.com/groups/shogihub/', 'https://www.facebook.com/groups/shogihub/', target:'_blank', class:'external')}
+h1 What's New on ShogiHub
+h2 Upcoming Events
+h3 Professional Games
+table style='margin-left:70px;'
+  tr
+    th Date
+    th colspan=2 Sente
+    th colspan=2 Gote
+    th Tournament
+    th Description
+  - @coming_games.each do |g|
+    tr
+      td #{g.game_date}
+      td style="border-right:0;font-family:'MS UI Gothic';" #{g.to_result_mark(true)}
+      td #{player_name_tag(g.sente)}
+      td style="border-right:0;" #{player_name_tag(g.gote)}
+      td style="font-family:'MS UI Gothic';" #{g.to_result_mark(false)}
+      td #{g.tournament.name}
+      td #{g.description}
+h3 World Shogi Events
+ul.updates
+  - @coming_events.each do |e|
+    li
+      b = e.start_time.strftime("%Y-%m-%d")
+      = flag_s_tag(e.country.code)
+      = link_to e.name, e
+h2 New Updates
+h3 World Shogi Events
+ul.updates
+  - @updated_events.each do |e|
+    li
+      b = e.start_time.strftime("%Y-%m-%d")
+      = flag_ss_tag(e.country.code)
+      = link_to e.name, e
+h3 Shogi Books
+ul.updates
+  - @new_books.each do |b|
+    li
+      = flag_ss_tag(b.language.flag_code)
+      = link_to b.title, b
+      = ' (' + b.author + ')'
+h3 World Shogi Clubs
+ul.updates
+  - @new_clubs.each do |c|
+    li
+      = flag_ss_tag(c.country.code)
+      = link_to c.name, c
+h3 World Shogi Portals
+ul.updates
+  - @new_websites.each do |w|
+    li
+      = flag_ss_tag(w.country.code)
+      = link_to w.name, w
 
-h2 Updates
-dl style='margin-left:25px;'
+h2 Site Development
+p style='margin-left:10px;'
+  |Site development is subject to open discussion on Facebook Group: #{link_to('https://www.facebook.com/groups/shogihub/', 'https://www.facebook.com/groups/shogihub/', target:'_blank', class:'external')}
+dl style='margin-left:50px;'
+  dt 2015-10-18
+  dd Official release with a new top page.
   dt 2015-8-30
   dd ATOM feed is implemented in the #{link_to 'World Shogi Events', '/events'} page.
   dt 2015-8-29
   dd #{link_to 'Active Professional Players', '/players/active'} page is added.
-  dt 2015-4-3
-  dd #{link_to 'World Shogi Clubs', '/clubs'} page is ready. Please register your club, or help us copy data from #{link_to 'the older "Worls Shogi Map"', 'http://goo.gl/maps/SPrCo', class:'external', target:'_blank'} on GoogleMap. (We list only 'clubs' where you can play shogi.)
-  dt 2015-3-30
-  dd #{link_to 'World Shogi Events', '/events'} page is ready. Please don't forget to register all events you organize!!
-  dt 2015-3-23
-  dd #{link_to 'World Shogi Portals', '/websites'} page is added. (Logged in users can edit the info)
-  dd Tentative #{link_to 'Database Policy', '/pages/help'} page added.
-  dt 2015-3-20
-  dd #{link_to 'Shogi Books', '/books'} page is added.
-  dd User login added. (There is no point in registering at the moment)
-  dt 2015-3-19
-  dd #{link_to 'Professional player, master-pupil diagram', '/players'} is ready.
-  dd User login function is prepared to authorize database update.
-  dt 2015-3-16
-  dd Moved to ShogiHub.com domain.
-  dt 2015-3-7
-  dd #{link_to('Facebook group', 'https://www.facebook.com/groups/shogihub/', target:'_blank', class:'external')} started. 
-  dt 2015-3-6
-  dd Concept site started as beta.
-  dd Concept page: #{link_to 'Professional game results & schedule', '/games'} started.
