@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   end
 
   get 'pages/help'
+  get 'updates' => 'activities#index'
   root :to => 'pages#updates'
   
   if Rails.env.development?

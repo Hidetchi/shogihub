@@ -33,11 +33,14 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     @event.save
+    @event.create_activity(action: 'create', owner: current_user, parameters: {description: @event.desccription})
     respond_with(@event)
   end
 
   def update
+    last_updated_at = @event.updated_at
     @event.update(event_params)
+    @event.create_activity(action: 'update', owner: current_user, parameters: {description: @event.description}) if @event.updated_at - last_updated_at > 24*60*60
     respond_with(@event)
   end
 

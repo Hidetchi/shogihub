@@ -1,4 +1,7 @@
+= content_for :head do
+  = auto_discovery_link_tag(:atom, '/updates.atom')
 h1 What's New on ShogiHub
+= link_to(image_tag('atom_feed.gif'), '/updates.atom', :style => 'margin-left:25px;')
 h2 Upcoming Events
 h3 Professional Games
 table style='margin-left:70px;'
@@ -60,8 +63,10 @@ ul.updates
   li.more = link_to 'See more...', '/websites'
 h2 Site Development
 p style='margin-left:10px;'
-  |Site development is subject to open discussion on Facebook Group: #{link_to('https://www.facebook.com/groups/shogihub/', 'https://www.facebook.com/groups/shogihub/', target:'_blank', class:'external')}
+  |Our site development is subject to open discussion on Facebook Group: #{link_to('https://www.facebook.com/groups/shogihub/', 'https://www.facebook.com/groups/shogihub/', target:'_blank', class:'external')}
 dl style='margin-left:50px;'
+  dt 2015-10-24
+  dd New #{link_to('Atom feed','/updates.atom')} is implemented in the top page, publishing all updates of ShogiHub. (The old Atom feed for the Events page is removed.)
   dt 2015-10-18
   dd Official release with a new top page.
   dt 2015-8-30

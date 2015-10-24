@@ -1,4 +1,6 @@
 class Event < ActiveRecord::Base
+  include PublicActivity::Common
+
   has_many :event_players
   has_many :players, through: :event_players
   accepts_nested_attributes_for :event_players, allow_destroy: true

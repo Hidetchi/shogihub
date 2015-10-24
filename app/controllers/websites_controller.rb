@@ -25,6 +25,7 @@ class WebsitesController < ApplicationController
   def create
     @website = Website.new(website_params)
     @website.save
+    @website.create_activity(action: 'create', owner: current_user)
     respond_with(@website)
   end
 

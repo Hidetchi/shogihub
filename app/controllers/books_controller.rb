@@ -26,6 +26,7 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
     @book.save
+    @book.create_activity(action: 'create', owner: current_user)
     respond_with(@book)
   end
 

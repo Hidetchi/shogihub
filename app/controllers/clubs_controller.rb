@@ -31,6 +31,7 @@ class ClubsController < ApplicationController
   def create
     @club = Club.new(club_params)
     @club.save
+    @club.create_activity(action: 'create', owner: current_user)
     respond_with(@club)
   end
 

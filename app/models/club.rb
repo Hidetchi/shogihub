@@ -1,4 +1,6 @@
 class Club < ActiveRecord::Base
+  include PublicActivity::Common
+
   belongs_to :country
   geocoded_by :address
   after_validation :geocode_if_blank
