@@ -33,7 +33,7 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     @event.save
-    @event.create_activity(action: 'create', owner: current_user, parameters: {description: @event.desccription})
+    @event.create_activity(action: 'create', owner: current_user, parameters: {description: @event.description})
     respond_with(@event)
   end
 
