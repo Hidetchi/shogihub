@@ -25,10 +25,10 @@ div.form
           | (0~2 stars; see Help below for definition)
       tr
         th = f.label :start_time
-        td = f.datetime_select :start_time
+        td = f.datetime_select :start_time, minute_step: 15
       tr
         th = f.label :end_time
-        td = f.datetime_select :end_time
+        td = f.datetime_select :end_time, minute_step: 15
       tr
         th = f.label :country_id
         td = f.collection_select :country_id, Country.where(enabled:true), :id, :name
