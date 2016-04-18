@@ -1,0 +1,31 @@
+h2 Form
+= form_for @news do |f|
+  - if @news.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@news.errors.count, "error")} prohibited this news from being saved:"
+      ul
+        - @news.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :url
+    br
+    = f.text_field :url, size: "80"
+  .field
+    = f.label :title_en
+    br
+    = f.text_field :title_en, size: "80"
+  .field
+    = f.label :content_en
+    br
+    = f.text_area :content_en, size: "80x14"
+  .field
+    = f.label :category
+    |&emsp;(0: ShogiHub original, 1: JSA topics, 2: JSA events and others)
+    br
+    = f.text_field :category
+  .field
+    |Published (Whether the english version has been prepared and is ready to be released on ShogiHub)
+    br
+    = f.check_box :open
+  .actions = f.submit

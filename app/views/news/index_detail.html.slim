@@ -1,0 +1,15 @@
+h1 Official News Release
+
+p
+  |[ #{link_to 'Index mode', news_index_path} | Detail mode ]
+
+- @news_open.each do |n|
+  h2 = n.title_en
+  p <b>Category:</b>&emsp;#{news_category_tag(n)}
+
+  p <b>Published at:</b>&emsp;#{n.updated_at.strftime("%Y-%m-%d %H:%M")}
+
+  - if n.category != 0
+    p <b>Original site:</b>&emsp;#{link_to n.url, n.url, target: '_blank', class: 'external'}
+
+  div style='border-top: 1px solid #aaa;padding: 5px 20px;' = n.content_en.html_safe

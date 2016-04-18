@@ -1,0 +1,26 @@
+h1 Official News Release
+
+p 
+  |[ Index mode | #{link_to 'Detail mode', detail_news_index_path} ]
+
+ul
+  - @news_open.each do |n|
+    li style='line-height:1.8em;' <b>#{n.published_at.strftime("%Y-%m-%d %H:%M")}</b>&emsp;#{news_category_tag(n)}&emsp;#{link_to n.title_en, news_path(n)}
+
+- if user_signed_in? && current_user.is_admin?
+  br
+  br
+  h2 Admin's section
+  div.news
+    p = link_to 'Create a new ShogiHub release', new_news_path
+  - @news.each do |n|
+    div.news
+      - if n.open
+        p style='font-weight:bold;color:red;' PUBLISHED as "#{n.title_en}"
+      p
+        = n.published_at.strftime("%Y-%m-%d %H:%M")
+        - if n.category != 0
+          |&emsp;#{link_to n.title_ja, n.url, target: '_blank', class: 'external'}
+      p #{link_to 'Show', n}&emsp;#{link_to 'Edit', edit_news_path(n)}
+      div style='margin: 0 20px;'
+        = n.category == 0 ? n.content_en.html_safe : n.content_ja.html_safe

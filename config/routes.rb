@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :news, :except => [:destroy] do
+    get 'detail' => 'news#index_detail', on: :collection
+  end
+
   resources :clubs
 
   get 'events/past' => 'events#index', :past => true

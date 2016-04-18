@@ -4,6 +4,15 @@ atom_feed do |feed|
 
   @activities.each do |activity|
     case activity.trackable_type
+    when 'News'
+      feed.entry(activity, {url: news_url(activity.trackable)}) do |entry|
+        category_header = activity.trackable.category >= 2 ? "JSA official | " : ""
+        entry.title("NEWS | " + category_header + activity.trackable.title_en)
+        entry.content(activity.trackable.content_en)
+        entry.author do |author|
+          author.name('ShogiHub')
+        end
+      end
     when 'Event'
       feed.entry(activity, {url: event_url(activity.trackable)}) do |entry|
         header = activity.key =~ /update/ ? 'Event Update' : 'EVENT'

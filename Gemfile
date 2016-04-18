@@ -67,3 +67,4 @@ gem 'whenever', :require => false
 gem 'nested_form'
 gem 'gmaps4rails'
 gem 'geocoder'
+gem 'feedjira'

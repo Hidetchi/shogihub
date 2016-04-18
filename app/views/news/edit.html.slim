@@ -1,0 +1,25 @@
+h1 Editing news
+
+table style='text-align:left;'
+  tr
+    th Japanese title
+    td.left = @news.title_ja
+  tr
+    th Entry ID
+    td.left = @news.entry_id
+  tr
+    th Published
+    td.left = @news.published_at
+  tr
+    th HTML
+    td.left = @news.content_ja.html_safe
+  tr
+    th source
+    td.left = @news.content_ja
+
+== render 'form'
+
+= link_to 'Show', @news
+'|
+= link_to 'Back', news_index_path
+

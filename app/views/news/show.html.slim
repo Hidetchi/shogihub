@@ -1,0 +1,24 @@
+- if @news.open && @news.title_en && @news.title_en != ""
+  = content_for :title do
+    |News release: 
+    = @news.title_en
+
+h1 Official News Release
+h2 = @news.title_en
+
+p <b>Category:</b>&emsp;#{news_category_tag(@news)}
+
+p <b>Published at:</b>&emsp;#{@news.updated_at.strftime("%Y-%m-%d %H:%M")}
+
+- if @news.category != 0
+  p <b>Original site:</b>&emsp;#{link_to @news.url, @news.url, target: '_blank', class: 'external'}
+
+div.news_content = @news.content_en.html_safe
+
+p style='margin-top:30px;' = link_to '<< Back to list', news_index_path
+
+- if user_signed_in? && current_user.is_admin?
+  h3 Admin's menu
+  div.level2
+    = link_to 'Edit', edit_news_path(@news)
+

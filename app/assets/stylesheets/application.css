@@ -193,6 +193,10 @@ th {
 	font-weight: normal;
 }
 
+td.left {
+  text-align: left;
+}
+
 dt {
 	font-weight: bold;
 }
@@ -321,3 +325,8 @@ div.level5 {
 div.form {
   margin-left: 30px;
 }
+div.right {
+  width: 90%;
+  text-align: right;
+}
+
