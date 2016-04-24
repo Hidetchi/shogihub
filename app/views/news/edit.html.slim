@@ -8,14 +8,8 @@ table style='text-align:left;'
     th Entry ID
     td.left = @news.entry_id
   tr
-    th Published
-    td.left = @news.published_at
-  tr
     th HTML
-    td.left = @news.content_ja.html_safe
-  tr
-    th source
-    td.left = @news.content_ja
+    td.left = @news.content_ja ? @news.content_ja.html_safe : ""
 
 == render 'form'
 

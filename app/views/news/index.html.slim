@@ -23,4 +23,4 @@ ul
           |&emsp;#{link_to n.title_ja, n.url, target: '_blank', class: 'external'}
       p #{link_to 'Show', n}&emsp;#{link_to 'Edit', edit_news_path(n)}
       div style='margin: 0 20px;'
-        = n.category == 0 ? n.content_en.html_safe : n.content_ja.html_safe
+        = n.category == 0 ? (n.content_en ? n.content_en.html_safe : "") : (n.content_ja ? n.content_ja.html_safe : "")

@@ -6,9 +6,9 @@ atom_feed do |feed|
     case activity.trackable_type
     when 'News'
       feed.entry(activity, {url: news_url(activity.trackable)}) do |entry|
-        category_header = activity.trackable.category >= 2 ? "JSA official | " : ""
+        category_header = activity.trackable.category >= 1 ? "JSA official | " : ""
         entry.title("NEWS | " + category_header + activity.trackable.title_en)
-        entry.content(activity.trackable.content_en)
+        entry.content(interpreted_content(activity.trackable))
         entry.author do |author|
           author.name('ShogiHub')
         end

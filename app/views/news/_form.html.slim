@@ -1,4 +1,3 @@
-h2 Form
 = form_for @news do |f|
   - if @news.errors.any?
     #error_explanation
@@ -7,6 +6,10 @@ h2 Form
         - @news.errors.full_messages.each do |message|
           li = message
 
+  .field
+    = f.label :published_at
+    br
+    = f.datetime_select :published_at, minute_step: 5
   .field
     = f.label :url
     br

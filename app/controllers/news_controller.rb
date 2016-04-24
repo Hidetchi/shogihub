@@ -19,9 +19,7 @@ class NewsController < ApplicationController
 
   def new
     @news = News.new
-    @news.entry_id = News.last.id + 1
     @news.category = 0
-    @news.published_at = Time.now
     respond_with(@news)
   end
 
@@ -31,6 +29,7 @@ class NewsController < ApplicationController
 
   def create
     @news = News.new(news_params)
+    @news.entry_id = News.count == 0 ? 1 : News.last.id + 1
     @news.save
     respond_with(@news)
   end
