@@ -1,6 +1,6 @@
 class NewsController < ApplicationController
-  before_action :set_news, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:edit, :update, :new, :create]
+  before_action :set_news, only: [:show, :edit, :update, :destroy, :remove]
+  before_action :authenticate_user!, only: [:edit, :update, :new, :create, :remove]
 
   respond_to :html
 
@@ -47,6 +47,10 @@ class NewsController < ApplicationController
   def destroy
     @news.destroy
     respond_with(@news)
+  end
+
+  def remove
+    @news.update_attributes(removed: true) unless @news.open
   end
 
   private

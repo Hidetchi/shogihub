@@ -21,6 +21,7 @@ ul
         = n.published_at.strftime("%Y-%m-%d %H:%M")
         - if n.category != 0
           |&emsp;#{link_to n.title_ja, n.url, target: '_blank', class: 'external'}
-      p #{link_to 'Show', n}&emsp;#{link_to 'Edit', edit_news_path(n)}
-      div style='margin: 0 20px;'
-        = n.category == 0 ? (n.content_en ? n.content_en.html_safe : "") : (n.content_ja ? n.content_ja.html_safe : "")
+      - unless n.removed
+        p #{link_to 'Show', n}&emsp;#{link_to 'Edit', edit_news_path(n)}&emsp;#{link_to 'Remove', remove_news_path(n), :method => 'post', :remote => true, :class => 'remote', :data => {confirm: 'Hide from list?'}}
+        div style='margin: 0 20px;'
+          = n.category == 0 ? (n.content_en ? n.content_en.html_safe : "") : (n.content_ja ? n.content_ja.html_safe : "")
