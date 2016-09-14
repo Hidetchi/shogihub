@@ -22,10 +22,11 @@ def self.load_JSA_all
   @rank = 0
   @kishi_id = 0
   retired = false
-  response = open("http://www.shogi.or.jp/player/index.html", "r:CP932").read
-  response += open("http://www.shogi.or.jp/player/joryu.html", "r:CP932").read
+  response = ""
+#  response += open("http://www.shogi.or.jp/player/pro.html").read
+  response += open("http://www.shogi.or.jp/player/lady.html").read
   response += "#INTAI_START\n"
-  response += open("http://www.shogi.or.jp/player/intai.html", "r:CP932").read
+  response += open("http://www.shogi.or.jp/player/retirement.html").read
   lines = response.split("\n")
   lines.each do |line|
     if line == "#INTAI_START"
@@ -33,32 +34,41 @@ def self.load_JSA_all
       @rank = 0
       next
     end
-#  f = File.read("/mnt/hgfs/VMWareShare/shogihubtest_players.html", encoding:'cp932')
-#  f.split("\n").each do |line|
-    if line =~ /heightLine\-(joru)?(\d)(kyu)?/
-      if ($3 == "kyu")
-        @rank = $2.to_i * (-1)
-      else
-        @rank = $2.to_i
+#    if line =~ /heightLine\-(joru)?(\d)(kyu)?/
+#      if ($3 == "kyu")
+#        @rank = $2.to_i * (-1)
+#      else
+#        @rank = $2.to_i
+#      end
+#    elsif line =~ /heightLine-kyakuin/
+#      @rank = 0
+#    elsif line =~/class\=\"heightLine\"/
+#      @rank = -5 
+#    end
+#    next if @rank == 0
+#    if line =~ /\<span\sclass\=\"playerno\"\>(女流)?棋士番号(\d+)/
+#      @kishi_id = $2.to_i
+#    elsif line =~ /\<span\sclass\=\"playername_edit\".*kishi\/(.+)\.html\"\>(.+)\<\/a\>/
+#      url = $1
+#      name = $2.gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
+#      Player.update_player(1, name, @kishi_id, @rank, url, retired)
+#      @rank = 0
+#    elsif line =~ /href\=\"joryu\/(.+)\.html\"\>(.+?)\<\/a\>/
+#      url = $1
+#      name = $2.gsub(/女流.+$/,"").gsub(/[\s　]/,"")
+#      Player.update_player(2, name, @kishi_id, @rank, url, retired)
+#      @rank = 0
+#    end
+    if line =~ /\<a\shref\=\"\/player\/(pro|lady)\/(\d+)\.html\"\>(.+?)\<\/a\>/
+      player_type = $1
+      id = $2
+      name = $3
+      if player_type == "lady"
+        p = Player.find_by(search_key: name)
+        if p
+          p.update_attributes(kishi_id: id.to_i)
+        end
       end
-    elsif line =~ /heightLine-kyakuin/
-      @rank = 0
-    elsif line =~/class\=\"heightLine\"/
-      @rank = -5 
-    end
-    next if @rank == 0
-    if line =~ /\<span\sclass\=\"playerno\"\>(女流)?棋士番号(\d+)/
-      @kishi_id = $2.to_i
-    elsif line =~ /\<span\sclass\=\"playername_edit\".*kishi\/(.+)\.html\"\>(.+)\<\/a\>/
-      url = $1
-      name = $2.gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
-      Player.update_player(1, name, @kishi_id, @rank, url, retired)
-      @rank = 0
-    elsif line =~ /href\=\"joryu\/(.+)\.html\"\>(.+?)\<\/a\>/
-      url = $1
-      name = $2.gsub(/女流.+$/,"").gsub(/[\s　]/,"")
-      Player.update_player(2, name, @kishi_id, @rank, url, retired)
-      @rank = 0
     end
   end
 
@@ -79,11 +89,18 @@ end
 def load_JSA_detail
   Rails.logger.level = 3
   puts sprintf("Loading %s ...", self.search_key)
-  response = open(to_jsa_url, "r:CP932").read
-  lines = response.encode('utf-8').split("\n")
-  mode = 0
+  response = open(to_jsa_url).read
+  lines = response.split("\n")
+  mode = -1
   lines.each do |line|
     next if line == ""
+    if mode < 0
+      if line == '<main id="main">'
+        mode = 0
+      else
+        next
+      end
+    end
     if mode == 0
       if line =~ /生年月日/
         mode = 1
@@ -91,6 +108,8 @@ def load_JSA_detail
         mode = 2
       elsif line =~/\>棋士番号\</
         mode = 3
+      elsif line == '</main>'
+        mode = -1
       end
     else
       if mode == 1
@@ -104,7 +123,7 @@ def load_JSA_detail
           self.teacher_id = teacher.id
         end
       elsif mode == 3
-        if line =~ /\<dd\>(\d+)\<\/dd\>/
+        if line =~ /\<td\>(\d+)\<\/td\>/
           self.kishi_id = $1.to_i
         end
       end
@@ -130,21 +149,19 @@ end
 
 def to_jsa_url
   if self.category == 1
-    "http://www.shogi.or.jp/player/kishi/" + self.url + ".html"
+    self.kishi_id ? ("http://www.shogi.or.jp/player/pro/" + self.kishi_id.to_s + ".html") : ""
   elsif self.category == 2
-    "http://www.shogi.or.jp/player/joryu/" + self.url + ".html"
+    self.kishi_id ? ("http://www.shogi.or.jp/player/lady/" + self.kishi_id.to_s + ".html") : ""
   else
     ""
   end
 end
 
 def to_image_url
-  if self.image_url == nil
-    ""
-  elsif self.category == 1
-    "http://www.shogi.or.jp/player/ph_kishi/" + self.image_url + ".jpg"
+  if self.category == 1
+    self.kishi_id ? ("http://www.shogi.or.jp/images/player/pro/" + self.kishi_id.to_s + ".jpg") : ""
   elsif self.category == 2
-    "http://www.shogi.or.jp/player/ph_joryu/" + self.image_url + ".jpg"
+    self.kishi_id ? ("http://www.shogi.or.jp/images/player/lady/" + self.kishi_id.to_s + ".jpg") : ""
   else
     ""
   end
