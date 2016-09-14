@@ -29,7 +29,18 @@ table.invisible
         div.profile_photo
           = image_tag(@player.to_image_url)
 
-table style="margin-left:50px;margin-top:10px;"
+- if @events.count > 0
+  div style='margin-top:0;margin-left:30px;margin-bottom:20px;'
+    u Invited International Events
+    ul style='margin-top:0;padding-top:0;padding-left:40px;'
+      - @events.each do |e| 
+        li
+          = e.start_time.strftime("%Y-%m-%d")
+          |&nbsp;
+          = flag_ss_tag(e.country.code)
+          = link_to e.name, e
+
+table style="margin-left:30px;margin-top:10px;"
   tr
     th Date
     th Side

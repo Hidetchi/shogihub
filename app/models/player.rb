@@ -4,6 +4,8 @@ class Player < ActiveRecord::Base
 
 belongs_to :teacher, class_name: 'Player', foreign_key: 'teacher_id'
 has_many :pupils, class_name: 'Player', foreign_key: 'teacher_id'
+has_many :event_players
+has_many :events, through: :event_players
 
 def self.find_or_create(name_ja)
   name_ja = name_ja.gsub(/眞/,"真").gsub(/髙/,"高").gsub(/﨑/,"崎")
