@@ -7,56 +7,62 @@ belongs_to :gote, class_name: 'Player', foreign_key: 'gote_id'
 belongs_to :tournament
 
 def self.load_JSA_month(year,month)
-  self.load_JSA_list(sprintf('http://www.shogi.or.jp/kisen/month/%d/%02dall.html', year, month), year)
+  #self.load_JSA_list(sprintf('http://www.shogi.or.jp/kisen/month/%d/%02dall.html', year, month), year)
 end
 
 def self.load_JSA_latest
-  self.load_JSA_list("http://www.shogi.or.jp/kisen/week/kekka.html")
-  self.load_JSA_list("http://www.shogi.or.jp/kisen/week/yotei.html")
+  self.load_JSA_list("http://www.shogi.or.jp/game")
 end
 
 def self.load_JSA_list(url, year = nil)
   Rails.logger.level = 3
 
   active = false
+  mode = 0 # 0:Results(6 columns), 1:Schedule(5 columns)
   column = 0
-  response = open(url, "r:CP932").read
-  lines = response.split("\n")
+  max_column = 100
+  response = open(url).read
+  lines = response.force_encoding("utf-8").split("\n")
   lines.each do |line|
-#  f = File.read("/mnt/hgfs/VMWareShare/shogihubtest_monthly.html", encoding:'cp932')
-#  f.split("\n").each do |line|
-    active = true if line =~ /\<table\>/i
-    active = false if line =~ /\<\/table\>/i
+    active = false if line.include?('</table>')
+    active = true if line.include?('<table class="tableElements')
+    mode = 0 if line.include?('週間対局結果（')
+    mode = 1 if line.include?('週間対局予定（')
     next unless active
     next if line =~ /(奨励|育成)会/
-    if line =~ /\<strong\>\s*(\d*)月(\d*)[日・]/i
+    if line =~ /colspan\=\"(\d+)\".+?(\d*)月(\d*)[日・]/i
+      max_column = $1.to_i 
       if year
-        @date = Date.new(year, $1.to_i, $2.to_i)
+        @date = Date.new(year, $2.to_i, $3.to_i)
       else
         today = Date.today
-        @date = Date.new(today.year, $1.to_i, $2.to_i)
+        @date = Date.new(today.year, $2.to_i, $3.to_i)
         if (@date - today > 180)
-          @date = Date.new(today.year - 1, $1.to_i, $2.to_i)
+          @date = Date.new(today.year - 1, $2.to_i, $3.to_i)
         elsif (today - @date > 180)
-          @date = Date.new(today.year + 1, $1.to_i, $2.to_i)
+          @date = Date.new(today.year + 1, $2.to_i, $3.to_i)
         end
       end
     else
-      if line =~ /\<tr/i
+      if line =~ /^\<tr\>\<td\>/i
         column = 0
         @elements = Array.new(7)
       end
-			line = line.gsub(/\<td\>\s*(.*?)\s*\<\/td\>/i) {
-        @elements[column] = $1
+			line = line.gsub(/\<td.*?\>\s*(.*?)\s*\<\/td\>/i) {
+        str = $1
+#        if str =~ /^\<a.*?\>(.+?)\<\/a\>/
+#          str = $1
+#        end
+        @elements[column] = str.gsub(/\<.+?\>/i, "")
         column += 1
 			  ""
 			}
-      if column == 7
-        result = ["○", "●", "引", "□", "■"].index(@elements[0])
-        sente = @elements[1].gsub(/\s+/,"").gsub(/[※\*＊　]/,"").gsub(/アマ/,"").gsub(/(奨励会)?[12345１２３４５初二三][級段]$/,"")
-        gote = @elements[2].gsub(/\s+/,"").gsub(/[※\*＊　]/,"").gsub(/アマ/,"").gsub(/(奨励会)?[12345１２３４５初二三][級段]$/,"")
-        event = @elements[4].gsub(/\s+/,"")
-        description = @elements[5]
+      if column == max_column
+        result = mode == 0 ? ["○", "●", "引", "□", "■"].index(@elements[1]) : nil
+        sente = @elements[mode == 0 ? 2 : 1].gsub(/\s+/,"").gsub(/[※\*＊　]/,"").gsub(/アマ/,"").gsub(/(奨励会)?[12345１２３４５初二三][級段]$/,"")
+        gote = @elements[mode == 0 ? 3 : 2].gsub(/\s+/,"").gsub(/[※\*＊　]/,"").gsub(/アマ/,"").gsub(/(奨励会)?[12345１２３４５初二三][級段]$/,"")
+        event = @elements[0]
+        description = @elements[mode == 0 ? 5 : 4]
         Game.update_game(@date, sente, gote, result, event, description)
         column = 0
       end
@@ -69,6 +75,11 @@ end
 
 def self.update_game(date, sente, gote, result, event, description)
   return if event == ""
+  description = ""
+  if event =~ /^(.+?)\s(.+)$/
+    event = $1
+    description = $2
+  end
   if description =~ /^第([123456789１２３４５６７８９])局/
     description = "Title match, Game " + NKF.nkf('-m0Z1 -w', $1)
   else
