@@ -74,7 +74,7 @@ def self.update_player(category, name_ja, kishi_id, rank, url, retired)
   return if retired == false && rank < -2
   player = Player.find_or_create(name_ja)
   if (retired)
-    player.update_attributes(retired: true) if player.retired == false
+    player.update_attributes(retired: true, rank: rank) if player.retired == false || player.rank < rank
   else
     player.update_attributes(category: category, kishi_id: kishi_id, rank: rank, url: url) if (player.category != category || player.rank == nil || player.rank < rank)
   end
