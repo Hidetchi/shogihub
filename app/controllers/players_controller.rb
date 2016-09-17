@@ -11,7 +11,7 @@ class PlayersController < ApplicationController
 
   def show
     @player = Player.includes(:teacher, :pupils).find(params[:id])
-    @events = @player.events
+    @events = @player.events.order(:start_time)
     @games = Game.includes(:sente, :gote, :tournament).where('sente_id = ? or gote_id = ?', @player.id, @player.id).order('game_date desc')
   end
 end
