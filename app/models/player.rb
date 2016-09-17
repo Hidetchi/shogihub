@@ -21,55 +21,47 @@ end
 def self.load_JSA_all
   Rails.logger.level = 3
 
-  @rank = 0
-  @kishi_id = 0
-  retired = false
+  @active = false
+  @retired = false
+  @name_loaded = false
   response = ""
-#  response += open("http://www.shogi.or.jp/player/pro.html").read
+  response += open("http://www.shogi.or.jp/player/").read
   response += open("http://www.shogi.or.jp/player/lady.html").read
-  response += "#INTAI_START\n"
   response += open("http://www.shogi.or.jp/player/retirement.html").read
-  lines = response.split("\n")
+  response += open("http://www.shogi.or.jp/player/deceased.html").read
+#  response += "#INTAI_START\n"
+#  response += open("http://www.shogi.or.jp/player/retirement.html").read
+  lines = response.force_encoding("utf-8").split("\n")
   lines.each do |line|
-    if line == "#INTAI_START"
-      retired = true
-      @rank = 0
-      next
-    end
-#    if line =~ /heightLine\-(joru)?(\d)(kyu)?/
-#      if ($3 == "kyu")
-#        @rank = $2.to_i * (-1)
-#      else
-#        @rank = $2.to_i
-#      end
-#    elsif line =~ /heightLine-kyakuin/
-#      @rank = 0
-#    elsif line =~/class\=\"heightLine\"/
-#      @rank = -5 
-#    end
-#    next if @rank == 0
-#    if line =~ /\<span\sclass\=\"playerno\"\>(女流)?棋士番号(\d+)/
-#      @kishi_id = $2.to_i
-#    elsif line =~ /\<span\sclass\=\"playername_edit\".*kishi\/(.+)\.html\"\>(.+)\<\/a\>/
-#      url = $1
-#      name = $2.gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
-#      Player.update_player(1, name, @kishi_id, @rank, url, retired)
-#      @rank = 0
-#    elsif line =~ /href\=\"joryu\/(.+)\.html\"\>(.+?)\<\/a\>/
-#      url = $1
-#      name = $2.gsub(/女流.+$/,"").gsub(/[\s　]/,"")
-#      Player.update_player(2, name, @kishi_id, @rank, url, retired)
-#      @rank = 0
-#    end
+    @active = true if line == '<main id="main">'
+    @active = false if line == '</main>'
+    next if !@active
+    @retired = true if line == '<h2 class="headingElementsA01">引退棋士</h2>'
     if line =~ /\<a\shref\=\"\/player\/(pro|lady)\/(\d+)\.html\"\>(.+?)\<\/a\>/
-      player_type = $1
-      id = $2
-      name = $3
-      if player_type == "lady"
-        p = Player.find_by(search_key: name)
-        if p
-          p.update_attributes(kishi_id: id.to_i)
+      @name_loaded = true
+      @player_type = $1
+      @id = $2
+      @name = $3.gsub(/[\s　]/,"")
+    elsif @name_loaded && line =~ /\<p\>(.+)\<\/p\>/
+      @name_loaded = false
+      rank_text = $1
+      if rank_text =~ /\A(女流)?([１２３初二三四五六七八九])([段級])\z/
+        num_text = $2
+        rank_type = $3
+        if num_text == "１"
+          rank = -1
+        elsif num_text == "２"
+          rank = -2
+        elsif num_text == "３"
+          rank = -3
+        else
+          rank = [0, "初", "二", "三", "四", "五", "六", "七", "八", "九"].index(num_text)
         end
+      else
+        rank = @retired ? 10 : 9
+      end
+      if rank >= -2
+        Player.update_player(@player_type == 'pro' ? 1 : 2, @name, @id, rank, nil, @retired)
       end
     end
   end
@@ -92,8 +84,8 @@ def load_JSA_detail
   Rails.logger.level = 3
   puts sprintf("Loading %s ...", self.search_key)
   response = open(to_jsa_url).read
-  lines = response.split("\n")
   mode = -1
+  lines = response.force_encoding("utf-8").split("\n")
   lines.each do |line|
     next if line == ""
     if mode < 0
@@ -104,29 +96,35 @@ def load_JSA_detail
       end
     end
     if mode == 0
-      if line =~ /生年月日/
+      if line =~ /\A\<span\sclass\=\"jp\"\>(.+)\<\/span\>\z/
         mode = 1
-      elsif line =~ /\>師匠\</
+      elsif line =~ /生年月日\<\/th\>\z/
         mode = 2
-      elsif line =~/\>棋士番号\</
+      elsif line =~ /師匠\<\/th\>\z/
         mode = 3
       elsif line == '</main>'
         mode = -1
       end
     else
       if mode == 1
-        if line =~ /(\d+)年(\d+)月(\d+)日/
-          self.birthday = Date.new($1.to_i, $2.to_i, $3.to_i)
+        if self.name == nil
+          if line =~ /\A\<span\sclass\=\"en\"\>(.+)\s(.+)\<\/span\>\z/
+            self.name = $2 + ", " + $1
+          end
         end
       elsif mode == 2
-        if line =~ /\<dd\>(.+)\<\/dd\>/
-          teacher_name = $1.gsub(/[（\(].+[）\)]/,"").gsub(/門下/,"").gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世|実力制).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
-          teacher = Player.find_or_create(teacher_name)
-          self.teacher_id = teacher.id
+        if self.birthday == nil
+          if line =~ /(\d+)年(\d+)月(\d+)日/
+            self.birthday = Date.new($1.to_i, $2.to_i, $3.to_i)
+          end
         end
       elsif mode == 3
-        if line =~ /\<td\>(\d+)\<\/td\>/
-          self.kishi_id = $1.to_i
+        if line =~ /\<td\>(.+)\<\/td\>/
+          if self.teacher_id == nil
+            teacher_name = $1.gsub(/[（\(].+[）\)]/,"").gsub(/門下/,"").gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世|実力制).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
+            teacher = Player.find_or_create(teacher_name)
+            self.teacher_id = teacher.id
+          end
         end
       end
       mode = 0
@@ -146,7 +144,11 @@ end
 
 def to_rank
   return "" unless self.rank
-  self.rank.abs.to_s + (self.rank > 0 ? "-Dan" : "-kyu")
+  if self.rank == 10
+    "Honorary title"
+  else
+    self.rank.abs.to_s + (self.rank > 0 ? "-Dan" : "-kyu")
+  end
 end
 
 def to_jsa_url
