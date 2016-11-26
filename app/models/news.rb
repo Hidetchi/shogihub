@@ -20,7 +20,7 @@ class News < ActiveRecord::Base
       next unless to_load
       unless (News.find_by(entry_id: e.entry_id))
         category = 1
-        News.create(entry_id: e.entry_id, url: e.url, published_at: e.published, title_ja: e.title, title_en: e.title, content_ja: e.content, content_en: e.content, category: category))
+        News.create(entry_id: e.entry_id, url: e.url, published_at: e.published, title_ja: e.title, title_en: e.title, content_ja: e.content, content_en: e.content, category: category)
       end
     end
   end
