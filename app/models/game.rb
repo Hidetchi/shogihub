@@ -26,12 +26,17 @@ def self.load_JSA_list(url, year = nil)
   lines.each do |line|
     active = false if line.include?('</table>')
     active = true if line.include?('<table class="tableElements')
-    mode = 0 if line.include?('週間対局結果（')
-    mode = 1 if line.include?('週間対局予定（')
+    mode = 0 if line.include?('<div id="jsTabE01_01"')
+    mode = 1 if line.include?('<div id="jsTabE01_02"')
     next unless active
     next if line =~ /(奨励|育成)会/
     if line =~ /colspan\=\"(\d+)\".+?(\d*)月(\d*)[日・]/i
       max_column = $1.to_i 
+      if max_column == 6
+        mode = 0
+      elsif max_column == 5
+        mode = 1
+      end
       if year
         @date = Date.new(year, $2.to_i, $3.to_i)
       else
