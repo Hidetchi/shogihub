@@ -8,10 +8,10 @@ module NewsHelper
     end
   end
 
-  def interpreted_content(news)
+  def interpreted_content(news, link_player = true)
     if news.content_en
       html = news.content_en.gsub(/\[\[(.+?)\|(.+?)\]\]/) {
-        player = Player.find_by(search_key: $1)
+        player = link_player ? Player.find_by(search_key: $1) : nil
         if (player && (player.category == 1 || player.category == 2))
           link_to($2, player_url(player), class: 'player_name', name: player.to_image_url)
         else
