@@ -5,12 +5,12 @@ class NewsController < ApplicationController
   respond_to :html
 
   def index
-    @news = News.all.order(id: :desc).limit(100)
-    @news_open = News.where(open: true).order(id: :desc).limit(100)
+    @news = News.all.order(published_at: :desc).limit(100)
+    @news_open = News.where(open: true).order(published_at: :desc).limit(100)
   end
 
   def index_detail
-    @news_open = News.where(open: true).order(id: :desc).limit(100)
+    @news_open = News.where(open: true).order(published_at: :desc).limit(100)
   end
 
   def show
