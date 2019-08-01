@@ -3,7 +3,7 @@ class PagesController < ApplicationController
   def updates
     d = Date.today - 1
     t = Time.new - 24*60*60
-    @news = News.where(open: true).order(id: :desc).limit(5)
+    @news = News.where(open: true).order(published_at: :desc).limit(5)
     @coming_games = Game.includes(:sente, :gote, :tournament).where('result is null and game_date >= ?', d).order(:game_date).limit(8)
     @coming_events = Event.includes(:country).where('start_time > ?', t).order(:start_time).limit(3)
     @updated_events = Event.includes(:country).order(updated_at: :desc).limit(5)

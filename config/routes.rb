@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
   resources :news, :except => [:destroy] do
-    get 'detail' => 'news#index_detail', on: :collection
+    get 'detail' => 'news#index', on: :collection
+    get 'headlines' => 'news#index_headlines', on: :collection
     post 'remove' => 'news#remove', on: :member
   end
 

@@ -6,8 +6,13 @@
 set :output, "log/cron_log.log"
 set :environment, :production
 
-every 1.day, :at => '11pm' do
+every 1.day, :at => '3am' do
   runner "Game.load_JSA_latest"
+  runner "News.fetch_from_JSA"
+end
+
+every :monday, at: '3am' do
+  runner "Player.load_JSA_all"
 end
 
 # Learn more: http://github.com/javan/whenever

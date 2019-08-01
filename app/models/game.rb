@@ -11,7 +11,7 @@ def self.load_JSA_month(year,month)
 end
 
 def self.load_JSA_latest
-  self.load_JSA_list("http://www.shogi.or.jp/game")
+  self.load_JSA_list("https://www.shogi.or.jp/game")
 end
 
 def self.load_JSA_list(url, year = nil)

@@ -68,3 +68,5 @@ gem 'nested_form'
 gem 'gmaps4rails'
 gem 'geocoder'
 gem 'feedjira'
+gem 'table_print'
+
