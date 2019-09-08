@@ -3,9 +3,9 @@
 ==== License
 * (c) Team ISCube, Hidetchi. All rights reserved.
 
-==== Version
-* Ruby 2.0~
-* Rails 4
+==== Confirmed environments
+* Ruby 2.3.8
+* Rails 4.2
 
 ==== Database Initialization
 * Run <tt>rake db:seed</tt> to insert initial data

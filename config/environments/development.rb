@@ -27,6 +27,10 @@ Rails.application.configure do
   # number of complex assets.
   config.assets.debug = true
 
+  # Asset digests allow you to set far-future HTTP expiration dates on all assets,
+  # yet still be able to expire them through the digest params.
+  config.assets.digest = true
+
   # Adds additional error checking when serving assets at runtime.
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
@@ -38,6 +42,8 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: '127.0.0.1:3000' }
   config.action_mailer.delivery_method = :letter_opener_web
   
+  config.serve_static_files = true
+
 	config.after_initialize do
 	  Bullet.enable = false
 	  Bullet.alert = true
