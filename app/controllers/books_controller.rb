@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:create, :update, :destroy]
-  before_action :admin_only, only: [:create, :update, :destroy]
+  authorize_resource
 
   respond_to :html
 

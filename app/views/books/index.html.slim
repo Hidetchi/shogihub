@@ -3,7 +3,7 @@
 
 h1 Shogi Books in Non-Japanese Languages
 
-- if user_signed_in? && current_user.is_admin?
+- if user_signed_in? && current_user.is_moderator?
   div.admin_menu
     = link_to 'New Book', new_book_path
 
@@ -47,7 +47,7 @@ h1 Shogi Books in Non-Japanese Languages
         |Publisher: #{book.publisher}
         br
         |Issued on: #{book.issue_date}
-  - if user_signed_in? && current_user.is_admin?
+  - if can? :edit, book
     div.admin_menu
       = link_to 'Show', book
       = " | "

@@ -1,6 +1,7 @@
 class NewsController < ApplicationController
   before_action :set_news, only: [:show, :edit, :update, :destroy, :remove]
-  before_action :authenticate_user!, only: [:edit, :update, :new, :create, :remove]
+  before_action :authenticate_user!, only: [:edit, :update, :new, :create, :remove, :destroy]
+  authorize_resource
 
   respond_to :html
 
@@ -11,6 +12,10 @@ class NewsController < ApplicationController
   def index_headlines
     @news = News.all.order(published_at: :desc).limit(100)
     @news_open = News.where(open: true).order(published_at: :desc).limit(100)
+  end
+
+  def backyard
+    @news = News.all.order(published_at: :desc).limit(100)
   end
 
   def show
@@ -24,7 +29,6 @@ class NewsController < ApplicationController
   end
 
   def edit
-    raise "access denied" unless current_user.is_admin?
   end
 
   def create

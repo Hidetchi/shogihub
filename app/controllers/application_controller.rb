@@ -54,8 +54,4 @@ class ApplicationController < ActionController::Base
     @caption = "An internal server error occured. We apologize for any inconveniences."
     render template: 'pages/error', status: 500, layout: 'application', content_type: 'text/html'
   end
-
-  def admin_only
-    raise UserException::AccessDenied unless (user_signed_in? && current_user.is_admin?)
-  end
 end

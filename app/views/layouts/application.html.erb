@@ -71,7 +71,7 @@
 <div id="user_box">
 <% if user_signed_in? %>
   <%= current_user.email %><br>
-  <% if current_user.is_admin? %>(Admin)<br><% end %>
+  [<%= current_user.to_role %>]<br>
   <%= link_to "Logout", destroy_user_session_path, method: :delete %>
 <% else %>
   <%= link_to "Login to edit", new_user_session_path, :class => 'navbar-link' %>

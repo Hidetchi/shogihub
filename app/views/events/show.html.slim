@@ -18,7 +18,7 @@ div.admin_menu
   - if user_signed_in?
     = " | "
     = link_to 'Edit', edit_event_path(@event)
-    - if current_user.is_admin?
+    - if can? :destroy, @event
       = " | "
       = link_to 'Destroy', @event, data: {:confirm => 'Are you sure?'}, :method => :delete
 

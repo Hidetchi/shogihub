@@ -3,7 +3,7 @@
 
 h1 World Shogi Portal Sites 
 
-- if user_signed_in? && current_user.is_admin?
+- if user_signed_in? && current_user.is_moderator?
   div.admin_menu
     = link_to 'New Website', new_website_path
 
@@ -41,7 +41,7 @@ h1 World Shogi Portal Sites
         span style='display:block;float:right;width:100px;text-align:right;'
           - if user_signed_in?
             = link_to 'Edit', edit_website_path(website)
-            - if current_user.is_admin?
+            - if can? :destroy, website
               = " | "
               = link_to 'Destroy', website, data: {:confirm => 'Are you sure?'}, :method => :delete
         |Organization scale: #{stars_tag(website.scale)} / Update frequency: #{stars_tag(website.frequency)}

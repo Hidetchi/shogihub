@@ -29,7 +29,7 @@ div#map style='width:820px;height:400px;margin:15px 0;'
         span style='display:block;float:right;width:100px;text-align:right;'
           - if user_signed_in?
             = link_to 'Edit', edit_club_path(c)
-            - if current_user.is_admin?
+            - if can? :destroy, c
               = " | "
               = link_to 'Destroy', c, data: {:confirm => 'Are you sure?'}, :method => :delete
         = link_to c.url, c.url, :class=>'external', :target=>'_blank', :style=>'margin-right:15px;'

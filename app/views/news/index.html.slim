@@ -1,7 +1,7 @@
 h1 Official News Release
 
 p
-  |[ Detail mode | #{link_to 'Headline mode', headlines_news_index_path} ]
+  |[ Detail mode | #{link_to 'Headline mode', headlines_news_index_path} | #{link_to 'Backyard', backyard_news_index_path}]
 
 - @news_open.each do |n|
   h2 = n.title_en

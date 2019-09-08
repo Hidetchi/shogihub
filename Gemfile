@@ -53,12 +53,13 @@ gem 'kaminari'
 gem 'twitter'
 gem 'userstamp', :git => 'https://github.com/stricte/userstamp.git', :branch => 'rails4'
 gem 'responders', '~> 2.0'
-gem 'web-console', '~> 2.0'
+gem 'cancancan'
 group :development do
   gem 'bullet'
   gem 'rack-mini-profiler'
   gem 'letter_opener_web'
   gem 'rb-readline'
+  gem 'web-console', '~> 2.0'
 end
 group :test do
   gem "rspec"

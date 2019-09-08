@@ -19,10 +19,13 @@ div.news_content = interpreted_content(@news)
 
 p style='margin-top:30px;' = link_to '<< Back to list', news_index_path
 
-- if user_signed_in? && current_user.is_admin?
+- if can? :edit, @news
   h3 Admin's menu
   div.level2
     = link_to 'Edit', edit_news_path(@news)
+    - if can? :destroy, @news
+      = " | "
+      = link_to 'Destroy', @news, data: {:confirm => 'Are you sure?'}, :method => :delete
 
 javascript:
   $(function(){
