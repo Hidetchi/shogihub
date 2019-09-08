@@ -3,7 +3,8 @@ p
   |[#{link_to 'Detail mode', news_index_path} | #{link_to 'Headline mode', headlines_news_index_path} | Backyard]
 
 div.news
-  p = link_to 'Create a new ShogiHub release', new_news_path
+  - if can? :create, News
+    p = link_to 'Create a new ShogiHub release', new_news_path
 - @news.each do |n|
   div.news
     - if n.open
@@ -13,6 +14,13 @@ div.news
       - if n.category != 0
         |&emsp;#{link_to n.title_ja, n.url, target: '_blank', class: 'external'}
     - unless n.removed
-      p #{link_to 'Show', n}&emsp;#{link_to 'Edit', edit_news_path(n)}&emsp;#{link_to 'Remove', remove_news_path(n), :method => 'post', :remote => true, :class => 'remote', :data => {confirm: 'Hide from list?'}}
+      p
+        = link_to 'Show', n
+        - if can? :edit, n
+          = " | "
+          = link_to 'Edit', edit_news_path(n)
+        - if can? :remove, n
+          = " | "
+          = link_to 'Remove', remove_news_path(n), :method => 'post', :remote => true, :class => 'remote', :data => {confirm: 'Hide from list?'}
       div style='margin: 0 20px;'
         = n.category == 0 ? (n.content_en ? n.content_en.html_safe : "") : (n.content_ja ? n.content_ja.html_safe : "")

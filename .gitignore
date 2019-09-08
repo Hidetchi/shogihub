@@ -19,3 +19,7 @@
 *.swp
 *.swo
 *.swn
+
+.rvmrc
+.ruby-version
+/vendor/bundle

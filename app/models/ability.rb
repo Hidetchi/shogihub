@@ -14,7 +14,7 @@ class Ability
     can :destroy, Club, creator: user
     cannot [:create, :destroy], Website
     cannot [:create, :edit, :destroy], Book
-    cannot [:edit, :destroy], News
+    cannot [:create, :edit, :destroy, :remove], News
 
     if user.is_collaborator?
       can :edit, News
@@ -25,7 +25,8 @@ class Ability
       can :destroy, Club
       can [:create, :destroy], Website
       can [:create, :edit, :destroy], Book
-      can :destroy, News, category: 0
+      can [:create, :destroy], News, category: 0
+      can :remove, News
     end
   end
 end
