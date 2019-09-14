@@ -11,9 +11,9 @@ class EventsController < ApplicationController
     if (request.format.symbol == :atom)
       @events = Event.order(updated_at: :desc)
     elsif (@past)
-      @events = Event.where('end_time < ?', t).order(start_time: :desc)
+      @events = Event.where('end_time < ?', t).order(start_time: :desc).page(params[:page])
     else
-      @events = Event.where('end_time >= ?', t).order(:start_time)
+      @events = Event.where('end_time >= ?', t).order(:start_time).page(params[:page])
     end
     respond_to :html, :atom
   end

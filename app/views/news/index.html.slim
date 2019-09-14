@@ -1,10 +1,9 @@
 h1 Official News Release
 
-p
-  |[ Detail mode | #{link_to 'Headline mode', headlines_news_index_path} | #{link_to 'Backyard', backyard_news_index_path}]
+== render partial: 'navigator', locals:{mode:0}
 
-- @news_open.each do |n|
-  h2 = n.title_en
+- @news.each do |n|
+  h2 = link_to n.title_en, n
   p <b>Category:</b>&emsp;#{news_category_tag(n)}
 
   p <b>Published at:</b>&emsp;#{n.published_at.strftime("%Y-%m-%d %H:%M")}

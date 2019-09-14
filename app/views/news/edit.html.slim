@@ -1,19 +1,22 @@
 h1 Editing news
 
-table style='text-align:left;'
+h2 Original data
+
+table style='text-align:left;width:98%'
   tr
-    th Japanese title
+    th Title
     td.left = @news.title_ja
   tr
-    th Entry ID
+    th ID
     td.left = @news.entry_id
   tr
-    th HTML
+    th View
     td.left = @news.content_ja ? @news.content_ja.html_safe : ""
+  tr
+    th Source
+    td.left style="padding:0"
+      pre style="white-space:pre-wrap;margin:0;width:100%;height:250px;overflow:scroll" = @news.content_ja
+
+h2 Translation edit form
 
 == render 'form'
-
-= link_to 'Show', @news
-'|
-= link_to 'Back', news_index_path
-

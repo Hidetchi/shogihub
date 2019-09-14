@@ -1,10 +1,10 @@
 h1 Official News | Backyard
-p
-  |[#{link_to 'Detail mode', news_index_path} | #{link_to 'Headline mode', headlines_news_index_path} | Backyard]
+
+== render partial: 'navigator', locals:{mode:2}
 
 div.news
   - if can? :create, News
-    p = link_to 'Create a new ShogiHub release', new_news_path
+    p = link_to fa_icon('plus-square', text:'Create a new ShogiHub release'), new_news_path
 - @news.each do |n|
   div.news
     - if n.open

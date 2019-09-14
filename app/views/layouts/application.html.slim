@@ -1,0 +1,90 @@
+doctype html
+html
+head
+  title = SITE_NAME + (content_for?(:title) ? (" / " + yield(:title)) : "")
+  meta name="description" content=(content_for?(:description) ? yield(:description) : 'The central hub of information for overseas shogi fans where you can find the right routes to all sorts of up-to-date information in the shogi world.')
+  meta name="keywords" content=""
+  - if content_for?(:canonical)
+    link rel="canonical" href=(yield(:canonical))
+    meta property="og:url" content=(yield(:canonical))
+  meta property="og:title" content=(SITE_NAME + (content_for?(:title) ? (" / " + yield(:title)) : ""))
+  meta property="og:type" content="website"
+  meta property="og:description" content=(content_for?(:description) ? yield(:description) : 'The central hub of information for overseas shogi fans where you can find the right routes to all sorts of up-to-date information in the shogi world.')
+  meta property="og:image" content=(image_url(content_for?(:og_image) ? yield(:og_image) : 'logo.jpg'))
+  script src="//maps.google.com/maps/api/js?v=3&key=AIzaSyCYxtC2rqbdwDpVeYF9vujkbQS_QSPdNQI"
+  script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"
+  = favicon_link_tag
+  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = csrf_meta_tags
+  = content_for :head
+
+  body#root
+    div#wrapper
+      div#top_banner = link_to image_tag('top_banner.jpg', :id => 'banner_img'), '/'
+
+      div#side_column
+        div#sidemenu
+          ul
+            li = link_to fa_icon('home lg fw', text:'HOME'), '/'
+            li = link_to fa_icon('newspaper-o lg fw', text:'Official News'), '/news'
+            li.has-sub
+              span = fa_icon('certificate lg fw', text:'JSA Professional')
+              ul
+                li = link_to fa_icon('trophy lg fw', text:'Games'), '/games'
+                li.has-sub
+                  span = fa_icon('user lg fw', text:'Players')
+                  ul
+                    li = link_to fa_icon('users lg fw', text:'Active players'), '/players/active'
+                    li = link_to fa_icon('sitemap lg rotate-270 fw', text:'Master-pupil tree'), '/players'
+            li.has-sub
+              span = fa_icon('globe lg fw', text:'World Activities')
+              ul
+                li = link_to 'World Shogi Events', '/events'
+                li = link_to 'World Shogi Portals', '/websites'
+                li = link_to 'World Shogi Clubs', '/clubs'
+            li.has-sub
+              span = fa_icon('comments lg fw', text:'Forums')
+              ul
+                li = link_to "World Shogi Forum", 'http://system.81dojo.com/en/forums', :target=>'_blank', :class => 'external'
+                li = link_to "Shogi-L", 'https://groups.google.com/forum/#!forum/shogi-l', :target=>'_blank', :class => 'external'
+            li.has-sub
+              span = fa_icon('table lg fw rotate-180', text:'Playing Online')
+              ul
+                li = link_to 'Shogi Club 24', 'http://www.shogidojo.com/eng/engindex.htm', :target=>'_blank', :class => 'external'
+                li = link_to '81Dojo', 'http://81dojo.com/', :target=>'_blank', :class => 'external'
+            li.has-sub
+              span = fa_icon('graduation-cap lg fw', text:'Lessons')
+              ul
+                li = link_to "Shogi Openings", 'http://kingcrimsondiscipline.blogspot.de/', :target=>'_blank', :class => 'external'
+                li = link_to "YouTube Lessons", 'http://youtube.com/HIDETCHI', :target=>'_blank', :class => 'external'
+                li = link_to "Rules & Manners", 'http://81dojo.com/documents/Rules_and_Manners_of_Shogi', :target=>'_blank', :class=>'external'
+            li = link_to fa_icon('book lg fw', text:'Shogi Books'), '/books'
+            li = link_to fa_icon('question-circle lg fw', text:'Help'), '/pages/help'
+
+          div#user_box
+            - if user_signed_in?
+              = current_user.email
+              br
+              |[
+              = current_user.to_role
+              |]
+              br
+              = link_to "Logout", destroy_user_session_path, method: :delete
+            - else
+              = link_to "Login to edit", new_user_session_path, :class => 'navbar-link'
+
+          - if (notice || alert)
+            div#alert_box
+              p.notice = notice
+              p.alert = alert
+
+      div#main
+        div#contents = yield
+
+    div#footer
+      center
+        table.invisible style="padding:0"
+          tr
+            td style="border:0;padding:0 15px 0 0;" = image_tag 'is3-logo-small.png'
+            td style="border:0;padding:0;text-align:left;" (c) Team ISCube<br>Innovative Shogi Information System Initiation Scheme

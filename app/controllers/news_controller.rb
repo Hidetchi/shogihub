@@ -6,16 +6,15 @@ class NewsController < ApplicationController
   respond_to :html
 
   def index
-    @news_open = News.where(open: true).order(published_at: :desc).limit(100)
+    @news = News.where(open: true).order(published_at: :desc).page(params[:page]).per(10)
   end
 
   def index_headlines
-    @news = News.all.order(published_at: :desc).limit(100)
-    @news_open = News.where(open: true).order(published_at: :desc).limit(100)
+    @news = News.where(open: true).order(published_at: :desc).page(params[:page]).per(50)
   end
 
   def backyard
-    @news = News.all.order(published_at: :desc).limit(100)
+    @news = News.all.order(published_at: :desc).page(params[:page]).per(20)
   end
 
   def show
@@ -46,6 +45,10 @@ class NewsController < ApplicationController
       end
     end
     respond_with(@news)
+  end
+
+  def preview
+    @preview_news = News.new(content_en: params[:content_en])
   end
 
   def destroy

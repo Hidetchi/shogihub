@@ -11,17 +11,17 @@
     br
     = f.datetime_select :published_at, minute_step: 5
   .field
-    = f.label :url
+    |URL
     br
     = f.text_field :url, size: "80"
   .field
-    = f.label :title_en
+    |English title
     br
     = f.text_field :title_en, size: "80"
   .field
-    = f.label :content_en
+    |English HTML source
     br
-    = f.text_area :content_en, size: "80x14"
+    = f.text_area :content_en, size: "100x20"
   .field
     = f.label :category
     |&emsp;(0: ShogiHub original, 1: JSA topics, 2: JSA events and others)
@@ -32,3 +32,17 @@
     br
     = f.check_box :open
   .actions = f.submit
+
+h3
+  |Translation preview&emsp;
+  a href="javascript:void(0)" onclick="sendPreview()" title="Reload" = fa_icon('refresh lg')
+div#translation_preview style="margin:0 50px" = interpreted_content(@news)
+
+javascript:
+  function sendPreview(){
+    $.ajax({
+      type: "POST",
+      url: "/news/preview",
+      data: {content_en: $('textarea#news_content_en').val()}
+    });
+  }

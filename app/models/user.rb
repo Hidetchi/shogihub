@@ -6,15 +6,15 @@ class User < ActiveRecord::Base
   model_stamper
 
   def is_admin?
-    self.role == 3
+    self.role || 0 == 3
   end
 
   def is_moderator?
-    self.role >= 2
+    self.role || 0 >= 2
   end
 
   def is_collaborator?
-    self.role >= 1
+    self.role || 0 >= 1
   end
 
   def to_role

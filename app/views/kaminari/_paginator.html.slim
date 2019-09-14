@@ -1,0 +1,23 @@
+/ The container tag
+  - available local variables
+    current_page : a page object for the currently displayed page
+    total_pages  : total number of pages
+    per_page     : number of items to fetch per page
+    remote       : data-remote
+    paginator    : the paginator that renders the pagination tags inside
+
+- my_window = 4
+- distance_to_closer_edge = [current_page.to_i - 1, total_pages - current_page.to_i].min
+- my_window = 2 * my_window - distance_to_closer_edge if distance_to_closer_edge < my_window
+
+== paginator.render do
+  nav.pagination
+    == first_page_tag
+    == prev_page_tag
+    - each_page do |page|
+      - if (page - current_page).abs <= my_window
+        == page_tag page
+    == next_page_tag
+    == last_page_tag
+
+    label style="color:grey;font-size:13px;margin-left:5px" #{total_pages} pages in total

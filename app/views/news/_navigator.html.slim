@@ -1,0 +1,21 @@
+div style="display:flex;margin-right:30px"
+  div
+    - if mode == 0
+      b = fa_icon('file-image-o', text:'Detail mode')
+    - else
+      = link_to fa_icon('file-image-o', text:'Detail mode'), detail_news_index_path
+
+    |&emsp;|&emsp;
+
+    - if mode == 1
+      b = fa_icon('list-ul', text:'Headline mode')
+    - else
+      = link_to fa_icon('list-ul', text:'Headline mode'), headlines_news_index_path
+
+  div style="text-align:right;flex:1"
+    - if mode == 2
+      b = fa_icon('wrench', text:'Backyard')
+    - else
+      = link_to fa_icon('wrench', text:'Backyard'), backyard_news_index_path
+
+= paginate @news

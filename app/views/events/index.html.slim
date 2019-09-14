@@ -3,13 +3,20 @@
 
 h1 World Shogi Events
 
-ul
-  li = @past ? link_to('Upcoming Events', '/events') : "Upcoming Events"
-  li = @past ? "Past Events" : link_to('Past Events', '/events/past')
-
 - if user_signed_in?
-  div.admin_menu
-    = link_to 'Create New Event', new_event_path
+  div style="float:right;margin-right:40px"
+    = link_to fa_icon('plus-square', text:'Create New Event'), new_event_path
+
+- if @past
+  = link_to fa_icon('share', text:'Upcoming Events'), '/events'
+  |&emsp;|&emsp;
+  = fa_icon('reply', text:'Past Events')
+- else
+  = fa_icon('share', text:'Upcoming Events')
+  |&emsp;|&emsp;
+  = link_to fa_icon('share', text:'Past Events'), '/events/past'
+
+= paginate @events
 
 - month = nil
 - @events.each do |e|

@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
 
   resources :news do
-    get 'detail' => 'news#index', on: :collection
-    get 'headlines' => 'news#index_headlines', on: :collection
-    get 'backyard' => 'news#backyard', on: :collection
+    collection do
+      get 'detail' => 'news#index'
+      get 'headlines' => 'news#index_headlines'
+      get 'backyard' => 'news#backyard'
+      post 'preview' => 'news#preview'
+    end
     post 'remove' => 'news#remove', on: :member
   end
 

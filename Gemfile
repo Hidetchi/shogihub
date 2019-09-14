@@ -54,6 +54,7 @@ gem 'twitter'
 gem 'userstamp', :git => 'https://github.com/stricte/userstamp.git', :branch => 'rails4'
 gem 'responders', '~> 2.0'
 gem 'cancancan'
+gem 'font-awesome-rails'
 group :development do
   gem 'bullet'
   gem 'rack-mini-profiler'
