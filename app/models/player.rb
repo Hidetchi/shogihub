@@ -10,7 +10,7 @@ has_many :events, through: :event_players
 def self.find_or_create(name_ja)
   name_ja = name_ja.gsub(/・/,"")
   name_ja = name_ja.gsub(/眞/,"真").gsub(/髙/,"高").gsub(/﨑/,"崎")
-  name_ja = name_ja.gsub(/$[KＫ]ステ/,"カロリーナステ")
+  name_ja = name_ja.gsub(/^[KＫ]ステ/,"カロリーナステ")
   name_ja = '真田彩子' if name_ja == '古河彩子'
   name_ja = '上川香織' if name_ja == '松尾香織'
   unless (player = Player.find_by(search_key: name_ja))

@@ -71,8 +71,8 @@ def self.load_JSA_list(url, year = nil)
 			}
       if column == max_column
         result = mode == 0 ? ["○", "●", "引", "□", "■"].index(@elements[1]) : nil
-        sente = @elements[mode == 0 ? 2 : 1].gsub(/\s+/,"").gsub(/[※\*＊　]/,"").gsub(/アマ/,"").gsub(/(奨励会)?[12345１２３４５初二三][級段]$/,"")
-        gote = @elements[mode == 0 ? 3 : 2].gsub(/\s+/,"").gsub(/[※\*＊　]/,"").gsub(/アマ/,"").gsub(/(奨励会)?[12345１２３４５初二三][級段]$/,"")
+        sente = @elements[mode == 0 ? 2 : 1].gsub(/\s+/,"").gsub(/[※\*＊　]/,"").gsub(/アマ/,"").gsub(/(奨励会)?[1234567１２３４５６７初二三][級段]$/,"")
+        gote = @elements[mode == 0 ? 3 : 2].gsub(/\s+/,"").gsub(/[※\*＊　]/,"").gsub(/アマ/,"").gsub(/(奨励会)?[1234567１２３４５６７初二三][級段]$/,"")
         event = @elements[0]
         description = @elements[mode == 0 ? 5 : 4]
         Game.update_game(@date, sente, gote, result, event, description)
