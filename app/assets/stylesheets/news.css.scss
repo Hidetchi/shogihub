@@ -11,6 +11,10 @@ div.news_content {
   border-top: 1px solid #bbb;
   padding: 15px 20px;
   width: 90%;
+  overflow-y:auto;
+  h3 {
+    margin-left: 0;
+  }
 }
 
 table.news_backyard {

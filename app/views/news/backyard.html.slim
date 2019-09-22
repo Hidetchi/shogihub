@@ -24,7 +24,7 @@ table.news_backyard
           = news_category_tag(n)
           = link_to n.title_en, n, target:'_blank'
         - else
-          = link_to n.title_ja, n, target:'_blank', style:('color:#aaa' if n.instruction == 2)
+          = link_to n.title_ja, n, target:'_blank', style:('text-decoration:none;color:#aaa' if n.instruction == 2)
       td
         - if n.category == 0
           |-
