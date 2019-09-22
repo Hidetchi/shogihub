@@ -71,6 +71,6 @@ gem 'whenever', :require => false
 gem 'nested_form'
 gem 'gmaps4rails'
 gem 'geocoder'
-gem 'feedjira'
+gem 'feedjira', '~> 2.0'
 gem 'table_print'
 
