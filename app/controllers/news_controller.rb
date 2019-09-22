@@ -1,6 +1,6 @@
 class NewsController < ApplicationController
-  before_action :set_news, only: [:show, :edit, :update, :destroy, :remove]
-  before_action :authenticate_user!, only: [:edit, :update, :new, :create, :remove, :destroy]
+  before_action :set_news, only: [:show, :edit, :update, :destroy, :instruction]
+  before_action :authenticate_user!, only: [:edit, :update, :new, :create, :instruction, :destroy]
   authorize_resource
 
   respond_to :html
@@ -14,7 +14,9 @@ class NewsController < ApplicationController
   end
 
   def backyard
-    @news = News.all.order(published_at: :desc).page(params[:page]).per(20)
+    @hide_skipped = params[:hide_skipped].present?
+    @news = News.order(published_at: :desc).page(params[:page]).per(50)
+    @news = @news.where.not(instruction:2) if @hide_skipped
   end
 
   def show
@@ -56,8 +58,9 @@ class NewsController < ApplicationController
     respond_with(@news)
   end
 
-  def remove
-    @news.update_attributes(removed: true) unless @news.open
+  def instruction
+    @news.update_attributes(instruction: params[:instruction])
+    respond_with(@news)
   end
 
   private
@@ -66,6 +69,6 @@ class NewsController < ApplicationController
     end
 
     def news_params
-      params.require(:news).permit(:entry_id, :url, :published_at, :title_ja, :title_en, :content_ja, :content_en, :category, :open)
+      params.require(:news).permit(:entry_id, :url, :published_at, :title_ja, :title_en, :content_ja, :content_en, :category, :status, :translator_id)
     end
 end

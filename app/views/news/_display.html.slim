@@ -1,0 +1,13 @@
+p <b>Category:</b>&emsp;#{news_category_tag(news)}
+p <b>Published at:</b>&emsp;#{news.published_at.strftime("%Y-%m-%d %H:%M")}
+- if news.category != 0
+  p <b>Original site:</b>&emsp;#{link_to news.url, news.url, target: '_blank', class: 'external'}
+div.news_content = interpreted_content(news)
+- if news.translator.present?
+  span style="color:grey;font-style:italic"
+    - if news.category == 0
+      = fa_icon('pencil lg fw')
+      |Written by <b>#{news.translator.to_name}</b>
+    - else
+      = fa_icon('language lg fw')
+      |Translated by <b>#{news.translator.to_name}</b>

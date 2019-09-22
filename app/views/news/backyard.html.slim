@@ -2,25 +2,37 @@ h1 Official News | Backyard
 
 == render partial: 'navigator', locals:{mode:2}
 
-div.news
-  - if can? :create, News
-    p = link_to fa_icon('plus-square', text:'Create a new ShogiHub release'), new_news_path
-- @news.each do |n|
-  div.news
-    - if n.open
-      p style='font-weight:bold;color:red;' PUBLISHED as "#{n.title_en}"
-    p
-      = n.published_at.strftime("%Y-%m-%d %H:%M")
-      - if n.category != 0
-        |&emsp;#{link_to n.title_ja, n.url, target: '_blank', class: 'external'}
-    - unless n.removed
-      p
-        = link_to 'Show', n
-        - if can? :edit, n
-          = " | "
-          = link_to 'Edit', edit_news_path(n)
-        - if can? :remove, n
-          = " | "
-          = link_to 'Remove', remove_news_path(n), :method => 'post', :remote => true, :class => 'remote', :data => {confirm: 'Hide from list?'}
-      div style='margin: 0 20px;'
-        = n.category == 0 ? (n.content_en ? n.content_en.html_safe : "") : (n.content_ja ? n.content_ja.html_safe : "")
+div style="text-align:right;margin:10px 15px 5px"
+  - if @hide_skipped
+    = link_to fa_icon('eye', text:'Show skipped articles'), backyard_news_index_path(page:params[:page])
+  - else
+    = link_to fa_icon('eye-slash', text:'Hide skipped articles'), backyard_news_index_path(hide_skipped:true, page:params[:page])
+
+table.news_backyard
+  tr
+    th ID
+    th Date
+    th Japanese title
+    th Target
+    th Status
+  - @news.each do |n|
+    tr
+      td = n.id
+      td style="white-space:nowrap" = n.published_at.strftime("%Y-%m-%d")
+      td.left
+        - if n.category == 0
+          = news_category_tag(n)
+          = link_to n.title_en, n, target:'_blank'
+        - else
+          = link_to n.title_ja, n, target:'_blank', style:('color:#aaa' if n.instruction == 2)
+      td
+        - if n.category == 0
+          |-
+        - elsif n.instruction == 1
+          = fa_icon('check lg', style:'color:mediumseagreen', title:'To publish')
+        - elsif n.instruction == 2
+          = fa_icon('times lg', style:'color:crimson', title:'Skipped')
+      td = render_news_status(n)
+
+- if can? :create, News
+  p = link_to fa_icon('plus-square', text:'Create a new original ShogiHub release'), new_news_path

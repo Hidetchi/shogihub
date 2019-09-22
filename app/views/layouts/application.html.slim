@@ -64,11 +64,7 @@ head
 
           div#user_box
             - if user_signed_in?
-              = current_user.email
-              br
-              |[
-              = current_user.to_role
-              |]
+              |Logged in as:<br><b>#{current_user.to_name}</b> [#{current_user.to_role}]
               br
               = link_to "Logout", destroy_user_session_path, method: :delete
             - else

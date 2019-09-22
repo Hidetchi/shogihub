@@ -24,9 +24,9 @@ div.admin_menu
 
 - if user_signed_in?
   p style='text-align:center;'
-    |Created by: #{@event.creator.email}
+    |Created by: #{@event.creator.to_name}
     br
-    |Updated by: #{@event.updater.email}
+    |Updated by: #{@event.updater.to_name}
 
 javascript:
   handler = Gmaps.build('Google');

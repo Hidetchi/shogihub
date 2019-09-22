@@ -5,28 +5,46 @@
   = content_for :description do
     = @news.content_en
 
-h1 Official News Release
+- if @news.open?
+  h1 Official News Release
+  p = link_to fa_icon('angle-double-left lg', text:'View all news'), news_index_path
+  h2 = @news.title_en
+  == render partial:'display', locals:{news:@news}
 
-p = link_to fa_icon('angle-double-left lg', text:'View all news'), news_index_path
-
-h2 = @news.title_en
-
-p <b>Category:</b>&emsp;#{news_category_tag(@news)}
-
-p <b>Published at:</b>&emsp;#{@news.published_at.strftime("%Y-%m-%d %H:%M")}
-
-- if @news.category != 0
-  p <b>Original site:</b>&emsp;#{link_to @news.url, @news.url, target: '_blank', class: 'external'}
-
-div.news_content = interpreted_content(@news)
+- else
+  p This news is not available in English
+  p = link_to fa_icon('angle-double-left lg', text:'View all news'), news_index_path
 
 - if can? :edit, @news
-  h3 Your special menu
+  h2.special style="margin-top:50px" Editor's backyard (not seen by normal users)
   div.level2
-    = link_to fa_icon('edit fw', text:'Edit'), edit_news_path(@news)
-    - if can? :destroy, @news
-      = " | "
-      = link_to fa_icon('trash-o fw', text:'Destroy'), @news, data: {:confirm => 'Are you sure?'}, :method => :delete
+    p
+      strong Moderator's instruction:&ensp;
+      - if @news.instruction == 1
+        = fa_icon('check lg fw', style:'color:mediumseagreen', text:'To publish')
+      - elsif @news.instruction == 2
+        = fa_icon('times lg fw', style:'color:crimson', text:'Skipped')
+    p
+      strong Status:&ensp;
+      = render_news_status(@news)
+        
+    ul style="list-style-type:none;padding-left:0"
+      - if @news.category != 0 && can?(:instruction, @news)
+        li = link_to fa_icon('check fw', text:'Instruction: To publish'), instruction_news_path(@news, instruction:1), :method => 'post'
+        li = link_to fa_icon('times fw', text:'Instruction: Skip'), instruction_news_path(@news, instruction:2), :method => 'post'
+      li = link_to fa_icon('edit fw', text:'Edit'), edit_news_path(@news)
+      - if can? :destroy, @news
+        li = link_to fa_icon('trash-o fw', text:'Destroy'), @news, data: {:confirm => 'Are you sure?'}, :method => :delete
+  hr
+
+  div
+    p
+      = @news.published_at.strftime("%Y-%m-%d %H:%M")
+      - if @news.category != 0
+        |&emsp;#{link_to @news.title_ja, @news.url, target: '_blank', class: 'external'}
+    - unless @news.removed
+      div style='margin: 0 20px;overflow:auto'
+        = @news.category == 0 ? (@news.content_en ? @news.content_en.html_safe : "") : (@news.content_ja ? @news.content_ja.html_safe : "")
 
 javascript:
   $(function(){

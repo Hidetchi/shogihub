@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       get 'backyard' => 'news#backyard'
       post 'preview' => 'news#preview'
     end
-    post 'remove' => 'news#remove', on: :member
+    post 'instruction' => 'news#instruction', on: :member
   end
 
   resources :clubs

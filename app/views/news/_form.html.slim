@@ -7,11 +7,11 @@
           li = message
 
   .field
-    = f.label :published_at
+    |Published at (Keep the original publish date of the Japanese release)
     br
     = f.datetime_select :published_at, minute_step: 5
   .field
-    |URL
+    |Original URL
     br
     = f.text_field :url, size: "80"
   .field
@@ -24,13 +24,34 @@
     = f.text_area :content_en, size: "100x20"
   .field
     = f.label :category
-    |&emsp;(0: ShogiHub original, 1: JSA topics, 2: JSA events and others)
     br
-    = f.text_field :category
+    label
+      = f.radio_button :category, 0
+      |ShogiHub original
+    label
+      = f.radio_button :category, 1
+      |JSA topics
+    label
+      = f.radio_button :category, 2
+      |JSA events and others
   .field
-    |Published (Whether the english version has been prepared and is ready to be released on ShogiHub)
+    |Translation status<br>
+    label
+      = f.radio_button :status, 0
+      |Ongoing
+    label
+      = f.radio_button :status, 1
+      |Submitted for proofreading
+    label
+      = f.radio_button :status, 2
+      |Approved
+    label style=("color:grey" if cannot?(:instruction, @news))
+      = f.radio_button :status, 3, disabled: cannot?(:instruction, @news)
+      |Published
+  .field
+    = f.label :translator
     br
-    = f.check_box :open
+    = f.collection_select :translator_id, User.where('role > 0'), :id, :to_name, include_blank:true
   .actions = f.submit
 
 h3

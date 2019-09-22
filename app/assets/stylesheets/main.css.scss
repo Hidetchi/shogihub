@@ -106,6 +106,7 @@ div#user_box {
   margin-top:50px;
   margin-left:3px;
   width:134px;
+  line-height:1.5em;
 }
 
 h1 {
@@ -131,6 +132,11 @@ h2 {
     text-decoration: none;
     color: #400;
   }
+}
+
+h2.special{
+  color:white;
+  background:grey;
 }
 
 h3 {

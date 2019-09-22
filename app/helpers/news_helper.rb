@@ -2,9 +2,9 @@ module NewsHelper
   def news_category_tag(news)
     case news.category
     when 0
-      image_tag 'news_icon_shogihub.png', style: 'vertical-align: middle'
+      image_tag 'news_icon_shogihub.png', style: 'vertical-align: middle;margin-right:3px'
     when 1, 2
-      image_tag 'news_icon_jsa.png', style: 'vertical-align: middle'
+      image_tag 'news_icon_jsa.png', style: 'vertical-align: middle;margin-right:3px'
     end
   end
 
@@ -23,4 +23,17 @@ module NewsHelper
       ""
     end
   end
+
+  def render_news_status(news)
+    if news.status == 0 && news.translator.present?
+      "Assigned"
+    elsif news.status == 1
+      content_tag(:span, "Submitted", style:'color:orangered;font-weight:bold')
+    elsif news.status == 2
+      content_tag(:span, "Approved", style:'color:mediumseagreen;font-weight:bold')
+    elsif news.status == 3
+      content_tag(:span, "Published", style:'color:white;background:forestgreen;padding:0 5px')
+    end
+  end
+
 end

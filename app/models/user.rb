@@ -20,4 +20,8 @@ class User < ActiveRecord::Base
   def to_role
     ['Member', 'Collaborator', 'Moderator', 'Admin'][role]
   end
+
+  def to_name
+    self.email.split("@")[0]
+  end
 end

@@ -1,5 +1,6 @@
 class News < ActiveRecord::Base
   include PublicActivity::Common
+  belongs_to :translator, class_name: 'User'
 
   def self.fetch_from_JSA
     url = 'http://www.shogi.or.jp/atom.xml'
@@ -23,5 +24,9 @@ class News < ActiveRecord::Base
         News.create(entry_id: e.entry_id, url: e.url, published_at: e.published, title_ja: e.title, title_en: e.title, content_ja: e.content, content_en: e.content, category: category)
       end
     end
+  end
+
+  def open?
+    status == 3
   end
 end
