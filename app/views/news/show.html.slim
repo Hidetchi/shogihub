@@ -19,6 +19,10 @@
   h2.special style="margin-top:50px" Editor's backyard (not seen by normal users)
   div.level2
     p
+      = @news.published_at.strftime("%Y-%m-%d %H:%M")
+      - if @news.category != 0
+        |&emsp;#{link_to @news.title_ja, @news.url, target: '_blank', class: 'external'}
+    p
       strong Moderator's instruction:&ensp;
       - if @news.instruction == 1
         = fa_icon('check lg fw', style:'color:mediumseagreen', text:'To publish')
@@ -35,16 +39,9 @@
       li = link_to fa_icon('edit fw', text:'Edit'), edit_news_path(@news)
       - if can? :destroy, @news
         li = link_to fa_icon('trash-o fw', text:'Destroy'), @news, data: {:confirm => 'Are you sure?'}, :method => :delete
-  hr
-
-  div
-    p
-      = @news.published_at.strftime("%Y-%m-%d %H:%M")
-      - if @news.category != 0
-        |&emsp;#{link_to @news.title_ja, @news.url, target: '_blank', class: 'external'}
-    - unless @news.removed
-      div style='margin: 0 20px;overflow:auto'
-        = @news.category == 0 ? (@news.content_en ? @news.content_en.html_safe : "") : (@news.content_ja ? @news.content_ja.html_safe : "")
+  - unless @news.removed
+    div.news_content
+      = @news.category == 0 ? (@news.content_en ? @news.content_en.html_safe : "") : (@news.content_ja ? @news.content_ja.html_safe : "")
 
 javascript:
   $(function(){

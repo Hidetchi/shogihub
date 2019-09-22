@@ -6,22 +6,31 @@ class User < ActiveRecord::Base
   model_stamper
 
   def is_admin?
-    self.role || 0 == 3
+    role_i == 3
   end
 
   def is_moderator?
-    self.role || 0 >= 2
+    role_i >= 2
   end
 
   def is_collaborator?
-    self.role || 0 >= 1
+    role_i >= 1
   end
 
   def to_role
-    ['Member', 'Collaborator', 'Moderator', 'Admin'][role]
+    ['Member', 'Collaborator', 'Moderator', 'Admin'][role_i]
+  end
+
+  def role_i
+    self.role || 0
   end
 
   def to_name
     self.email.split("@")[0]
+  end
+
+  def to_hidden_email
+    tokens = self.email.match(/^(.*)@(.)(.*)$/)
+    $1 + "@" + $2 + "**********"
   end
 end

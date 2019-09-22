@@ -65,10 +65,13 @@ head
           div#user_box
             - if user_signed_in?
               |Logged in as:<br><b>#{current_user.to_name}</b> [#{current_user.to_role}]
-              br
-              = link_to "Logout", destroy_user_session_path, method: :delete
             - else
               = link_to "Login to edit", new_user_session_path, :class => 'navbar-link'
+          ul
+            - if can? :index, User
+              li = link_to fa_icon('address-book lg fw', text:'Manage users'), users_path
+            - if user_signed_in?
+              li = link_to fa_icon('sign-out lg fw', text:'Logout'), destroy_user_session_path, method: :delete
 
           - if (notice || alert)
             div#alert_box

@@ -20,6 +20,10 @@ Rails.application.routes.draw do
   resources :books
 
   devise_for :users
+  resources :users, :only => [:index] do
+    post 'upgrade', on: :member
+    post 'downgrade', on: :member
+  end
   get 'players/show'
   get 'players/active'
 

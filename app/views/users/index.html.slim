@@ -1,0 +1,17 @@
+h2 Manage users
+div.level2 style="margin-top:15px"
+  = paginate @users
+  table style="margin-top:15px"
+    tr
+      th Name
+      th Role
+      th Change
+    - @users.each do |u|
+      tr
+        td.left = u.to_hidden_email
+        td = u.to_role
+        td
+          - if u.role_i > 0 && current_user.role_i > u.role_i
+            = link_to fa_icon('caret-down lg fw', title:'Downgrade'), downgrade_user_path(u), method: :post, data:{confirm:'Are you sure?'}
+          - if u.role_i < 3 && current_user.role_i > u.role_i
+            = link_to fa_icon('caret-up lg fw', title:'Upgrade'), upgrade_user_path(u), method: :post, data:{confirm:'Are you sure?'}

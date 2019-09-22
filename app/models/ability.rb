@@ -15,6 +15,7 @@ class Ability
     cannot [:create, :destroy], Website
     cannot [:create, :edit, :destroy], Book
     cannot [:create, :edit, :destroy, :instruction], News
+    cannot :manage, User
 
     if user.is_collaborator?
       can :edit, News
@@ -27,6 +28,7 @@ class Ability
       can [:create, :edit, :destroy], Book
       can :destroy, News, category: 0
       can [:create, :instruction], News
+      can [:index, :upgrade, :downgrade], User
     end
   end
 end
