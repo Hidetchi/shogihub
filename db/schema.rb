@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190922002802) do
+ActiveRecord::Schema.define(version: 20190922145001) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id",   limit: 4
@@ -144,10 +144,8 @@ ActiveRecord::Schema.define(version: 20190922002802) do
     t.text     "content_ja",    limit: 65535
     t.text     "content_en",    limit: 65535
     t.integer  "category",      limit: 4
-    t.boolean  "open",                        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "removed",                     default: false
     t.integer  "instruction",   limit: 1,     default: 0
     t.integer  "status",        limit: 1,     default: 0
     t.integer  "translator_id", limit: 4
@@ -170,6 +168,7 @@ ActiveRecord::Schema.define(version: 20190922002802) do
     t.string   "image_url",  limit: 255
     t.boolean  "retired",                default: false
     t.boolean  "deceased",               default: false
+    t.string   "ancestry",   limit: 255
   end
 
   add_index "players", ["search_key"], name: "index_players_on_search_key", using: :btree

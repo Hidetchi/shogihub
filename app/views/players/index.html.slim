@@ -2,8 +2,13 @@
   |Professional Players, Master-pupil Diagram
 
 h2 All Professional Players, Master-pupil Diagram
-div.families
-  = family_tree(@root_players)
+div.level2
+  - @root_players.each do |root|
+    = arranged_tree_as_list(root.subtree.order(:category, :kishi_id, :birthday).arrange, ul_class_top: ['tree-menu']) do |p|
+      - if p.root?
+        strong = player_name_tag(p)
+      - else
+        = player_name_tag(p)
 
 javascript:
   $(function(){

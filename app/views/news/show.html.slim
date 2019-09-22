@@ -1,4 +1,4 @@
-- if @news.open && @news.title_en && @news.title_en != ""
+- if @news.open? && @news.title_en && @news.title_en != ""
   = content_for :title do
     |News release: 
     = @news.title_en
@@ -39,7 +39,7 @@
       li = link_to fa_icon('edit fw', text:'Edit'), edit_news_path(@news)
       - if can? :destroy, @news
         li = link_to fa_icon('trash-o fw', text:'Destroy'), @news, data: {:confirm => 'Are you sure?'}, :method => :delete
-  - unless @news.removed
+  - unless @news.instruction == 2
     div.news_content
       = @news.category == 0 ? (@news.content_en ? @news.content_en.html_safe : "") : (@news.content_ja ? @news.content_ja.html_safe : "")
 
