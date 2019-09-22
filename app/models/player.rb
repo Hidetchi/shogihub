@@ -2,10 +2,9 @@ require 'open-uri'
 
 class Player < ActiveRecord::Base
 
-belongs_to :teacher, class_name: 'Player', foreign_key: 'teacher_id'
-has_many :pupils, class_name: 'Player', foreign_key: 'teacher_id'
 has_many :event_players
 has_many :events, through: :event_players
+has_ancestry
 
 def self.find_or_create(name_ja)
   name_ja = name_ja.gsub(/・/,"")
@@ -122,10 +121,10 @@ def load_JSA_detail
         end
       elsif mode == 3
         if line =~ /\<td\>(.+)\<\/td\>/
-          if self.teacher_id == nil
+          if self.root?
             teacher_name = $1.gsub(/[（\(].+[）\)]/,"").gsub(/門下/,"").gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(名誉|永世|実力制).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
             teacher = Player.find_or_create(teacher_name)
-            self.teacher_id = teacher.id
+            self.parent = teacher
           end
         end
       end
@@ -179,7 +178,7 @@ def self.seeds(array)
       teacher_name = hash[:teacher_name].gsub(/[（\(].+[）\)]/,"").gsub(/門下/,"").gsub(/[一二三四五六七八九十]+世名人/,"").gsub(/(実力制|名誉|永世).+$/,"").gsub(/[四五六七八九]段/,"").gsub(/[\s　]/,"")
       teacher = Player.find_or_create(teacher_name)
       hash.delete(:teacher_name)
-      hash[:teacher_id] = teacher.id
+      hash[:parent_id] = teacher.id
     end
 
     if (player = Player.find_by(search_key: hash[:search_key]))

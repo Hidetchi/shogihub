@@ -368,3 +368,52 @@ nav.pagination a:hover {
   background:white;
   text-decoration: none;
 }
+
+$tree-menu-indent: 30px;
+$tree-menu-height: 23px;
+$tree-menu-border-width: 1px;
+$tree-menu-border-color: #aaa;
+ 
+ 
+.tree-menu,
+.tree-menu ul {
+    line-height: $tree-menu-height;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+ 
+.tree-menu ul {
+  position: relative;
+  margin-left: $tree-menu-indent;
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    border-left: $tree-menu-border-width solid $tree-menu-border-color;
+  }
+  li {
+    position: relative;
+    margin: 0;
+    padding-left: $tree-menu-indent;
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: $tree-menu-height / 2;
+      left: 0;
+      width: $tree-menu-indent * 0.7;
+      height: 0;
+      border-top: $tree-menu-border-width solid $tree-menu-border-color;
+    }
+    &:last-child:before {
+      bottom: 0;
+      height: auto;
+      background-color: white;
+    }
+  }
+}

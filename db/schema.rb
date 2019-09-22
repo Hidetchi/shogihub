@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190922144107) do
+ActiveRecord::Schema.define(version: 20190922145001) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id",   limit: 4
@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(version: 20190922144107) do
     t.string   "image_url",  limit: 255
     t.boolean  "retired",                default: false
     t.boolean  "deceased",               default: false
+    t.string   "ancestry",   limit: 255
   end
 
   add_index "players", ["search_key"], name: "index_players_on_search_key", using: :btree
