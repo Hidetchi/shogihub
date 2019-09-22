@@ -1,7 +1,9 @@
 = content_for :title do
-  = @player.to_s
+  |#{@player.to_s} (#{@player.search_key})
 = content_for :og_image do
   = @player.to_image_url
+
+p = link_to fa_icon('angle-double-left lg', text:'View all players'), players_path
 
 h2 Professional Player Info
 h3 #{@player.to_s}
@@ -40,6 +42,7 @@ table.invisible
           = flag_ss_tag(e.country.code)
           = link_to e.name, e
 
+div style="margin-left:30px" == paginate @games
 table style="margin-left:30px;margin-top:10px;"
   tr
     th Date

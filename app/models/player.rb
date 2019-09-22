@@ -8,7 +8,9 @@ has_many :event_players
 has_many :events, through: :event_players
 
 def self.find_or_create(name_ja)
+  name_ja = name_ja.gsub(/・/,"")
   name_ja = name_ja.gsub(/眞/,"真").gsub(/髙/,"高").gsub(/﨑/,"崎")
+  name_ja = name_ja.gsub(/$[KＫ]ステ/,"カロリーナステ")
   name_ja = '真田彩子' if name_ja == '古河彩子'
   name_ja = '上川香織' if name_ja == '松尾香織'
   unless (player = Player.find_by(search_key: name_ja))
@@ -25,10 +27,10 @@ def self.load_JSA_all
   @retired = false
   @name_loaded = false
   response = ""
-  response += open("http://www.shogi.or.jp/player/").read
-  response += open("http://www.shogi.or.jp/player/lady.html").read
-  response += open("http://www.shogi.or.jp/player/retirement.html").read
-  response += open("http://www.shogi.or.jp/player/deceased.html").read
+  response += open("https://www.shogi.or.jp/player/").read
+  response += open("https://www.shogi.or.jp/player/lady.html").read
+  response += open("https://www.shogi.or.jp/player/retirement.html").read
+  response += open("https://www.shogi.or.jp/player/deceased.html").read
 #  response += "#INTAI_START\n"
 #  response += open("http://www.shogi.or.jp/player/retirement.html").read
   lines = response.force_encoding("utf-8").split("\n")
@@ -153,9 +155,9 @@ end
 
 def to_jsa_url
   if self.category == 1
-    self.kishi_id ? ("http://www.shogi.or.jp/player/pro/" + self.kishi_id.to_s + ".html") : ""
+    self.kishi_id ? ("https://www.shogi.or.jp/player/pro/" + self.kishi_id.to_s + ".html") : ""
   elsif self.category == 2
-    self.kishi_id ? ("http://www.shogi.or.jp/player/lady/" + self.kishi_id.to_s + ".html") : ""
+    self.kishi_id ? ("https://www.shogi.or.jp/player/lady/" + self.kishi_id.to_s + ".html") : ""
   else
     ""
   end
@@ -163,9 +165,9 @@ end
 
 def to_image_url
   if self.category == 1
-    self.kishi_id ? ("http://www.shogi.or.jp/images/player/pro/" + self.kishi_id.to_s + ".jpg") : ""
+    self.kishi_id ? ("https://www.shogi.or.jp/images/player/pro/" + self.kishi_id.to_s + ".jpg") : ""
   elsif self.category == 2
-    self.kishi_id ? ("http://www.shogi.or.jp/images/player/lady/" + self.kishi_id.to_s + ".jpg") : ""
+    self.kishi_id ? ("https://www.shogi.or.jp/images/player/lady/" + self.kishi_id.to_s + ".jpg") : ""
   else
     ""
   end

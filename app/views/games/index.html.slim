@@ -4,8 +4,9 @@
 h2 Professional Game Results & Schedule
 p
   |See JSA original data at: 
-  = link_to('http://www.shogi.or.jp/game/','http://www.shogi.or.jp/game/',target:'_blank', class:'external')
+  = link_to('https://www.shogi.or.jp/game/','https://www.shogi.or.jp/game/',target:'_blank', class:'external')
 
+== paginate @games
 = render :partial => 'list', :locals => { :games => @games}
 
 javascript:

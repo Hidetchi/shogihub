@@ -49,9 +49,16 @@ def self.load_JSA_list(url, year = nil)
         end
       end
     else
-      if line =~ /^\<tr\>\<td\>/i
-        column = 0
-        @elements = Array.new(7)
+      if line =~ /^\<tr\>\<td[\s\>]/i
+        if line =~ /^\<tr\>\<td\srowspan=\"(\d+)\"/i
+          @elements = Array.new(7)
+          column = 0
+        else
+          prev_tournament = @elements[0]
+          @elements = Array.new(7)
+          @elements[0] = prev_tournament
+          column = 1
+        end
       end
 			line = line.gsub(/\<td.*?\>\s*(.*?)\s*\<\/td\>/i) {
         str = $1
@@ -103,16 +110,24 @@ def self.update_game(date, sente, gote, result, event, description)
     if event =~ /([123456１２３４５６])組/
       description = "Class " + NKF.nkf('-m0Z1 -w', $1)
     end
+  elsif event =~/棋聖/
+    tournament_name = '棋聖'
+  elsif event =~/清麗/
+    tournament_name = '清麗'
+  elsif event =~/王将/ && event !~/女流/
+    tournament_name = '王将'
   elsif event =~ /女流名人/
     tournament_name = '女流名人' 
   elsif event =~ /倉敷藤花/
     tournament_name = '倉敷藤花' 
+  elsif event =~ /女流王座/
+    tournament_name = '女流王座' 
   elsif event =~ /(レディース|マイナビ)/
     tournament_name = 'マイナビ' 
   elsif event =~ /^朝日/
     tournament_name = '朝日杯'
-  elsif event =~ /(NHK|ＮＨＫ|銀河|最強|新人王|加古川|女流王将)/
-#    puts sprintf("TV/Online/Rookie Tournament %s is ignored.", event)
+  elsif event =~ /(NHK|ＮＨＫ|銀河|最強|新人王|加古川|女流王将|YAMADA)/
+    #puts sprintf("TV/Online/Rookie Tournament %s is ignored.", event)
     return
   else
     tournament_name = event
@@ -122,7 +137,7 @@ def self.update_game(date, sente, gote, result, event, description)
     puts sprintf("Tournament with search key %s not found.", tournament_name)
     return
   end
-  if sente =~ /^.+か[^り]+$/ || gote =~ /^.+か[^り]+$/
+  if sente =~ /^.+か[^おほり]+$/ || gote =~ /^.+か[^おほり]+$/
     puts sprintf("Ignored %s vs %s", sente, gote)
     return
   end
