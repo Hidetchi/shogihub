@@ -6,11 +6,11 @@ class NewsController < ApplicationController
   respond_to :html
 
   def index
-    @news = News.where(open: true).order(published_at: :desc).page(params[:page]).per(10)
+    @news = News.where(status: 3).order(published_at: :desc).page(params[:page]).per(10)
   end
 
   def index_headlines
-    @news = News.where(open: true).order(published_at: :desc).page(params[:page]).per(50)
+    @news = News.where(status: 3).order(published_at: :desc).page(params[:page]).per(50)
   end
 
   def backyard
@@ -41,7 +41,7 @@ class NewsController < ApplicationController
 
   def update
     @news.update(news_params)
-    if params[:news][:open].to_i == 1
+    if params[:news][:status].to_i == 3
       if (PublicActivity::Activity.find_by(trackable: @news) == nil)
         @news.create_activity(key: 'news.publish', owner: current_user)
       end
