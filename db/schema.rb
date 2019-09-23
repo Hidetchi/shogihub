@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190922145001) do
+ActiveRecord::Schema.define(version: 20190922163604) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id",   limit: 4
@@ -159,16 +159,14 @@ ActiveRecord::Schema.define(version: 20190922145001) do
     t.string   "search_key", limit: 255
     t.integer  "category",   limit: 4,   default: 0
     t.integer  "kishi_id",   limit: 4
-    t.integer  "teacher_id", limit: 4
     t.integer  "rank",       limit: 4
     t.date     "birthday"
-    t.string   "url",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "image_url",  limit: 255
     t.boolean  "retired",                default: false
     t.boolean  "deceased",               default: false
     t.string   "ancestry",   limit: 255
+    t.integer  "alias_id",   limit: 4
   end
 
   add_index "players", ["search_key"], name: "index_players_on_search_key", using: :btree

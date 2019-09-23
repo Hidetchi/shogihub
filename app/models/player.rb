@@ -2,6 +2,8 @@ require 'open-uri'
 
 class Player < ActiveRecord::Base
 
+belongs_to :alias, class_name: 'Player'
+has_many :ghosts, class_name: 'Player', foreign_key: :alias_id
 has_many :event_players
 has_many :events, through: :event_players
 has_ancestry
@@ -16,7 +18,7 @@ def self.find_or_create(name_ja)
     player = Player.create(search_key: name_ja)
     puts sprintf("New player %s created!", name_ja)
   end
-  player
+  player.alias.present? ? player.alias : player
 end
 
 def self.load_JSA_all
@@ -137,6 +139,19 @@ def load_JSA_detail
   self.save
   Rails.logger.level = 0
   ""
+end
+
+def assign_alias_player(player)
+  # All existing data and association of +self+ will be migrated to +player+, which becomes the main record
+  # +self+ loses its data and will not be used. Further access to +self+ will be transferred to +player+ 
+  return if player.nil? || self == player
+  # Update association
+  Game.where(sente: self).update_all(sente_id: player.id)
+  Game.where(gote: self).update_all(gote_id: player.id)
+  event_players.update_all(player_id: player.id)
+  # Set alias_id to +self+ and all players ("ghosts") who had +self+ as the alias so far
+  self.update(alias: player, category: 0, ancestry: nil)
+  self.ghosts.each {|g| g.update(alias: player)}
 end
 
 def to_s
