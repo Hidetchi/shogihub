@@ -32,11 +32,7 @@ head
               span = fa_icon('certificate lg fw', text:'JSA Professional')
               ul
                 li = link_to fa_icon('trophy lg fw', text:'Games'), '/games'
-                li.has-sub
-                  span = fa_icon('user lg fw', text:'Players')
-                  ul
-                    li = link_to fa_icon('sitemap lg rotate-270 fw', text:'Master-pupil tree'), '/players'
-                    li = link_to fa_icon('users lg fw', text:'Active players'), '/players/active'
+                li = link_to fa_icon('users lg fw', text:'Players'), '/players'
             li.has-sub
               span = fa_icon('globe lg fw', text:'World Activities')
               ul

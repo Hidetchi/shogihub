@@ -1,6 +1,7 @@
 class PlayersController < ApplicationController
 
   def index
+    @ja = params[:ja].present?
     @root_players = Player.where(search_key:[
       "関根金次郎",
       "小菅剣之助",

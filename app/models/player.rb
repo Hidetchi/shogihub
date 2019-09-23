@@ -61,7 +61,7 @@ def self.load_JSA_all
           rank = [0, "初", "二", "三", "四", "五", "六", "七", "八", "九"].index(num_text)
         end
       else
-        rank = @retired ? 10 : 9
+        rank = @retired ? 10 : -10
       end
       if rank >= -2
         Player.update_player(@player_type == 'pro' ? 1 : 2, @name, @id, rank, nil, @retired)

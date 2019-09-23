@@ -1,7 +1,12 @@
 = content_for :title do
-  |List of Active Professional Players
+  |Active Professional Players
 
-h1 List of Active Professional Players
+div style="margin:10px 15px -5px 0;text-align:right"
+  = link_to fa_icon('sitemap rotate-270 fw', text:'Master-pupil tree'), players_path
+  |&ensp;|&ensp;
+  strong = fa_icon('users fw', text:'Sort by active ranks')
+
+h1 Active Professional Players | By Ranks
 
 h2 Professional Players
 p
@@ -11,10 +16,14 @@ p
 - rank = 0
 - @pros.each do |p|
   - if p.rank != rank
+    - if rank != 0
+      |</div>
     - rank = p.rank
     h3 = p.to_rank
+    |<div style="columns:3;margin-right:30px">
   li style='margin-left:50px;'
     = player_name_tag(p)
+|</div>
 
 h2 Ladies Professional Players
 p
@@ -23,12 +32,17 @@ p
 
 - rank = 0
 - @ladies.each do |p|
+  - next if p.rank.nil?
   - break if p.rank < -2
   - if p.rank != rank
+    - if rank != 0
+      |</div>
     - rank = p.rank
     h3 = p.to_rank
+    |<div style="columns:3;margin-right:30px">
   li style='margin-left:50px;'
     = player_name_tag(p)
+|</div>
 
 javascript:
   $(function(){

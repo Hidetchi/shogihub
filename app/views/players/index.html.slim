@@ -1,14 +1,31 @@
 = content_for :title do
-  |Professional Players, Master-pupil Diagram
+  |Professional Players, Master-pupil Tree
 
-h2 All Professional Players, Master-pupil Diagram
+div style="margin:10px 15px -5px 0;text-align:right"
+  strong = fa_icon('sitemap rotate-270 fw', text:'Master-pupil tree')
+  |&ensp;|&ensp;
+  = link_to fa_icon('users fw', text:'Sort by active ranks'), players_active_path
+
+h1 Professional Players | Master-pupil Tree
+
+div style="margin:-5px 20px 10px;text-align:right"
+  - if @ja
+    = link_to fa_icon('language fw', text: 'English'), players_path
+  - else
+    strong = fa_icon('language fw', text: 'English')
+  |&ensp;|&ensp;
+  - if @ja
+    strong = fa_icon('language fw', text: '日本語')
+  - else
+    = link_to fa_icon('language fw', text: '日本語'), players_path(ja: true)
+
 div.level2
   - @root_players.each do |root|
     = arranged_tree_as_list(root.subtree.order(:category, :kishi_id, :birthday).arrange, ul_class_top: ['tree-menu']) do |p|
       - if p.root?
-        strong = player_name_tag(p)
+        strong = player_name_tag(p, @ja)
       - else
-        = player_name_tag(p)
+        = player_name_tag(p, @ja)
 
 javascript:
   $(function(){
