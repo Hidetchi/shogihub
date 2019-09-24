@@ -5,25 +5,31 @@
 
 p = link_to fa_icon('angle-double-left lg', text:'View all players'), players_path
 
-h2 Professional Player Info
-h3 #{@player.to_s}
+h1 Professional Player Info
+h2 #{@player.to_s}
 
 p style='margin-left:30px;' Original JSA Page: #{link_to(@player.to_jsa_url, @player.to_jsa_url, target:'_blank', class:'external')}
 
 table.invisible
   tr
-    td.invisible style='width:300px;'
+    td.invisible style='width:300px;line-height:1.6em'
       ul
-        li #{'Ladies ' if @player.category == 2}Player ID: #{@player.kishi_id}
-        li Rank: #{'Ladies ' if @player.category == 2}#{@player.to_rank}
-        li Date of birth: #{@player.birthday}
-        li Pupil of: #{player_name_tag(@player.parent)}
+        li #{'Ladies ' if @player.category == 2}Player ID:&ensp;<b>#{@player.kishi_id}</b>
+        li Rank:&ensp;<b>#{'Ladies ' if @player.category == 2}#{@player.to_rank}</b>
+        li Date of birth:&ensp;<b>#{@player.birthday}</b>
+        li Pupil of:&ensp;<b>#{player_name_tag(@player.parent)}</b>
+        li Fellow pupils with:
+        - if @siblings.present?
+          ul
+            - @siblings.each do |sibling|
+              - next if sibling == @player
+              li <b>#{player_name_tag(sibling)}</b>
         - if @player.category == 1
           li Master of:
           - if @pupils.present?
             ul
               - @pupils.each do |pupil|
-                li #{player_name_tag(pupil)}
+                li <b>#{player_name_tag(pupil)}</b>
         - if @player.retired
           li RETIRED
     td.invisible
@@ -41,6 +47,8 @@ table.invisible
           |&nbsp;
           = flag_ss_tag(e.country.code)
           = link_to e.name, e
+
+h3 Game records
 
 div style="margin-left:30px" == paginate @games
 table style="margin-left:30px;margin-top:10px;"
