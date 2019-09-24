@@ -1,0 +1,13 @@
+h2 Edit your user info
+div.level2
+  = form_for @user do |f|
+    p
+      strong Login ID (email):&ensp;
+      = @user.to_hidden_email
+    p
+      strong Nickname:&ensp;
+      = f.text_field :name
+    p
+      strong URL:&ensp;
+      = f.text_field :url, size:"40"
+    .actions = f.submit

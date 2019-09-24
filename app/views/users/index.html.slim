@@ -4,11 +4,15 @@ div.level2 style="margin-top:15px"
   table style="margin-top:15px"
     tr
       th Name
+      th ID
+      th Show
       th Role
       th Change
     - @users.each do |u|
       tr
+        td = u.name
         td.left = u.to_hidden_email
+        td = link_to 'Show', u
         td = u.to_role
         td
           - if u.role_i > 0 && current_user.role_i > u.role_i

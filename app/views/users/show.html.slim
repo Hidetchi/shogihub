@@ -1,0 +1,23 @@
+h1 User info
+
+div.level2
+  p
+    |Name:&ensp;
+    strong = @user.to_name
+    - if can? :edit, @user
+      |&emsp;
+      = link_to fa_icon('pencil', text:'Edit'), edit_user_path(@user)
+  p
+    |Class:&ensp;
+    strong = @user.to_role
+  - if @user.is_collaborator?
+    p
+      |Published news articles:&ensp;
+      strong = @user.news.count
+  p
+    |Published shogi events:&ensp;
+    strong = @user.events.count
+  p
+    |URL:&ensp;
+    - if @user.url.present?
+      = link_to @user.url, @user.url, class:'external', target:'_blank'

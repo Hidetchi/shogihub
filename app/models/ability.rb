@@ -16,6 +16,8 @@ class Ability
     cannot [:create, :edit, :destroy], Book
     cannot [:create, :edit, :destroy, :instruction, :backyard], News
     cannot :manage, User
+    can :show, User
+    can [:edit, :update], User, id: user.id
 
     if user.is_collaborator?
       can [:edit, :backyard], News

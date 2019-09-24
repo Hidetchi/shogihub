@@ -10,4 +10,4 @@ div.news_content = interpreted_content(news)
       |Written by <b>#{news.translator.to_name}</b>
     - else
       = fa_icon('language lg fw')
-      |Translated by <b>#{news.translator.to_name}</b>
+      |Translated by <b>#{link_to news.translator.to_name, news.translator, style:'color:#a85;text-decoration:none'}</b>
