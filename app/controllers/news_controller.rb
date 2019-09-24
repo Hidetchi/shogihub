@@ -14,9 +14,15 @@ class NewsController < ApplicationController
   end
 
   def backyard
-    @hide_skipped = params[:hide_skipped].present?
+    @filter_mode = params[:filter].nil? ? nil : params[:filter].to_i
     @news = News.order(published_at: :desc).page(params[:page]).per(50)
-    @news = @news.where.not(instruction:2) if @hide_skipped
+    if @filter_mode == 1
+      @news = @news.where.not(instruction:2)
+    elsif @filter_mode == 2
+      @news = @news.where(translator_id:current_user.id)
+    elsif @filter_mode == 3
+      @news = @news.where.not(translator_id:nil, status:3)
+    end
   end
 
   def show

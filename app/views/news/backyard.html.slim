@@ -3,10 +3,25 @@ h1 Official News | Backyard
 == render partial: 'navigator', locals:{mode:2}
 
 div style="text-align:right;margin:10px 15px 5px"
-  - if @hide_skipped
-    = link_to fa_icon('eye', text:'Show skipped articles'), backyard_news_index_path(page:params[:page])
+  - if @filter_mode.nil?
+    strong = fa_icon('eye', text:'Show all')
   - else
-    = link_to fa_icon('eye-slash', text:'Hide skipped articles'), backyard_news_index_path(hide_skipped:true, page:params[:page])
+    = link_to fa_icon('eye', text:'Show all'), backyard_news_index_path(page:params[:page])
+  |&ensp;|&ensp;
+  - if @filter_mode == 1
+    strong = fa_icon('eye-slash', text:'Hide skipped')
+  - else
+    = link_to fa_icon('eye-slash', text:'Hide skipped'), backyard_news_index_path(filter:1, page:params[:page])
+  |&ensp;|&ensp;
+  - if @filter_mode == 2
+    strong = fa_icon('archive', text:'My work')
+  - else
+    = link_to fa_icon('archive', text:'My work'), backyard_news_index_path(filter:2, page:params[:page])
+  |&ensp;|&ensp;
+  - if @filter_mode == 3
+    strong = fa_icon('tasks', text:'Running tasks')
+  - else
+    = link_to fa_icon('tasks', text:'Running tasks'), backyard_news_index_path(filter:3, page:params[:page])
 
 table.news_backyard
   tr
