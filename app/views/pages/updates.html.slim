@@ -6,7 +6,7 @@ h2 Offical News
 ul.updates
   - @news.each do |n|
     li <b>#{n.published_at.strftime("%Y-%m-%d %H:%M")}</b>&emsp;#{news_category_tag(n)}&emsp;#{link_to n.title_en, news_path(n)}
-  li.more = link_to 'See more...', '/news'
+  li.more = link_to fa_icon('plus fw', text:'See more...'), '/news'
 h2 Upcoming Events
 h3 Professional Games
 table style='margin-left:70px;'
@@ -25,8 +25,8 @@ table style='margin-left:70px;'
       td style="font-family:'MS UI Gothic';" #{g.to_result_mark(false)}
       td #{g.tournament.name}
       td #{g.description}
-p style='font-size:12px;margin-left:70px;margin-top:6px;'
-  = link_to 'See more...', '/games'
+p style='font-size:13px;margin-left:70px;margin-top:6px;'
+  = link_to fa_icon('plus fw', text:'See more...'), '/games'
 h3 World Shogi Events
 ul.updates
   - @coming_events.each do |e|
@@ -34,7 +34,7 @@ ul.updates
       b style='padding-right:8px;' = e.start_time.strftime("%Y-%m-%d")
       = flag_s_tag(e.country.code)
       = link_to e.name, e
-  li.more = link_to 'See more...', '/events'
+  li.more = link_to fa_icon('plus fw', text:'See more...'), '/events'
 h2 New Updates
 h3 World Shogi Events
 ul.updates
@@ -43,7 +43,7 @@ ul.updates
       b style='padding-right:8px;' = e.start_time.strftime("%Y-%m-%d")
       = flag_ss_tag(e.country.code)
       = link_to e.name, e
-  li.more = link_to 'See more...', '/events'
+  li.more = link_to fa_icon('plus fw', text:'See more...'), '/events'
 h3 Shogi Books
 ul.updates
   - @new_books.each do |b|
@@ -51,21 +51,21 @@ ul.updates
       = flag_ss_tag(b.language.flag_code)
       = book_title_tag(b, true)
       = ' (' + b.author + ')'
-  li.more = link_to 'See more...', '/books'
+  li.more = link_to fa_icon('plus fw', text:'See more...'), '/books'
 h3 World Shogi Clubs
 ul.updates
   - @new_clubs.each do |c|
     li
       = flag_ss_tag(c.country.code)
       = link_to c.name, c.url, :target => '_blank', :class => 'external'
-  li.more = link_to 'See more...', '/clubs'
+  li.more = link_to fa_icon('plus fw', text:'See more...'), '/clubs'
 h3 World Shogi Portals
 ul.updates
   - @new_websites.each do |w|
     li
       = flag_ss_tag(w.country.code)
       = link_to w.name, w.url, :target => '_blank', :class => 'external'
-  li.more = link_to 'See more...', '/websites'
+  li.more = link_to fa_icon('plus fw', text:'See more...'), '/websites'
 h2 Site Development
 p style='margin-left:10px;'
   |Our site development is subject to open discussion on Facebook Group: #{link_to('https://www.facebook.com/groups/shogihub/', 'https://www.facebook.com/groups/shogihub/', target:'_blank', class:'external')}

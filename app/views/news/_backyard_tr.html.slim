@@ -1,0 +1,19 @@
+td = news.id
+td style="white-space:nowrap" = news.published_at.strftime("%Y-%m-%d")
+td.left
+  - if news.category == 0
+    = news_category_tag(news)
+    = link_to news.title_en, news, target:'_blank'
+  - else
+    = link_to news.title_ja, news, target:'_blank', style:('text-decoration:none;color:#aaa' if news.instruction == 2)
+td
+  - if news.category == 0
+    |-
+  - elsif news.instruction == 1
+    = fa_icon('check lg', style:'color:mediumseagreen', title:'To publish')
+  - elsif news.instruction == 2
+    = fa_icon('times lg', style:'color:crimson', title:'Skipped')
+  - elsif can? :instruction, news
+    = link_to fa_icon('check fw'), instruction_news_path(news, instruction:1), :method => 'post', :remote => true, style:'color:#ecb'
+    = link_to fa_icon('times fw'), instruction_news_path(news, instruction:2), :method => 'post', :remote => true, style:'color:#ecb'
+td = render_news_status(news)

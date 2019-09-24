@@ -14,11 +14,11 @@ class Ability
     can :destroy, Club, creator: user
     cannot [:create, :destroy], Website
     cannot [:create, :edit, :destroy], Book
-    cannot [:create, :edit, :destroy, :instruction], News
+    cannot [:create, :edit, :destroy, :instruction, :backyard], News
     cannot :manage, User
 
     if user.is_collaborator?
-      can :edit, News
+      can [:edit, :backyard], News
     end
 
     if user.is_moderator?

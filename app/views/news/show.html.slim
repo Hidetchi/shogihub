@@ -24,13 +24,15 @@
         |&emsp;#{link_to @news.title_ja, @news.url, target: '_blank', class: 'external'}
     p
       strong Moderator's instruction:&ensp;
-      - if @news.instruction == 1
+      - if @news.instruction == 0
+        span style="color:#aaa" No decision made
+      - elsif @news.instruction == 1
         = fa_icon('check lg fw', style:'color:mediumseagreen', text:'To publish')
       - elsif @news.instruction == 2
         = fa_icon('times lg fw', style:'color:crimson', text:'Skipped')
     p
       strong Status:&ensp;
-      = render_news_status(@news)
+      = render_news_status(@news, true)
         
     ul style="list-style-type:none;padding-left:0"
       - if @news.category != 0 && can?(:instruction, @news)

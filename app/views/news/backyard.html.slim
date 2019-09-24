@@ -13,26 +13,10 @@ table.news_backyard
     th ID
     th Date
     th Japanese title
-    th Target
+    th Request
     th Status
   - @news.each do |n|
-    tr
-      td = n.id
-      td style="white-space:nowrap" = n.published_at.strftime("%Y-%m-%d")
-      td.left
-        - if n.category == 0
-          = news_category_tag(n)
-          = link_to n.title_en, n, target:'_blank'
-        - else
-          = link_to n.title_ja, n, target:'_blank', style:('text-decoration:none;color:#aaa' if n.instruction == 2)
-      td
-        - if n.category == 0
-          |-
-        - elsif n.instruction == 1
-          = fa_icon('check lg', style:'color:mediumseagreen', title:'To publish')
-        - elsif n.instruction == 2
-          = fa_icon('times lg', style:'color:crimson', title:'Skipped')
-      td = render_news_status(n)
+    tr id=(n.id) = render partial: 'backyard_tr', locals:{news: n}
 
 - if can? :create, News
   p = link_to fa_icon('plus-square', text:'Create a new original ShogiHub release'), new_news_path

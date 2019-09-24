@@ -24,8 +24,10 @@ module NewsHelper
     end
   end
 
-  def render_news_status(news)
-    if news.status == 0 && news.translator.present?
+  def render_news_status(news, show_default = false)
+    if show_default && news.status == 0 && news.translator.nil?
+      content_tag(:span, "Not assigned", style:'color:#aaa')
+    elsif news.status == 0 && news.translator.present?
       "Assigned"
     elsif news.status == 1
       content_tag(:span, "Submitted", style:'color:orangered;font-weight:bold')

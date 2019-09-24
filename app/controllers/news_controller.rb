@@ -60,7 +60,7 @@ class NewsController < ApplicationController
 
   def instruction
     @news.update_attributes(instruction: params[:instruction])
-    respond_with(@news)
+    respond_with(@news) unless request.xhr?
   end
 
   private
