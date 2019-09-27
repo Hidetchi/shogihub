@@ -3,6 +3,7 @@ atom_feed do |feed|
   feed.updated((@activities.first.created_at))
 
   @activities.each do |activity|
+    next if activity.trackable.nil?
     case activity.trackable_type
     when 'News'
       feed.entry(activity, {url: news_url(activity.trackable)}) do |entry|

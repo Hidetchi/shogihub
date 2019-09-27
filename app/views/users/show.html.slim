@@ -13,7 +13,7 @@ div.level2
   - if @user.is_collaborator?
     p
       |Published news articles:&ensp;
-      strong = @user.news.count
+      strong = @user.news.where(status:3).count
   p
     |Published shogi events:&ensp;
     strong = @user.events.count

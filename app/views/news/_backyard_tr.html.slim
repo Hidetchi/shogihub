@@ -15,5 +15,6 @@ td
     = fa_icon('times lg', style:'color:crimson', title:'Skipped')
   - elsif can? :instruction, news
     = link_to fa_icon('check fw'), instruction_news_path(news, instruction:1), :method => 'post', :remote => true, style:'color:#ecb'
+    |&ensp;
     = link_to fa_icon('times fw'), instruction_news_path(news, instruction:2), :method => 'post', :remote => true, style:'color:#ecb'
 td = render_news_status(news)
