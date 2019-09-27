@@ -35,4 +35,8 @@ class User < ActiveRecord::Base
     tokens = self.email.match(/^(.*)@(.)(.*)$/)
     $1 + "@" + $2 + $3.gsub(/[^.]/,"*")
   end
+
+  def likes_count
+    Like.where(news: news).count
+  end
 end

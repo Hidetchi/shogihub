@@ -7,7 +7,8 @@ div.news_content = interpreted_content(news)
   span style="color:grey;font-style:italic"
     - if news.category == 0
       = fa_icon('pencil lg fw')
-      |Written by <b>#{news.translator.to_name}</b>
+      |Written by <b>#{link_to news.translator.to_name, news.translator, style:'color:#a85;text-decoration:none'}</b>
     - else
       = fa_icon('language lg fw')
       |Translated by <b>#{link_to news.translator.to_name, news.translator, style:'color:#a85;text-decoration:none'}</b>
+  span.like-button-field id=(news.id) = render partial:'like_button', locals:{news: news}

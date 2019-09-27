@@ -1,0 +1,3 @@
+= button_tag(type:'button', class:"like-button #{news.liked?(current_user, @anonymous_token) ? 'like-button-liked' : ''}", id:news.id, onclick:'clickLike(this)', title:'Praise the translator if useful')
+  = fa_icon('thumbs-up fw')
+  = news.likes_count

@@ -1,5 +1,6 @@
 class NewsController < ApplicationController
-  before_action :set_news, only: [:show, :edit, :update, :destroy, :instruction]
+  before_action :set_anonymous_token, only: [:index, :show, :like]
+  before_action :set_news, only: [:show, :edit, :update, :destroy, :instruction, :like]
   before_action :authenticate_user!, only: [:edit, :update, :new, :create, :instruction, :destroy]
   authorize_resource
 
@@ -23,6 +24,10 @@ class NewsController < ApplicationController
     elsif @filter_mode == 3
       @news = @news.where.not(translator_id:nil, status:3)
     end
+  end
+
+  def statistics
+    @users = User.where("role > 0").order(role: :desc)
   end
 
   def show
@@ -69,6 +74,10 @@ class NewsController < ApplicationController
     respond_with(@news) unless request.xhr?
   end
 
+  def like
+    @news.like(current_user, @anonymous_token)
+  end
+
   private
     def set_news
       @news = News.find(params[:id])
@@ -76,5 +85,12 @@ class NewsController < ApplicationController
 
     def news_params
       params.require(:news).permit(:entry_id, :url, :published_at, :title_ja, :title_en, :content_ja, :content_en, :category, :status, :translator_id)
+    end
+
+    def set_anonymous_token
+      unless user_signed_in?
+        cookies.permanent[:anonymous_token] = SecureRandom.hex(8) unless cookies.permanent[:anonymous_token].present?
+        @anonymous_token = cookies.permanent[:anonymous_token]
+      end
     end
 end

@@ -1,6 +1,7 @@
 class News < ActiveRecord::Base
   include PublicActivity::Common
   belongs_to :translator, class_name: 'User'
+  has_many :likes
 
   def self.fetch_from_JSA
     url = 'http://www.shogi.or.jp/atom.xml'
@@ -28,5 +29,27 @@ class News < ActiveRecord::Base
 
   def open?
     status == 3
+  end
+
+  def like(user, anonymous_token)
+    if user.present?
+      self.likes.find_or_create_by(user: user)
+    elsif anonymous_token.present?
+      self.likes.find_or_create_by(anonymous_id: anonymous_token)
+    end
+  end
+
+  def liked?(user, anonymous_token)
+    if user.present?
+      self.likes.where(user: user).exists?
+    elsif anonymous_token.present?
+      self.likes.where(anonymous_id: anonymous_token).exists?
+    else
+      false
+    end
+  end
+
+  def likes_count
+    self.likes.count
   end
 end

@@ -6,8 +6,10 @@ Rails.application.routes.draw do
       get 'headlines' => 'news#index_headlines'
       get 'backyard' => 'news#backyard'
       post 'preview' => 'news#preview'
+      get 'statistics'
     end
     post 'instruction' => 'news#instruction', on: :member
+    post 'like', on: :member
   end
 
   resources :clubs
