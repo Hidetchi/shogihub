@@ -23,15 +23,18 @@ div style="text-align:right;margin:10px 15px 5px"
   - else
     = link_to fa_icon('tasks', text:'Running tasks'), backyard_news_index_path(filter:3, page:params[:page])
 
-table.news_backyard
-  tr
-    th ID
-    th Date
-    th Japanese title
-    th Request
-    th Status
-  - @news.each do |n|
-    tr id=(n.id) = render partial: 'backyard_tr', locals:{news: n}
+div style="margin-right:15px"
+  table.news_backyard
+    tr
+      th ID
+      th Date
+      th Japanese title
+      th Request
+      th Status
+    - @news.each do |n|
+      tr id=(n.id) = render partial: 'backyard_tr', locals:{news: n}
 
 - if can? :create, News
   p = link_to fa_icon('plus-square', text:'Create a new original ShogiHub release'), new_news_path
+
+div style="margin-top:50px" = paginate @news

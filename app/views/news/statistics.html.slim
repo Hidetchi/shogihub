@@ -1,0 +1,16 @@
+h1 News editors statistics
+
+div.level2
+  p = link_to fa_icon('wrench lg fw', text:'Go to Official News Backyard'), backyard_news_index_path
+  table style="line-height:1.8em;width:70%"
+    tr
+      th User
+      th Role
+      th Published
+      th Likes
+    - @users.each do |u|
+      tr
+        td = link_to u.to_name, u
+        td = u.to_role
+        td = u.news.where(status:3).count
+        td = u.likes_count

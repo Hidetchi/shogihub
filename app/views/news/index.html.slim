@@ -6,6 +6,8 @@ h1 Official News Release
   h2 = link_to n.title_en, n
   == render partial:'display', locals:{news:n}
 
+div style="margin-top:50px" = paginate @news
+
 javascript:
   $(function(){
     setPreview();

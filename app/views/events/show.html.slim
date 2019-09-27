@@ -12,21 +12,21 @@ p#notice = notice
 
 div.admin_menu
   - if Time.new > @event.end_time + 24*60*60
-    = link_to 'Back', '/events/past'
+    = link_to fa_icon('caret-left',text:'Back'), '/events/past'
   - else
-    = link_to 'Back', events_path
+    = link_to fa_icon('caret-left', text:'Back'), events_path
   - if user_signed_in?
-    = " | "
-    = link_to 'Edit', edit_event_path(@event)
+    |&emsp;|&emsp;
+    = link_to fa_icon('edit', text:'Edit'), edit_event_path(@event)
     - if can? :destroy, @event
-      = " | "
-      = link_to 'Destroy', @event, data: {:confirm => 'Are you sure?'}, :method => :delete
+      |&emsp;|&emsp;
+      = link_to fa_icon('trash-o', text:'Destroy'), @event, data: {:confirm => 'Are you sure?'}, :method => :delete
 
 - if user_signed_in?
   p style='text-align:center;'
-    |Created by: #{@event.creator.to_name}
+    |Created by <b>#{link_to @event.creator.to_name, @event.creator, style:'color:#a85;text-decoration:none'}</b>
     br
-    |Updated by: #{@event.updater.to_name}
+    |Updated by <b>#{link_to @event.updater.to_name, @event.updater, style:'color:#a85;text-decoration:none'}</b>
 
 javascript:
   handler = Gmaps.build('Google');

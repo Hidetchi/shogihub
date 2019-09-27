@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190924121731) do
+ActiveRecord::Schema.define(version: 20190927103543) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id",   limit: 4
@@ -134,6 +134,16 @@ ActiveRecord::Schema.define(version: 20190924121731) do
   end
 
   add_index "languages", ["enabled"], name: "index_languages_on_enabled", using: :btree
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "news_id",      limit: 4
+    t.integer "user_id",      limit: 4
+    t.string  "anonymous_id", limit: 255
+  end
+
+  add_index "likes", ["anonymous_id"], name: "index_likes_on_anonymous_id", using: :btree
+  add_index "likes", ["news_id"], name: "index_likes_on_news_id", using: :btree
+  add_index "likes", ["user_id"], name: "index_likes_on_user_id", using: :btree
 
   create_table "news", force: :cascade do |t|
     t.string   "entry_id",      limit: 255

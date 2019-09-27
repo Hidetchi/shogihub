@@ -14,6 +14,9 @@ div.level2
     p
       |Published news articles:&ensp;
       strong = @user.news.count
+      br
+      |Total likes:&ensp;
+      strong = @user.likes_count
   p
     |Published shogi events:&ensp;
     strong = @user.events.count

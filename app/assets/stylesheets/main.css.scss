@@ -418,3 +418,28 @@ $tree-menu-border-color: #aaa;
     }
   }
 }
+
+.like-button {
+  margin: 0 8px;
+  text-align: center;
+  height: 20px;
+  width: 55px;
+  border-radius: 10px;
+  border: 0;
+  cursor: pointer;
+  outline: none;
+  background: #e5e5e5;
+	color: #666;
+  font-size: 14px;
+  &:hover {
+    background: #f8ceaa;
+  }
+}
+.like-button-liked {
+  color: white;
+  background:#e95;
+  cursor: default;
+  &:hover {
+    background:#e95;
+  }
+}
