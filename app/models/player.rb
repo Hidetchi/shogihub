@@ -26,6 +26,7 @@ def self.load_JSA_all
 
   @active = false
   @retired = false
+  @deceased = false
   @name_loaded = false
   response = ""
   response += open("https://www.shogi.or.jp/player/").read
@@ -40,6 +41,7 @@ def self.load_JSA_all
     @active = false if line == '</main>'
     next if !@active
     @retired = true if line == '<h2 class="headingElementsA01">引退棋士</h2>'
+    @deceased = true if line == '<h2 class="headingElementsA01">物故棋士</h2>'
     if line =~ /\<a\shref\=\"\/player\/(pro|lady)\/(\d+)\.html\"\>(.+?)\<\/a\>/
       @name_loaded = true
       @player_type = $1
@@ -64,7 +66,7 @@ def self.load_JSA_all
         rank = @retired ? 10 : -10
       end
       if rank >= -2
-        Player.update_player(@player_type == 'pro' ? 1 : 2, @name, @id, rank, nil, @retired)
+        Player.update_player(@player_type == 'pro' ? 1 : 2, @name, @id, rank, @retired, @deceased)
       end
     end
   end
@@ -73,13 +75,15 @@ def self.load_JSA_all
   ""
 end
 
-def self.update_player(category, name_ja, kishi_id, rank, url, retired)
+def self.update_player(category, name_ja, kishi_id, rank, retired, deceased)
   return if retired == false && rank < -2
   player = Player.find_or_create(name_ja)
   if (retired)
     player.update_attributes(retired: true, rank: rank) if player.retired == false || player.rank < rank
+    player.update_attributes(deceased: true) if deceased && player.deceased == false
+    player.update_attributes(category: category, kishi_id: kishi_id) if (player.category == 0 || player.kishi_id.nil?)
   else
-    player.update_attributes(category: category, kishi_id: kishi_id, rank: rank, url: url) if (player.category != category || player.rank == nil || player.rank < rank)
+    player.update_attributes(category: category, kishi_id: kishi_id, rank: rank) if (player.category != category || player.rank == nil || player.rank < rank)
   end
 end
 
