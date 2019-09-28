@@ -17,25 +17,29 @@ table.invisible
         li #{'Ladies ' if @player.category == 2}Player ID:&ensp;<b>#{@player.kishi_id}</b>
         li Rank:&ensp;<b>#{'Ladies ' if @player.category == 2}#{@player.to_rank}</b>
         li Date of birth:&ensp;<b>#{@player.birthday}</b>
-        li Pupil of:&ensp;<b>#{player_name_tag(@player.parent)}</b>
+        li Pupil of:&ensp;#{player_icon_tag(@player.parent)}<b>#{player_name_tag(@player.parent)}</b>
         li Fellow pupils with:
         - if @siblings.present?
-          ul
+          ul style="list-style-type:none"
             - @siblings.each do |sibling|
               - next if sibling == @player
-              li <b>#{player_name_tag(sibling)}</b>
+              li
+                = player_icon_tag(sibling)
+                = player_name_tag(sibling)
         - if @player.category == 1
           li Master of:
           - if @pupils.present?
-            ul
+            ul style="list-style-type:none"
               - @pupils.each do |pupil|
-                li <b>#{player_name_tag(pupil)}</b>
+                li
+                  = player_icon_tag(pupil)
+                  = player_name_tag(pupil)
         - if @player.retired
           li RETIRED
     td.invisible
       - if @player.category == 1 || @player.category == 2
         div.profile_photo
-          = image_tag(@player.to_image_url)
+          = image_tag(@player.to_image_url, onerror:"this.src='https://www.shogi.or.jp/images/player/substitute.png';")
 
 - if @events.count > 0
   div style='margin-top:0;margin-left:30px;margin-bottom:20px;'
