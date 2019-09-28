@@ -17,13 +17,14 @@ p
 - @pros.each do |p|
   - if p.rank != rank
     - if rank != 0
-      |</div>
+      |</ul></div>
     - rank = p.rank
     h3 = p.to_rank
-    |<div style="columns:3;margin-right:30px">
+    |<div style="columns:3;margin-right:30px"><ul style="margin:0;padding:0;list-style-type:none">
   li style='margin-left:50px;'
+    = player_icon_tag(p)
     = player_name_tag(p)
-|</div>
+|</ul></div>
 
 h2 Ladies Professional Players
 p
@@ -36,13 +37,14 @@ p
   - break if p.rank < -2
   - if p.rank != rank
     - if rank != 0
-      |</div>
+      |</ul></div>
     - rank = p.rank
     h3 = p.to_rank
-    |<div style="columns:3;margin-right:30px">
+    |<div style="columns:3;margin-right:30px"><ul style="margin:0;padding:0;list-style-type:none">
   li style='margin-left:50px;'
+    = player_icon_tag(p)
     = player_name_tag(p)
-|</div>
+|</ul></div>
 
 javascript:
   $(function(){

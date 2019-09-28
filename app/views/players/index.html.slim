@@ -25,6 +25,7 @@ div.level2
       - if p.root?
         strong = player_name_tag(p, @ja)
       - else
+        = player_icon_tag(p)
         = player_name_tag(p, @ja)
 
 javascript:

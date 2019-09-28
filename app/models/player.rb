@@ -136,9 +136,6 @@ def load_JSA_detail
       end
       mode = 0
     end
-    if line =~ /ph_(kishi|joryu)\/(.+)\.jpg/
-      self.image_url = $2
-    end
   end
   self.save
   Rails.logger.level = 0

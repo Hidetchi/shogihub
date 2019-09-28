@@ -11,4 +11,12 @@ def player_name_tag(player, ja = false)
   end
 end
 
+def player_icon_tag(player)
+  if player.category == 1 || player.category == 2
+    image_tag(player.to_image_url, class:'player_icon', onerror:"this.src='https://www.shogi.or.jp/images/player/substitute.png';")
+  else
+    ""
+  end
+end
+
 end

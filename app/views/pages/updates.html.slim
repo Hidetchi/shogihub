@@ -12,16 +12,18 @@ h3 Professional Games
 table style='margin-left:70px;'
   tr
     th Date
-    th colspan=2 Sente
-    th colspan=2 Gote
+    th colspan=3 Sente
+    th colspan=3 Gote
     th Tournament
     th Description
   - @coming_games.each do |g|
     tr
       td #{g.game_date}
       td style="border-right:0;font-family:'MS UI Gothic';" #{g.to_result_mark(true)}
-      td #{player_name_tag(g.sente)}
-      td style="border-right:0;" #{player_name_tag(g.gote)}
+      td style="border-right:0" #{player_name_tag(g.sente)}
+      td #{player_icon_tag(g.sente)}
+      td style="border-right:0" #{player_icon_tag(g.gote)}
+      td style="border-right:0;padding-left:0" #{player_name_tag(g.gote)}
       td style="font-family:'MS UI Gothic';" #{g.to_result_mark(false)}
       td #{g.tournament.name}
       td #{g.description}
