@@ -49,9 +49,13 @@
       = f.radio_button :status, 3, disabled: cannot?(:instruction, @news)
       |Published
   .field
-    = f.label :translator
+    |Author
     br
     = f.collection_select :translator_id, User.where('role > 0'), :id, :to_name, include_blank:true
+  .field
+    = f.label :proofreader
+    br
+    = f.collection_select :proofreader_id, User.where('role > 0'), :id, :to_name, include_blank:true
   .actions = f.submit
 
 h3

@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :news, foreign_key: :translator_id
+  has_many :proofread_news, foreign_key: :proofreader_id, class_name: 'News'
   has_many :events, foreign_key: :creator_id
   model_stamper
 

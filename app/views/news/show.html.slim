@@ -3,7 +3,7 @@
     |News release: 
     = @news.title_en
   = content_for :description do
-    = @news.content_en
+    = strip_tags(interpreted_content(@news, false))
 
 - if @news.open?
   h1 Official News Release
@@ -41,8 +41,11 @@
       strong Status:&ensp;
       = render_news_status(@news, true)
       br
-      strong Assigned:&ensp;
+      strong #{@news.category == 0 ? 'Writer' : 'Translator'}:&ensp;
       = link_to(@news.translator.to_name, @news.translator) if @news.translator.present?
+      br
+      strong Proofreader:&ensp;
+      = link_to(@news.proofreader.to_name, @news.proofreader) if @news.proofreader.present?
       br
       strong Last updated at:&ensp;
       = @news.updated_at
@@ -56,9 +59,9 @@
         h3.section English draft
         div.news_content style="border:0"
           p style="font-size:1.15em;font-weight:bold;text-decoration:underline" = @news.title_en
-          = @news.content_en ? @news.content_en.html_safe : ""
-    h3.section Original version
+          = @news.content_en ? interpreted_content(@news).html_safe : ""
     - unless @news.category == 0
+      h3.section Original version
       div.news_content style="border:0"
         = @news.content_ja ? @news.content_ja.html_safe : ""
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190927103543) do
+ActiveRecord::Schema.define(version: 20190929114644) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id",   limit: 4
@@ -146,19 +146,20 @@ ActiveRecord::Schema.define(version: 20190927103543) do
   add_index "likes", ["user_id"], name: "index_likes_on_user_id", using: :btree
 
   create_table "news", force: :cascade do |t|
-    t.string   "entry_id",      limit: 255
-    t.string   "url",           limit: 255
+    t.string   "entry_id",       limit: 255
+    t.string   "url",            limit: 255
     t.datetime "published_at"
-    t.string   "title_ja",      limit: 255
-    t.string   "title_en",      limit: 255
-    t.text     "content_ja",    limit: 65535
-    t.text     "content_en",    limit: 65535
-    t.integer  "category",      limit: 4
+    t.string   "title_ja",       limit: 255
+    t.string   "title_en",       limit: 255
+    t.text     "content_ja",     limit: 65535
+    t.text     "content_en",     limit: 65535
+    t.integer  "category",       limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "instruction",   limit: 1,     default: 0
-    t.integer  "status",        limit: 1,     default: 0
-    t.integer  "translator_id", limit: 4
+    t.integer  "instruction",    limit: 1,     default: 0
+    t.integer  "status",         limit: 1,     default: 0
+    t.integer  "translator_id",  limit: 4
+    t.integer  "proofreader_id", limit: 4
   end
 
   add_index "news", ["entry_id"], name: "index_news_on_entry_id", using: :btree

@@ -7,9 +7,11 @@ div.level2
       th Role
       th Published
       th Likes
+      th Proofread
     - @users.each do |u|
       tr
         td = link_to u.to_name, u
         td = u.to_role
         td = u.news.where(status:3).count
         td = u.likes_count
+        td = u.proofread_news.where(status:3).count

@@ -1,6 +1,7 @@
 class News < ActiveRecord::Base
   include PublicActivity::Common
   belongs_to :translator, class_name: 'User'
+  belongs_to :proofreader, class_name: 'User'
   has_many :likes
 
   def self.fetch_from_JSA

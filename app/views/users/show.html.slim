@@ -17,6 +17,9 @@ div.level2
       br
       |Total likes:&ensp;
       strong = @user.likes_count
+      br
+      |Proofread articles:&ensp;
+      strong = @user.proofread_news.where(status:3).count
   p
     |Published shogi events:&ensp;
     strong = @user.events.count

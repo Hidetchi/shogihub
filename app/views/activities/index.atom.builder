@@ -9,7 +9,7 @@ atom_feed do |feed|
       feed.entry(activity, {url: news_url(activity.trackable)}) do |entry|
         category_header = activity.trackable.category >= 1 ? "JSA official | " : ""
         entry.title("NEWS | " + category_header + activity.trackable.title_en)
-        entry.content(interpreted_content(activity.trackable, false))
+        entry.content(interpreted_content(activity.trackable, false).html_safe, type: 'html')
         entry.author do |author|
           author.name('ShogiHub')
         end

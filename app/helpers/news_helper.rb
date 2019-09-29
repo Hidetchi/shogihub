@@ -10,12 +10,22 @@ module NewsHelper
 
   def interpreted_content(news, link_player = true)
     if news.content_en
-      html = news.content_en.gsub(/\[\[(.+?)\|(.+?)\]\]/) {
-        player = link_player ? Player.find_by(search_key: $1) : nil
-        if (player && (player.category == 1 || player.category == 2))
-          link_to($2, player_url(player), class: 'player_name', name: player.to_image_url)
+      html = news.content_en.gsub(/\[\[(.+?)\]\]/) {
+        search_key = nil
+        text = nil
+        str = $1
+        if str.match(/^(.+?)\|(.+?)$/)
+          search_key = $1
+          text = $2
         else
-          $2
+          search_key = str
+        end
+        player = link_player ? Player.find_by(search_key: search_key) : nil
+        if (player && (player.category == 1 || player.category == 2))
+          text = text || player.name.gsub(/,/, "")
+          link_to(text, player_url(player), class: 'player_name', name: player.to_image_url)
+        else
+          text || search_key
         end
       }
       html.html_safe

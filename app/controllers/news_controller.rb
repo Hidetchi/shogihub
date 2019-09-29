@@ -84,7 +84,7 @@ class NewsController < ApplicationController
     end
 
     def news_params
-      params.require(:news).permit(:entry_id, :url, :published_at, :title_ja, :title_en, :content_ja, :content_en, :category, :status, :translator_id)
+      params.require(:news).permit(:entry_id, :url, :published_at, :title_ja, :title_en, :content_ja, :content_en, :category, :status, :translator_id, :proofreader_id)
     end
 
     def set_anonymous_token
