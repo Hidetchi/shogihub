@@ -67,6 +67,7 @@ head
             ul
               li = link_to fa_icon('user-circle lg fw', text:'My profile'), user_path(current_user)
               - if can? :edit, News
+                li = link_to fa_icon('wrench lg fw', text:"Editor's backyard"), backyard_news_index_path
                 li = link_to fa_icon('pie-chart lg fw', text:'Editor statistics'), statistics_news_index_path
               - if can? :index, User
                 li = link_to fa_icon('address-book lg fw', text:'Manage users'), users_path

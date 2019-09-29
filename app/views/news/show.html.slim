@@ -18,32 +18,49 @@
 - if can? :edit, @news
   h2.special style="margin-top:50px" Editor's backyard (not seen by normal users)
   div.level2
-    p
+    p style="line-height:1.8em"
       = @news.published_at.strftime("%Y-%m-%d %H:%M")
       - if @news.category != 0
         |&emsp;#{link_to @news.title_ja, @news.url, target: '_blank', class: 'external'}
-    p
-      strong Moderator's instruction:&ensp;
-      - if @news.instruction == 0
-        span style="color:#aaa" No decision made
-      - elsif @news.instruction == 1
-        = fa_icon('check lg fw', style:'color:mediumseagreen', text:'To publish')
-      - elsif @news.instruction == 2
-        = fa_icon('times lg fw', style:'color:crimson', text:'Skipped')
-    p
+      - if @news.category != 0
+        br
+        strong Moderator's instruction:&ensp;
+        - if @news.instruction == 0
+          span style="color:#aaa" No decision made
+        - elsif @news.instruction == 1
+          = fa_icon('check lg fw', style:'color:mediumseagreen', text:'To publish')
+        - elsif @news.instruction == 2
+          = fa_icon('times lg fw', style:'color:crimson', text:'Skipped')
+        - if can?(:instruction, @news)
+          |&emsp;(Change to 
+          = link_to fa_icon('check fw', text:'To publish'), instruction_news_path(@news, instruction:1), :method => 'post'
+          |&emsp;|&emsp;
+          = link_to fa_icon('times fw', text:'Skip'), instruction_news_path(@news, instruction:2), :method => 'post'
+          |)
+      br
       strong Status:&ensp;
       = render_news_status(@news, true)
-        
-    ul style="list-style-type:none;padding-left:0"
-      - if @news.category != 0 && can?(:instruction, @news)
-        li = link_to fa_icon('check fw', text:'Instruction: To publish'), instruction_news_path(@news, instruction:1), :method => 'post'
-        li = link_to fa_icon('times fw', text:'Instruction: Skip'), instruction_news_path(@news, instruction:2), :method => 'post'
-      li = link_to fa_icon('edit fw', text:'Edit'), edit_news_path(@news)
+      br
+      strong Assigned:&ensp;
+      = link_to(@news.translator.to_name, @news.translator) if @news.translator.present?
+      br
+      strong Last updated at:&ensp;
+      = @news.updated_at
+    p
+      = link_to fa_icon('edit fw', text:'Edit'), edit_news_path(@news)
       - if can? :destroy, @news
-        li = link_to fa_icon('trash-o fw', text:'Destroy'), @news, data: {:confirm => 'Are you sure?'}, :method => :delete
-  - unless @news.instruction == 2
-    div.news_content
-      = @news.category == 0 ? (@news.content_en ? @news.content_en.html_safe : "") : (@news.content_ja ? @news.content_ja.html_safe : "")
+        |&emsp;|&emsp;
+        = link_to fa_icon('trash-o fw', text:'Destroy'), @news, data: {:confirm => 'Are you sure?'}, :method => :delete
+    - unless @news.instruction == 2
+      - if @news.status == 1 || @news.status == 2
+        h3.section English draft
+        div.news_content style="border:0"
+          p style="font-size:1.15em;font-weight:bold;text-decoration:underline" = @news.title_en
+          = @news.content_en ? @news.content_en.html_safe : ""
+    h3.section Original version
+    - unless @news.category == 0
+      div.news_content style="border:0"
+        = @news.content_ja ? @news.content_ja.html_safe : ""
 
 javascript:
   $(function(){
