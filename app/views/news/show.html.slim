@@ -21,6 +21,7 @@
   h2.special style="margin-top:50px" Editor's backyard (not seen by normal users)
   div.level2
     p style="line-height:1.8em"
+      span style="color:white;background:#666;padding:0 8px;margin-right:10px" ID&ensp;#{@news.id}
       = @news.published_at.strftime("%Y-%m-%d %H:%M")
       - if @news.category != 0
         |&emsp;#{link_to @news.title_ja, @news.url, target: '_blank', class: 'external'}
@@ -53,7 +54,7 @@
       br
       strong Last updated at:&ensp;
       = @news.updated_at
-    p
+    p style="text-align:center;margin-right:35px;font-weight:bold"
       = link_to fa_icon('edit fw', text:'Edit'), edit_news_path(@news)
       - if can? :destroy, @news
         |&emsp;|&emsp;
