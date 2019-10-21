@@ -16,12 +16,12 @@ div style="text-align:right;margin:10px 15px 5px"
   - if @filter_mode == 2
     strong = fa_icon('archive', text:'My work')
   - else
-    = link_to fa_icon('archive', text:'My work'), backyard_news_index_path(filter:2, page:params[:page])
+    = link_to fa_icon('archive', text:'My work'), backyard_news_index_path(filter:2)
   |&ensp;|&ensp;
   - if @filter_mode == 3
     strong = fa_icon('tasks', text:'Running tasks')
   - else
-    = link_to fa_icon('tasks', text:'Running tasks'), backyard_news_index_path(filter:3, page:params[:page])
+    = link_to fa_icon('tasks', text:'Running tasks'), backyard_news_index_path(filter:3)
 
 div style="margin-right:15px"
   table.news_backyard

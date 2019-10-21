@@ -1,13 +1,15 @@
 = content_for :title do
   |Recent Professional Games
 
-h2 Professional Game Results & Schedule
-p
-  |See JSA original data at: 
-  = link_to('https://www.shogi.or.jp/game/','https://www.shogi.or.jp/game/',target:'_blank', class:'external')
+h1 Professional Game Results & Schedule
+div.level2
+  p
+    |See JSA original data at: 
+    = link_to('https://www.shogi.or.jp/game/','https://www.shogi.or.jp/game/',target:'_blank', class:'external')
 
-== paginate @games
-= render :partial => 'list', :locals => { :games => @games}
+  == paginate @games
+  = render :partial => 'list', :locals => { :games => @games}
+  == paginate @games
 
 javascript:
   $(function(){

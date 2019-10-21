@@ -17,7 +17,7 @@ table.invisible
         li #{'Ladies ' if @player.category == 2}Player ID:&ensp;<b>#{@player.kishi_id}</b>
         li Rank:&ensp;<b>#{'Ladies ' if @player.category == 2}#{@player.to_rank}</b>
         li Date of birth:&ensp;<b>#{@player.birthday}</b>
-        li Pupil of:&ensp;#{player_icon_tag(@player.parent)}<b>#{player_name_tag(@player.parent)}</b>
+        li Pupil of:&ensp;#{player_icon_tag(@player.parent) if @player.parent}<b>#{player_name_tag(@player.parent) if @player.parent}</b>
         li Fellow pupils with:
         - if @siblings.present?
           ul style="list-style-type:none"

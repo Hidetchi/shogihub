@@ -10,12 +10,12 @@ class News < ActiveRecord::Base
     feed.entries.reverse.each do |e|
       to_load = false
       e.categories.each do |category|
-        if ["イベント", "メディア情報", "棋戦", "女流棋戦"].include?(category)
+        if ["イベント", "メディア出演情報", "棋士・棋戦", "女流棋戦"].include?(category)
           to_load = false
           break
-        elsif category == "お知らせ"
+        elsif ["お知らせ", "日本将棋連盟からのお知らせ", "棋戦"].include?(category)
           to_load = true
-        elsif ["棋界ニュース", "昇段・昇級", "キリ勝数"].include?(category)
+        elsif ["昇段・昇級", "キリ勝数", "棋界ニュース"].include?(category)
           to_load = true
           break
         end

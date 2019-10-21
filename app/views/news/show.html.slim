@@ -36,6 +36,8 @@
           = link_to fa_icon('check fw', text:'To publish'), instruction_news_path(@news, instruction:1), :method => 'post'
           |&emsp;|&emsp;
           = link_to fa_icon('times fw', text:'Skip'), instruction_news_path(@news, instruction:2), :method => 'post'
+          |&emsp;|&emsp;
+          = link_to fa_icon('minus fw', text:'Withdraw decision'), instruction_news_path(@news, instruction:0), :method => 'post'
           |)
       br
       strong Status:&ensp;
