@@ -4,6 +4,8 @@
     = @news.title_en
   = content_for :description do
     = strip_tags(interpreted_content(@news, false))
+  = content_for :og_image do
+    = @news.og_image_url
 
 - if @news.open?
   h1 Official News Release

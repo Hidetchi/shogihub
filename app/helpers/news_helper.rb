@@ -20,9 +20,11 @@ module NewsHelper
         else
           search_key = str
         end
-        player = link_player ? Player.find_by(search_key: search_key) : nil
-        if (player && (player.category == 1 || player.category == 2))
+        player = Player.find_by(search_key: search_key)
+        if player
           text = text || player.name.gsub(/,/, "")
+        end
+        if (link_player && player && (player.category == 1 || player.category == 2))
           link_to(text, player_url(player), class: 'player_name', name: player.to_image_url)
         else
           text || search_key

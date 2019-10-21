@@ -53,4 +53,12 @@ class News < ActiveRecord::Base
   def likes_count
     self.likes.count
   end
+
+  def og_image_url
+    if content_en.match(/\<img\s[^\>]+\ssrc\="(http[^"]+)"/)
+      $1
+    else
+      nil
+    end
+  end
 end
