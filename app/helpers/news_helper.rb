@@ -21,7 +21,7 @@ module NewsHelper
           search_key = str
         end
         player = Player.find_by(search_key: search_key)
-        if player
+        if player && player.name
           text = text || player.name.gsub(/,/, "")
         end
         if (link_player && player && (player.category == 1 || player.category == 2))

@@ -10,7 +10,7 @@ class News < ActiveRecord::Base
     feed.entries.reverse.each do |e|
       to_load = false
       e.categories.each do |category|
-        if ["イベント", "メディア出演情報", "棋士・棋戦", "女流棋戦"].include?(category)
+        if ["イベント", "メディア出演情報", "棋士・棋戦", "女流棋戦", "観戦記情報", "大盤解説会情報"].include?(category)
           to_load = false
           break
         elsif ["お知らせ", "日本将棋連盟からのお知らせ", "棋戦"].include?(category)
@@ -20,6 +20,7 @@ class News < ActiveRecord::Base
           break
         end
       end
+      to_load = true if e.content.include?("81dojo") || e.content.include?("海外")
       next unless to_load
       unless (News.find_by(entry_id: e.entry_id))
         category = 1
