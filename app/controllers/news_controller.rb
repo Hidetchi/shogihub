@@ -53,9 +53,7 @@ class NewsController < ApplicationController
   def update
     @news.update(news_params)
     if params[:news][:status].to_i == 3
-      if (PublicActivity::Activity.find_by(trackable: @news) == nil)
-        @news.create_activity(key: 'news.publish', owner: current_user)
-      end
+      @news.store_publish_activity(current_user)
     end
     respond_with(@news)
   end
@@ -84,7 +82,8 @@ class NewsController < ApplicationController
     end
 
     def news_params
-      params.require(:news).permit(:entry_id, :url, :published_at, :title_ja, :title_en, :content_ja, :content_en, :category, :status, :translator_id, :proofreader_id)
+      params[:news]["expires_at(1i)"] = "" if params[:news][:use_expiration] == "0"
+      params.require(:news).permit(:entry_id, :url, :published_at, :title_ja, :title_en, :content_ja, :content_en, :category, :status, :translator_id, :proofreader_id, :expires_at)
     end
 
     def set_anonymous_token

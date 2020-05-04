@@ -29,8 +29,37 @@ class News < ActiveRecord::Base
     end
   end
 
+  def self.check_auto_publishing
+    time_now = Time.now
+    #Publish if a submitted draft has been unattended for a specific length of time
+    News.where("not category = 0 and (status = 1 or status = 2)").each do |n|
+      if (n.status == 1 && time_now - n.updated_at > 3.days) || (n.status == 2 && time_now - n.updated_at > 1.day)
+        n.update(status:3)
+        n.store_publish_activity
+      end
+    end
+    #Skip article if not published by the expiration date
+    News.where("status = 0 and not instruction = 2 and expires_at is not null").each do |n|
+      n.update(instruction:2) if time_now > n.expires_at
+    end
+  end
+
+  def store_publish_activity(user = nil)
+    if PublicActivity::Activity.find_by(trackable: self) == nil
+      self.create_activity(key: 'news.publish', owner: user)
+    end
+  end
+
   def open?
     status == 3
+  end
+
+  def waiting_action?
+    status != 3 && category != 0 && instruction != 2
+  end
+
+  def use_expiration
+    expires_at.present?
   end
 
   def like(user, anonymous_token)

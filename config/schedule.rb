@@ -15,4 +15,8 @@ every :monday, at: '3am' do
   runner "Player.load_JSA_all"
 end
 
+every 1.hour do
+  runner "News.check_auto_publishing"
+end
+
 # Learn more: http://github.com/javan/whenever

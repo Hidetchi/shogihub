@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190929114644) do
+ActiveRecord::Schema.define(version: 20200504060742) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id",   limit: 4
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(version: 20190929114644) do
     t.integer  "status",         limit: 1,     default: 0
     t.integer  "translator_id",  limit: 4
     t.integer  "proofreader_id", limit: 4
+    t.datetime "expires_at"
   end
 
   add_index "news", ["entry_id"], name: "index_news_on_entry_id", using: :btree

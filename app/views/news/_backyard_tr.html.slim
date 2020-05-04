@@ -1,6 +1,8 @@
 td = news.id
 td style="white-space:nowrap" = news.published_at.strftime("%Y-%m-%d")
 td.left
+  - if news.waiting_action? && news.expires_at
+    span style='color:red' title=("Expires at #{news.expires_at}") = fa_icon('clock-o lg fw')
   - if news.category == 0
     = news_category_tag(news)
     = link_to news.title_en, news, target:'_blank'

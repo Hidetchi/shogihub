@@ -43,6 +43,10 @@
           = link_to fa_icon('minus fw', text:'Withdraw decision'), instruction_news_path(@news, instruction:0), :method => 'post'
           |)
       br
+      - if @news.waiting_action? && @news.expires_at
+        strong Expires if not published until:&ensp;
+        strong style='color:red' = @news.expires_at
+        br
       strong Status:&ensp;
       = render_news_status(@news, true)
       br

@@ -56,6 +56,12 @@
     = f.label :proofreader
     br
     = f.collection_select :proofreader_id, User.where('role > 0'), :id, :to_name, include_blank:true
+  - if current_user.is_moderator? && @news.waiting_action?
+    .field
+      |Expires if not published until
+      = f.check_box :use_expiration, onchange:"if (this.checked) $('#expiration_form').show(); else $('#expiration_form').hide();"
+      div#expiration_form style=("display:#{@news.use_expiration ? 'block' : 'none'}")
+        = f.datetime_select :expires_at, minute_step: 30
   .actions = f.submit
 
 h3
