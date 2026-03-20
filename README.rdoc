@@ -35,4 +35,4 @@ end
 
 ==== Other preparation
 * Install ImageMagick to enable simple-captcha
-* Move some of the image files directly to public/assets/ to avoid linking failure, which happens when the file name is specified directly in CSS file or Helper functions.
+* Move some of the image files directly to public/assets/ to avoid linking failure, which happens when the file name is specified directly in CSS file or Helper functions. (icon-external-link.png)

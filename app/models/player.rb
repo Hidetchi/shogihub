@@ -115,7 +115,7 @@ def load_JSA_detail
     else
       if mode == 1
         if self.name == nil
-          if line =~ /\A\<span\sclass\=\"en\"\>(.+)\s(.+)\<\/span\>\z/
+          if line =~ /\A\<span\sclass\=\"en\"\>(.+)[\s|　](.+)\<\/span\>\z/
             self.name = $2 + ", " + $1
           end
         end
@@ -144,7 +144,7 @@ end
 
 def assign_alias_player(player)
   # All existing data and association of +self+ will be migrated to +player+, which becomes the main record
-  # +self+ loses its data and will not be used. Further access to +self+ will be transferred to +player+ 
+  # +self+ loses its data and will not be used. Further access to +self+ will be transferred to +player+
   return if player.nil? || self == player
   # Update association
   Game.where(sente: self).update_all(sente_id: player.id)
